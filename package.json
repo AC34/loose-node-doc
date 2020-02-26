@@ -1,0 +1,23 @@
+{
+  "name": "loose-node-doc",
+  "version": "0.0.0",
+  "description": "tries to generate loosely constructed Node.js project document in html by traversing require cache.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AC34/loose-node-doc.git"
+  },
+  "keywords": [
+    "node",
+    "doc"
+  ],
+  "author": "AC34",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AC34/loose-node-doc/issues"
+  },
+  "homepage": "https://github.com/AC34/loose-node-doc#readme"
+}

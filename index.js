@@ -10,13 +10,15 @@ function LND() {
  * @param {*} out_path
  */
 LND.generate = function(out_path) {
-  if(typeof out_path==="string"){
+  if(typeof out_path!=="string"){
     console.log("out_path is not type of string."+typeof out_path+" was given.");
     return;
   }
   var fs = require("fs");
   var ignoreFiles = require("./src/util/ignoreFiles");
-  var ignoreObjects = require("./src/util/parser/ignoreObjects");
+  //resolve objct tree sources
+  var resolveObjectDependencies = require("./src/util/resolveObjectDependencies");
+  var addCommentsToTree = require("./src/util/addCommentsToTree");
 
   //reads cache hisotry and returns its list
   var traverseCache = require("./src/util/traverseCache");
@@ -27,15 +29,6 @@ LND.generate = function(out_path) {
     "./build/tmp/req_tree.json",
     JSON.stringify(global.module_tree, null, "\t")
   );
-
-  //resolve objct tree sources
-  var resolveObjectTreeSources = require("./src/util/obsolete/resolveObjectTreeSources");
-  var resolveObjectDependencies = require("./src/util/resolveObjectDependencies");
-  var addCommentsToTree = require("./src/util/addCommentsToTree");
-
-  //list all project files recursively
-  //relative path from project root
-  var files = lister(["./dxl-builder.js", "./dxl-builder"]);
 
   //ignoring list by object names
   var ignore_objects = ["util.fs"];
@@ -59,7 +52,7 @@ LND.generate = function(out_path) {
     "./build/tmp/otree.json",
     JSON.stringify(obj_tree, null, "\t")
   );
-  var obj_tree = addCommentsToTree(obj_tree, files);
+  var obj_tree = addCommentsToTree(obj_tree);
 }
 /**
  * files and directories to ignore.

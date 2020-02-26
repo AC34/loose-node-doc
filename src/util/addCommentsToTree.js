@@ -4,7 +4,9 @@
  * @param {object} tree
  * @param {array} files
  */
-function addCommentsToTree(tree, files) {
+function addCommentsToTree(tree) {
+  //load files here, instead of loading at index
+  var files = [];
   //load files
   files = loadFiles(files);
   var code_parser = require("./parser/salvageCommentByCode");

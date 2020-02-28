@@ -9,7 +9,7 @@ function addCommentsToTree(tree) {
   var files = [];
   //load files
   files = loadFiles(files);
-  var code_parser = require("./parser/salvageCommentByCode");
+  var code_parser = require("loose-node-doc/src/util/parse/salvageCommentByCode");
   //console.log("files:"+JSON.stringify(files,null,"\t"));
   for (var key in tree) {
     var path = tree[key].path;

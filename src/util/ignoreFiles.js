@@ -5,7 +5,7 @@
 function ignoreFiles(cache_tree, ignores) {
   if(!cache_tree||!ignores)return cache_tree;
   var ignores = resolvePaths(ignores);
-  console.log("ignoring paths:" + JSON.stringify(ignores));
+  //console.log("ignoring paths:" + JSON.stringify(ignores));
   for (var path in cache_tree) {
     //console.log("ignore target:"+path);
     //remove from parent

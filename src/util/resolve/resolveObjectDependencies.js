@@ -5,7 +5,7 @@
  */
 function resolveObjectDependencies(cache_tree, obj_names) {
   var tree_names = listTreeNames(obj_names);
-  console.log("tree_names"+tree_names);
+  //console.log("tree_names"+tree_names);
   //adds parent and childeren infos
   var root_obj = constructRootObject(cache_tree);
   //reconstruct tree from its roots
@@ -46,16 +46,10 @@ function constructRootObject(caches) {
 function startReconstruction(root_obj, caches,tree_names) {
   //console.log("root_obj"+JSON.stringify(root_obj));
   var tree = {};
-  console.log("root paths:" + JSON.stringify(root_obj.sources, null, "\t"));
+  //console.log("root paths:" + JSON.stringify(root_obj.sources, null, "\t"));
   for (var i in root_obj.sources) {
     var source = root_obj.sources[i];
-    var children = root_obj.children;
-    //for (var k in children) {
-    //  tree = Object.assign(tree, traverseExports("", source, children[k],caches, tree));
-    //}
-    //for(var ex in root_obj.exports){
     tree = Object.assign(tree, traverseExports("", source, caches, tree,tree_names));
-    //}
   }
   return tree;
 }
@@ -72,10 +66,12 @@ function traverseExports(prefix, parent_path, caches, tree,tree_names) {
   for (var key in item.exports) {
     var new_prefix = prefix !== "" ? prefix + "." + key : key;
     //Proceed if such pattern of name exists.
-    console.log(new_prefix+":exists:"+tree_names.includes(new_prefix));
     if(!tree_names.includes(new_prefix))continue;
     //console.log("prefix:" + new_prefix);
     var ex = item.exports[key];
+    //initialize
+    tree[new_prefix] = {};
+    tree[new_prefix].type = typeof ex;
     if (typeof ex === "object") {
       //no children then ignore
       var children = item.children;
@@ -88,12 +84,6 @@ function traverseExports(prefix, parent_path, caches, tree,tree_names) {
         }
       }
     } else {
-      //ex is either value or function
-      tree[new_prefix] = {};
-      //var cpath = resolveChildPath(parent_path, caches);
-      //if(cpath!==false){
-      //  tree[new_prefix].path = resolveChildPath(parent_path,caches);
-      //}
       if (typeof ex === "function") {
         tree[new_prefix].exports = ex.toString(); //function
       } else {

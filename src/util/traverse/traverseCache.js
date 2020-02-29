@@ -11,7 +11,6 @@ function createCacheTree() {
   ;
   for (var file in caches) {
     var item = caches[file];
-    //console.log("cache[" + file + "] " + Object.keys(item));
     //initialize
     tree[file] = {};
     if (item.parent) {
@@ -21,17 +20,6 @@ function createCacheTree() {
     }
     //doesnt work good on circular reference.
     /*if (item.children) {
-      //console.log("children:"+item.children);
-      tree[file].children = [];
-      console.log("typeof children:"+typeof item.children);
-      var keys = Object.keys(item.children);
-      console.log("children keys:"+JSON.stringify(keys));
-      for(var k in keys){
-        //console.log("i:"+item.children[keys[i]].toString());
-        console.log("k:"+JSON.stringify(keys[k]));
-        console.log("child:"+k+":"+JSON.stringify(item.children[keys[k]]));
-        console.log("exports:"+item.exports?true:false);
-        //tree[file].children.push(item.children[keys[i]]);
       }
     }*/
     if (item.exports) {

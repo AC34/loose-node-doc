@@ -9,9 +9,12 @@
   var ignoreObjects = require("loose-node-doc/src/util/obsolete/ignoreObject");
   //resolve objct tree sources
   var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
-  //tries to salvage comment block from files
-  var addCommentsToTree = require("./src/util/addCommentsToTree");
+  //fetches code's own name
   var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
+  //tries to salvage comment block from files
+  var resolveCodesFiles =require("./src/util/resolve/resolveCodesFiles");
+  var loadAllRequiredFiles = require("./src/util/loadAllRequiredFiles");
+  var resolveComments = require("./src/util/resolveComments");
 
 /**
  * LND(loose-node-doc).
@@ -40,7 +43,6 @@ LND.generate = function(out_path,object) {
   ];
     
   //path objects pair
-  console.log("index: calling ignoreObjects");
   var obj_names = traverseObjectNames(object);
   obj_names = ignoreObjects(obj_names,ignore_objects);
   fs.writeFileSync(
@@ -49,31 +51,37 @@ LND.generate = function(out_path,object) {
     {encoding:'utf8',flag:'w'}
   );
 
-  console.log("index: calling traverseCache");
   //traverses require cache and returns an array
   //{"path":{exports[names/codes],parent},...}
-
   var cache_tree = traverseCache();
   cache_tree = ignoreFiles(cache_tree, default_ignores);
   cache_tree = ignoreFiles(cache_tree,this.files_to_ignore);
-  fs.writeFileSync(
+  /*fs.writeFileSync(
     "./build/tmp/ctree.json",
     JSON.stringify(cache_tree, null, "\t"),
     {encoding:'utf8',flag:'w'}
-  );
+  );*/
 
   //traverses caches tree and resolve 
   //{"name":{path,exports[codes/objects]},...}
-  var obj_tree = resolveObjectDependencies(cache_tree,obj_names);
+  var otree = resolveObjectDependencies(cache_tree,obj_names);
   //{"name":{path,exports[codes/objects],name},...}
-  obj_tree = resolveCodeNames(obj_tree,obj_names);
+  otree = resolveCodeNames(otree,obj_names);
+  /*fs.writeFileSync(
+    "./build/tmp/otree.json",
+    JSON.stringify(otree, null, "\t"),
+    {encoding:'utf8',flag:'w'}
+  );*/
+  //update otree with position and filename
+  var all_files = loadAllRequiredFiles(cache_tree);
+  otree = resolveCodesFiles(otree,all_files);
+  otree = resolveComments(otree,all_files);
   fs.writeFileSync(
     "./build/tmp/otree.json",
-    JSON.stringify(obj_tree, null, "\t"),
+    JSON.stringify(otree, null, "\t"),
     {encoding:'utf8',flag:'w'}
   );
-
-  //var obj_tree = addCommentsToTree(obj_tree);
+  //var otree = addCommentsToTree(otree);
 }
 
 /**

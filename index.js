@@ -4,9 +4,9 @@
   //reads cache hisotry and returns its list
   var traverseCache = require("./src/util/traverse/traverseCache");
   //deletes certain paths from traverseCache() result
-  var ignoreFiles = require("./src/util/ignoreFiles");
+  var ignoreFiles = require("loose-node-doc/src/util/ignore/ignoreFiles");
   //g by object names
-  var ignoreObjects = require("loose-node-doc/src/util/ignoreObject");
+  var ignoreObjects = require("loose-node-doc/src/util/ignore/ignoreObject");
   //resolve objct tree sources
   var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
   //fetches code's own name

@@ -2,7 +2,7 @@
   "name": "loose-node-doc",
   "version": "0.0.0",
   "description": "tries to generate loosely constructed Node.js project document in html by traversing require cache.",
-  "main": "index.js",
+  "main": "entry_point.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

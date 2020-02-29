@@ -1,8 +1,9 @@
+  var parsePptions = require("loose-node-doc/src/Options/parseOptions");
   var fs = require("fs");
   //traverses down object tree and finds object information
   var traverseObjectNames = require("loose-node-doc/src/util/traverse/traverseObjectNames");
   //reads cache hisotry and returns its list
-  var traverseCache = require("./src/util/traverse/traverseCache");
+  var traverseCache = require("loose-node-doc/src/util/traverse/traverseCache");
   //deletes certain paths from traverseCache() result
   var ignoreFiles = require("loose-node-doc/src/util/ignore/ignoreFiles");
   //g by object names
@@ -12,9 +13,10 @@
   //fetches code's own name
   var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
   //tries to salvage comment block from files
-  var resolveCodesFiles =require("./src/util/resolve/resolveCodesFiles");
-  var loadAllRequiredFiles = require("./src/util/loadAllRequiredFiles");
+  var resolveCodesFiles =require("loose-node-doc/src/util/resolve/resolveCodesFiles");
+  var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
   var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
+  
 
 /**
  * LND(loose-node-doc).
@@ -35,7 +37,7 @@ LND.generate = function(out_path,object) {
   }
 
   //ignoring list by object names
-  var ignore_objects = ["util.fs"];
+  //var ignore_objects = ["util.fs"];
   //default ignoring list by file names
   //paths from user's build script.
   var default_ignores = [
@@ -44,12 +46,12 @@ LND.generate = function(out_path,object) {
     
   //path objects pair
   var obj_names = traverseObjectNames(object);
-  obj_names = ignoreObjects(obj_names,ignore_objects);
-  fs.writeFileSync(
+  obj_names = ignoreObjects(obj_names,this.ignore_objects);
+  /*fs.writeFileSync(
     "./build/tmp/obj_names.json",
     JSON.stringify(obj_names, null, "\t"),
     {encoding:'utf8',flag:'w'}
-  );
+  );*/
 
   //traverses require cache and returns an array
   //{"path":{exports[names/codes],parent},...}

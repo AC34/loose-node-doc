@@ -6,7 +6,7 @@
   //deletes certain paths from traverseCache() result
   var ignoreFiles = require("./src/util/ignoreFiles");
   //g by object names
-  var ignoreObjects = require("loose-node-doc/src/util/obsolete/ignoreObject");
+  var ignoreObjects = require("loose-node-doc/src/util/ignoreObject");
   //resolve objct tree sources
   var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
   //fetches code's own name
@@ -14,7 +14,7 @@
   //tries to salvage comment block from files
   var resolveCodesFiles =require("./src/util/resolve/resolveCodesFiles");
   var loadAllRequiredFiles = require("./src/util/loadAllRequiredFiles");
-  var resolveComments = require("./src/util/resolveComments");
+  var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
 
 /**
  * LND(loose-node-doc).

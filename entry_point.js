@@ -46,48 +46,30 @@ LND.generate = function(object,options) {
     this.log(this.messages["process-stopped"]());
     return;
   }
-  
-  //test out_path
-  
-
-  //ignoring list by object names
-  //var ignore_objects = ["util.fs"];
-  //default ignoring list by file names
-  //paths from user's build script.
-  var default_ignores = [
-    "../node_modules/"
-  ];
-    
   //path objects pair
   var obj_names = traverseObjectNames(object);
-  obj_names = ignoreObjects(obj_names,this.ignore_objects);
-  /*fs.writeFileSync(
-    "./build/tmp/obj_names.json",
-    JSON.stringify(obj_names, null, "\t"),
-    {encoding:'utf8',flag:'w'}
-  );*/
-
+  obj_names = ignoreObjects(obj_names,this.options.ignore_objects);
   //traverses require cache and returns an array
   //{"path":{exports[names/codes],parent},...}
   var cache_tree = traverseCache();
-  cache_tree = ignoreFiles(cache_tree, default_ignores);
-  cache_tree = ignoreFiles(cache_tree,this.files_to_ignore);
-  /*fs.writeFileSync(
-    "./build/tmp/ctree.json",
-    JSON.stringify(cache_tree, null, "\t"),
-    {encoding:'utf8',flag:'w'}
-  );*/
-
+  //removes files by pre defined array
+  if(this.options.ignore_default_ignore_paths===true){
+    cache_tree = ignoreFiles(cache_tree, this.options.default_ignore_paths);
+  }
+  //removes files by user defined array
+  if(this.options.ignore_paths){
+    cache_tree = ignoreFiles(cache_tree,this.options.ignore_paths);
+  }
+  fs.writeFileSync("./build/tmp/obj_names.json",JSON.stringify(obj_names,null,"\t"));
+  fs.writeFileSync("./build/tmp/ctree.json",JSON.stringify(cache_tree,null,"\t"));
+  //this file needs to be called directly
+  var build_path = getBuildScriptPath();
   //traverses caches tree and resolve 
   //{"name":{path,exports[codes/objects]},...}
-  var otree = resolveObjectDependencies(cache_tree,obj_names);
+  var otree = resolveObjectDependencies(build_path,cache_tree,obj_names);
+  console.log("otree:"+JSON.stringify(otree));
   //{"name":{path,exports[codes/objects],name},...}
   otree = resolveCodeNames(otree,obj_names);
-  /*fs.writeFileSync(
-    "./build/tmp/otree.json",
-    JSON.stringify(otree, null, "\t"),
-    {encoding:'utf8',flag:'w'}
-  );*/
   //update otree with position and filename
   var all_files = loadAllRequiredFiles(cache_tree);
   otree = resolveCodesFiles(otree,all_files);
@@ -99,31 +81,27 @@ LND.generate = function(object,options) {
   );
   //var otree = addCommentsToTree(otree);
 }
-
 /**
- * files and directories to ignore.
- * relative paths from project directory.
- * @param {array} paths
+ * logging method.
  */
-LND.ignoreFiles = function(paths) {
-  if (!Array.isArray(paths)) {
-    //fail
-    console.log("paths needs to be type of array.");
-    return;
-  }
-  this.files_to_ignore = paths;
-};
-LND.g = function(obj_names) {
-  if (!Array.isArray(obj_names)) {
-    //fail
-    console.log("obj_names needs to be type of array.");
-  }
-  this.objects_to_ignore = obj_names;
-};
 LND.log = function(message){
   this.logs.push(message);
   if(this.options.verbose){
     console.log(message);
   }
 }
+/**
+ * this file is meant to be called from build script.
+ */
+function getBuildScriptPath(){
+  var trace = new Error().stack.split("\n")[3];
+  //removing brackets
+  trace = trace.substring(trace.indexOf("(")+1,trace.lastIndexOf(")"));
+  //there arae two semi colons from the tail of the path
+  //there can be zero or one semi colons from head, depending on OS.
+  trace = trace.substring(0,trace.lastIndexOf(":"));
+  trace = trace.substring(0,trace.lastIndexOf(":"));
+  return trace;
+}
+
 module.exports = LND;

@@ -14,8 +14,21 @@ module.exports = {
     default:true
   },
   //bool
-  "ignore_default_ignore_objects":{
+  "ignore_default_ignore_paths":{
     data_type:"boolean",
     default:true
   },
+  //paths fromo user's build script
+  "default_ignore_paths":{
+    data_type:"array",
+    default:["../node_modules/"]
+  },
+  "ignore_paths":{
+    data_type:"array",
+    default:[]
+  },
+  "ignore_objects":{
+    data_type:"array",
+    default:[]
+  }
 };

@@ -3,26 +3,27 @@
  * @param {object} cache_tree result of traverseCache.js
  * @return {object} merged tree
  */
-function resolveObjectDependencies(cache_tree, obj_names) {
+function resolveObjectDependencies(build_script,cache_tree, obj_names) {
   var tree_names = listTreeNames(obj_names);
   //console.log("tree_names"+tree_names);
   //adds parent and childeren infos
-  var root_obj = constructRootObject(cache_tree);
+  var root_obj = constructRootObject(cache_tree,build_script);
   //reconstruct tree from its roots
   var tree = startReconstruction(root_obj, cache_tree,tree_names);
   return tree;
 }
 /**
  * Merges merges root
+ * There is a need to avoid build_script.
  * @param {object} caches
  */
-function constructRootObject(caches) {
+function constructRootObject(caches,build_script) {
   var root_obj = {};
   var sources = [];
   var children = [];
   var exports = {};
   for (var path in caches) {
-    if (caches[path].parent === undefined) {
+    if (caches[path].parent === build_script) {
       //at this point there are multiple entries that doesn't have parent path.
       sources.push(path);
       if (caches[path].children) {

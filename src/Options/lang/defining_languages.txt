@@ -1,0 +1,20 @@
+
+About Standards:
+This list tires to comply ISO 639-1.
+However, the actual references are as follows.
+Language codes: https://www.w3schools.com/tags/ref_language_codes.asp
+Country codes: https://www.w3schools.com/tags/ref_country_codes.asp
+
+Calling tags by option:
+Tags keys must always be called by same rule.
+[lower-case two letters language code]+under_score+[uppser-case two letters country code]
+e.g.
+ Japanese in Japan : ja_JP
+ English in U.S.A :en_US
+ Eglish in Britain: en_GB
+
+Adding langauge files:
+
+Default lang_tag:
+default is "en-US".
+

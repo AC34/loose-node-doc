@@ -1,4 +1,5 @@
-  var parsePptions = require("loose-node-doc/src/Options/parseOptions");
+  var getMessages = require("loose-node-doc/src/Options/getMessages");
+  var validateOptions = require("./src/Options/validateOptions");
   var fs = require("fs");
   //traverses down object tree and finds object information
   var traverseObjectNames = require("loose-node-doc/src/util/traverse/traverseObjectNames");
@@ -16,7 +17,6 @@
   var resolveCodesFiles =require("loose-node-doc/src/util/resolve/resolveCodesFiles");
   var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
   var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
-  
 
 /**
  * LND(loose-node-doc).
@@ -30,11 +30,25 @@ function LND() {
  * @param {*} out_path
  * @param {object}
  */
-LND.generate = function(out_path,object) {
-  if(typeof out_path!=="string"){
-    console.log("out_path is not type of string."+typeof out_path+" was given.");
+LND.generate = function(object,options) {
+  if(!options)options = {};
+  //initializing log
+  this.logs = [];
+  //initial setting for getMessages,parseOptions
+  this.options = {verbose:true};
+  //first of all, the system needs messages
+  //anything that requires LND can now access LND.messages
+  this.messages = getMessages(options,this);
+  //initializing options(updating and checking)
+  this.options = validateOptions(options,this);
+  if(!object){
+    this.log(this.messages["empty-object"]());
+    this.log(this.messages["process-stopped"]());
     return;
   }
+  
+  //test out_path
+  
 
   //ignoring list by object names
   //var ignore_objects = ["util.fs"];
@@ -106,4 +120,10 @@ LND.g = function(obj_names) {
   }
   this.objects_to_ignore = obj_names;
 };
+LND.log = function(message){
+  this.logs.push(message);
+  if(this.options.verbose){
+    console.log(message);
+  }
+}
 module.exports = LND;

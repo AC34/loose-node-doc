@@ -7,7 +7,7 @@
   var traverseCache = require("loose-node-doc/src/util/traverse/traverseCache");
   //deletes certain paths from traverseCache() result
   var ignoreFiles = require("loose-node-doc/src/util/ignore/ignoreFiles");
-  //g by object names
+  //ignores names starting with given list item
   var ignoreObjects = require("loose-node-doc/src/util/ignore/ignoreObject");
   //resolve objct tree sources
   var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
@@ -15,7 +15,9 @@
   var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
   //tries to salvage comment block from files
   var resolveCodesFiles =require("loose-node-doc/src/util/resolve/resolveCodesFiles");
+  //reads all the files from the cache tree of traverseCache()
   var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
+  //locate where comments are in the files list, and stores them to the otree
   var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
 
 /**
@@ -46,6 +48,7 @@ LND.generate = function(object,options) {
     this.log(this.messages["process-stopped"]());
     return;
   }
+  
   //path objects pair
   var obj_names = traverseObjectNames(object);
   obj_names = ignoreObjects(obj_names,this.options.ignore_objects);
@@ -60,14 +63,13 @@ LND.generate = function(object,options) {
   if(this.options.ignore_paths){
     cache_tree = ignoreFiles(cache_tree,this.options.ignore_paths);
   }
-  fs.writeFileSync("./build/tmp/obj_names.json",JSON.stringify(obj_names,null,"\t"));
-  fs.writeFileSync("./build/tmp/ctree.json",JSON.stringify(cache_tree,null,"\t"));
+  //fs.writeFileSync("./build/tmp/obj_names.json",JSON.stringify(obj_names,null,"\t"));
+  //fs.writeFileSync("./build/tmp/ctree.json",JSON.stringify(cache_tree,null,"\t"));
   //this file needs to be called directly
   var build_path = getBuildScriptPath();
   //traverses caches tree and resolve 
   //{"name":{path,exports[codes/objects]},...}
   var otree = resolveObjectDependencies(build_path,cache_tree,obj_names);
-  console.log("otree:"+JSON.stringify(otree));
   //{"name":{path,exports[codes/objects],name},...}
   otree = resolveCodeNames(otree,obj_names);
   //update otree with position and filename
@@ -98,7 +100,7 @@ function getBuildScriptPath(){
   //removing brackets
   trace = trace.substring(trace.indexOf("(")+1,trace.lastIndexOf(")"));
   //there arae two semi colons from the tail of the path
-  //there can be zero or one semi colons from head, depending on OS.
+  //and there can be zero or one semi colons from head, depending on OS.
   trace = trace.substring(0,trace.lastIndexOf(":"));
   trace = trace.substring(0,trace.lastIndexOf(":"));
   return trace;

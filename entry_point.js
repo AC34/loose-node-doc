@@ -14,7 +14,7 @@
   //fetches code's own name
   var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
   //tries to salvage comment block from files
-  var resolveCodesFiles =require("loose-node-doc/src/util/resolve/resolveCodesFiles");
+  var resolveCodesFiles =require("loose-node-doc/src/util/resolve/resolveCodeFiles");
   //reads all the files from the cache tree of traverseCache()
   var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
   //locate where comments are in the files list, and stores them to the otree
@@ -77,7 +77,7 @@ LND.generate = function(object,options) {
   otree = resolveCodesFiles(otree,all_files);
   otree = resolveComments(otree,all_files);
   fs.writeFileSync(
-    "./build/tmp/otree.json",
+    __dirname+"/tmp/otree.json",
     JSON.stringify(otree, null, "\t"),
     {encoding:'utf8',flag:'w'}
   );

@@ -1,4 +1,4 @@
-var parser = require("loose-node-doc/src/util/parse/parseComment");
+var parser = require("loose-node-doc/src/util/resolve/parse/parseComment");
 
 var mock1 = require("fs").readFileSync(__dirname+"/mock1.txt","UTF-8");
 mock1 = parser(mock1);

@@ -19,6 +19,7 @@
   var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
   //locate where comments are in the files list, and stores them to the otree
   var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
+  var parseComments = require("./src/util/parse/parseComments");
 
 /**
  * LND(loose-node-doc).
@@ -76,12 +77,13 @@ LND.generate = function(object,options) {
   var all_files = loadAllRequiredFiles(cache_tree);
   otree = resolveCodesFiles(otree,all_files);
   otree = resolveComments(otree,all_files);
+  otree = parseComments(otree);
   fs.writeFileSync(
     __dirname+"/tmp/otree.json",
     JSON.stringify(otree, null, "\t"),
     {encoding:'utf8',flag:'w'}
   );
-  //var otree = addCommentsToTree(otree);
+  
 }
 /**
  * logging method.

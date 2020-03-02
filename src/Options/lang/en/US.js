@@ -7,8 +7,11 @@ module.exports = {
   /**
    * @common-messages
    */
+  "option-invalid-option-key":function(given_key){
+    return "Option key of ["+given_key+"] does not exist. There is no such option available.";
+  },
   "option-wrong-datatype":function(option_key,expected_type,actual_type){
-    return "Option ["+option_key+"expects data type of ["+expected_type+"]. However, ["+actual_type+"] was given."; 
+    return "Option ["+option_key+"] expects data type of ["+expected_type+"]. However, ["+actual_type+"] was given."; 
   },
   "empty-object":function(){
     return "An empty object was given.";

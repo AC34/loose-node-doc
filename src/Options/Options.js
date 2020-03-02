@@ -14,7 +14,7 @@ module.exports = {
     default:true
   },
   //bool
-  "ignore_default_ignore_paths":{
+  "enable_default_ignore_paths":{
     data_type:"boolean",
     default:true
   },

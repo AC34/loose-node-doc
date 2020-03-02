@@ -2,10 +2,12 @@
   "mock1": {
     "0": "This is mock comment 1.\nline 2 of mock1.\n",
     "1": {
+      "tag": "param",
       "types": "string",
       "name": "param_str"
     },
     "2": {
+      "tag": "return",
       "types": "boolean",
       "name": "success"
     }
@@ -13,37 +15,55 @@
   "mock2": {
     "0": "This is mock comment....\nmultiple parameters.\n",
     "1": {
+      "tag": "param",
       "types": "string,array",
       "name": "param_1"
     },
     "2": {
+      "tag": "param",
       "types": "boolean",
       "name": "param_2"
     },
     "3": {
+      "tag": "unkonown",
       "types": "object",
       "name": "param_3"
     },
     "4": {
+      "tag": "return",
       "types": "boolean",
       "name": "success"
     }
   },
   "mock3": {
-    "0": "This is mock comment.\nmultiple lines of param comments.\n",
+    "0": "This is mock comment.\nmultiple lines of comments after @.\n",
     "1": {
+      "tag": "param",
       "types": "string",
       "name": "param_1",
       "description": "this is param1"
     },
     "2": {
-      "description": "must belong to param2"
+      "tag": "param",
+      "types": "boolean",
+      "name": "param_2",
+      "description": "this is param2must belong to param2"
     },
     "3": {
+      "tag": "unknown",
+      "types": "object",
+      "name": "param_3",
       "description": "must belong to param_3"
     },
     "4": {
+      "tag": "return",
+      "types": "boolean",
+      "name": "success",
       "description": "must belong to return"
+    },
+    "5": {
+      "tag": "author",
+      "name": "AC34"
     }
   }
 }

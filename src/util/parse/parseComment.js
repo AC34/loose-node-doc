@@ -27,12 +27,18 @@ function parseLines(lines, c_tree = {}, c_index = 0) {
   if (line === "") return parseLines(lines, c_tree, c_index);
   //updating index (only when needed by the line)
   c_index = resolveC_Index(line, c_index);
-  if(c_index>0)c_tree[c_index] = {};//initialize object
+  if (!c_tree[c_index] && c_index > 0)c_tree[c_index] = {}; //initialize object
+  
   //update initial description (only when index=0)
   if (c_index === 0) {
-    if(!c_tree[c_index])c_tree[c_index] = "";
+    if (!c_tree[c_index]) c_tree[c_index] = "";
     c_tree[c_index] += line + "\n";
     return parseLines(lines, c_tree, c_index); //proceed
+  }
+  //resolve tag (on index incrementation)
+  if (Object.keys(c_tree[c_index]).length === 0) {
+    if (line.indexOf("@") === 0)
+      c_tree[c_index].tag = line.substring(1, line.indexOf(" "));
   }
   //update c_tree by parsing it
   c_tree = parseLine(line, c_tree, c_index);
@@ -82,16 +88,16 @@ function resolveC_Index(line, c_index) {
 function parseLine(line, c_tree, c_index) {
   //There is a chance of next line being description of previous @ definition(roughly saying). Anything else is under the initial description.
   var el = line.split(" ");
-  if (!el[1]) return c_tree; //abort on empty line
+  //if (el.length<3) return c_tree; //abort on empty line
   el.shift();
   //moving on to next block.
   if (isBlockDataTypes(el[0])) {
-    //is data. then shift.
+    //is data type. then shift.
     c_tree[c_index].types = fetchDataTypes(el[0]).toString();
-    if (!el[1]) return c_tree;
+    if (!el[1]) return c_tree; //somehow user forgot to add more info
     el.shift();
     //name can come after datatype
-    //yet there can be an empty clause
+    //yet there can be an empty block
     if (!c_tree[c_index].name && el[0]) {
       //treat as name ,then shift
       c_tree[c_index].name = el[0];
@@ -99,7 +105,7 @@ function parseLine(line, c_tree, c_index) {
       el.shift();
     }
   } else {
-    //if there is only one clause after @at, then  it should be treated as a name
+    //if there is only one clause after @, then  it should be treated as a name
     if (!c_tree[c_index].name && el.length === 1) {
       //treat as name ,then shift
       c_tree[c_index].name = el[0];
@@ -124,12 +130,12 @@ function isBlockDataTypes(suspect) {
     return false;
   }
 }
-function fetchDataTypes(d_clause) {
-  d_clause = d_clause.substring(1, d_clause.length - 1);
-  if (d_clause.indexOf("|") > -1) {
-    return d_clause.split("|");
+function fetchDataTypes(d_block) {
+  d_block = d_block.substring(1, d_block.length - 1);
+  if (d_block.indexOf("|") > -1) {
+    return d_block.split("|");
   } else {
-    return new Array(d_clause).toString();
+    return new Array(d_block).toString();
   }
 }
 module.exports = parseComment;

@@ -1,0 +1,11 @@
+/**
+ * This is mock comment.
+ * multiple lines of param comments.
+ * @param {string} param_1 this is param1
+ * @param {boolean} param_2 this is param2
+ * this must belong to param2
+ * @unkonown {object} param_3 
+ * this must belong to param_3
+ * @return {boolean} success
+ * this must belong to return
+ */

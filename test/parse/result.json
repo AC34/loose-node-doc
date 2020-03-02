@@ -1,0 +1,49 @@
+{
+  "mock1": {
+    "0": "This is mock comment 1.\nline 2 of mock1.\n",
+    "1": {
+      "types": "string",
+      "name": "param_str"
+    },
+    "2": {
+      "types": "boolean",
+      "name": "success"
+    }
+  },
+  "mock2": {
+    "0": "This is mock comment....\nmultiple parameters.\n",
+    "1": {
+      "types": "string,array",
+      "name": "param_1"
+    },
+    "2": {
+      "types": "boolean",
+      "name": "param_2"
+    },
+    "3": {
+      "types": "object",
+      "name": "param_3"
+    },
+    "4": {
+      "types": "boolean",
+      "name": "success"
+    }
+  },
+  "mock3": {
+    "0": "This is mock comment.\nmultiple lines of param comments.\n",
+    "1": {
+      "types": "string",
+      "name": "param_1",
+      "description": "this is param1"
+    },
+    "2": {
+      "description": "must belong to param2"
+    },
+    "3": {
+      "description": "must belong to param_3"
+    },
+    "4": {
+      "description": "must belong to return"
+    }
+  }
+}

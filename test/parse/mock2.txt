@@ -1,0 +1,8 @@
+/**
+ * This is mock comment..../
+ * multiple parameters.
+ * @param {string|array} param_1
+ * @param {boolean} param_2
+ * @unkonown {object} param_3
+ * @return {boolean} success
+ */

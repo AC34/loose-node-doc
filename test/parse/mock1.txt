@@ -1,0 +1,6 @@
+/**
+ * This is mock comment 1.
+ * line 2 of mock1.
+ * @param {string} param_str
+ * @return {boolean} success
+ */

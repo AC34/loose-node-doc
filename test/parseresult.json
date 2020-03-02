@@ -1,0 +1,26 @@
+[
+UTF-8{
+UTF-8UTF-8"description": "\nThis is mock comment 1.\r\nline 2 of mock1.\r\n",
+UTF-8UTF-8"param": {
+UTF-8UTF-8UTF-8"types": 1,
+UTF-8UTF-8UTF-8"name": "param_str",
+UTF-8UTF-8UTF-8"description": "success\r\n"
+UTF-8UTF-8}
+UTF-8},
+UTF-8{
+UTF-8UTF-8"description": "\nThis is mock comment....\nmultiple parameters.\r\n",
+UTF-8UTF-8"param": {
+UTF-8UTF-8UTF-8"types": 1,
+UTF-8UTF-8UTF-8"name": "param_1",
+UTF-8UTF-8UTF-8"description": "param_2\r\nparam_3\r\nsuccess\r\n"
+UTF-8UTF-8}
+UTF-8},
+UTF-8{
+UTF-8UTF-8"description": "\nThis is mock comment.\r\nmultiple lines of param comments.\r\n",
+UTF-8UTF-8"param": {
+UTF-8UTF-8UTF-8"types": 1,
+UTF-8UTF-8UTF-8"name": "param_1",
+UTF-8UTF-8UTF-8"description": "thisisparam1\r\nparam_2thisisparam2\r\nmustbelongtoparam2\r\nparam_3\nmustbelongtoparam_3\r\nsuccess\r\nmustbelongtoreturn\r\n"
+UTF-8UTF-8}
+UTF-8}
+]

@@ -21,6 +21,7 @@ var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments")
 var parseComments = require("./src/util/parse/parseComments");
 var FileIO = require("./src/out/FileIO");
 var Console = require("./src/out/Console");
+var checker = require("./src/checker");
 /**
  * LND(loose-node-doc).
  */
@@ -44,56 +45,38 @@ LND.generate = function(object, options) {
   //notify that options are loaded.
   this.console.outMessage("process-options-loaded");
   //notify and quit  on undefined object.
-  if(checks.checkObjectStatus(this.console,object)){
-    return;//quit
+  if (checker.checkObjectStatus(this.console, object)) {
+    return; //quit
   }
   //path objects pair
   var obj_names = traverseObjectNames(object);
   var names_count = Object.keys(obj_names).length;
-  if (names_count === 0) {
-    this.console.outMessage("object-names-empty");
-    this.console.outMessage("process-stopped");
-    return;
-  } else {
-    this.console.outMessage("process-object-names-loaded", {
-      number_of_keys: names_count
-    });
-  }
+  checker.checkObjectNamesCount(this.console, names_count);
+
   //ignore object names by given ignore list
   obj_names = ignoreObjects(obj_names, this.options.ignore_objects);
-  if (this.options.verbose === true) {
-    var n = names_count - Object.keys(obj_names).length;
-    this.console.outMessage("process-ignored-objects", {
-      ignored_amount: n
-    });
-  }
+  checker.checkIgnoredObjects(
+    this.console,
+    names_count - Object.keys(obj_names).length
+  );
 
   //traverses require cache and returns an array
   //{"path":{exports[names/codes],parent},...}
   var cache_tree = traverseCache();
-  if (this.options.verbose === true) {
-    if (Object.keys(cache_tree).length === 0) {
-      this.console.outMessage("empty-cache", {});
-      this.console.outMessage("process-stopped", {});
-      return;
-    } else {
-      var num = Object.keys(cache_tree).length;
-      this.console.outMessage("process-traversed-caches", {
-        number_of_caches: num
-      });
-    }
-  }
-
+  checker.checkCacheTreeCounts(this.console,cache_tree);
+  
   //removes files by pre defined paths array
   if (this.options.enable_default_ignore_paths === true) {
+    var before = Object.keys(cache_tree).length;
     //console.log("default ignores:"+this.options.default_ignore_paths);
     cache_tree = ignorePaths(
       cache_tree,
       this.options.default_ignore_paths,
       getProjectRootDir()
     );
+    checker.checkDefaultCacheTreeIgnoreCounts(this.console,before-Object.keys(cache_tree).length);
   }
-
+  
   //removes files by user defined array
   if (this.options.ignore_paths) {
     var before = Object.keys(cache_tree).length;
@@ -103,16 +86,14 @@ LND.generate = function(object, options) {
       getProjectRootDir()
     );
     var ignored_num = before - Object.keys(cache_tree).length;
-    this.console.outMessage("process-ignored-paths", {
-      ignored_amount: ignored_num
-    });
+    checker.checkCacheTreeIgnoreCounts(this.console,ignored_num);
   }
+
   fs.writeFileSync(
     __dirname + "/tmp/ctree.json",
     JSON.stringify(cache_tree, null, "\t")
   );
 
-  //fs.writeFileSync("./build/tmp/obj_names.json",JSON.stringify(obj_names,null,"\t"));
   //this file needs to be called directly
   var build_path = getBuildScriptPath();
   //traverses caches tree and resolve
@@ -133,14 +114,8 @@ LND.generate = function(object, options) {
   otree = resolveCodesFiles(otree, all_files);
   otree = resolveComments(otree, all_files);
   otree = parseComments(otree);
-  if (this.options.verbose === true) {
-    var count = countOtreeComment(otree);
-    if (count === 0) {
-      this.console.outMessage("zero-comments-resolved");
-    } else {
-      this.console.outMessage("process-resolved-comments", { num: count });
-    }
-  }
+  //notify user about the nnumber of resolved comments
+  checker.checkResolvedComments(this.console,otree);
   fs.writeFileSync(
     __dirname + "/tmp/otree.json",
     JSON.stringify(otree, null, "\t"),
@@ -176,40 +151,5 @@ function getProjectRootDir() {
   path = path.join(sep);
   return path;
 }
-/**
- *
- * @param {object} otree
- * @param {string} key
- */
-function countOtreeComment(otree) {
-  var count = 0;
-  for (var name in otree) {
-    if (otree[name].comment) {
-      count++;
-    }
-  }
-  return count;
-}
-var checks = {
-  /**
-   * checks object is undefined.
-   * outputs status to console.
-   * returns false on undefined.
-   * @param {object} object
-   * @return {boolean} proceedable
-   */
-  checkObjectStatus: function(Console, object) {
-    if (!object) {
-      Console.outMessage("empty-object");
-      Console.outMessage("process-stopped");
-      return;
-    } else {
-      Console.outMessage("process-object-loaded");
-    }
-  },
-  checkObjectNamesCount:function(Console,count){
-
-  }
-};
 
 module.exports = LND;

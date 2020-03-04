@@ -57,8 +57,11 @@ module.exports = {
   "process-ignored-objects":function(args={ignored_amount:""}){
     return "["+args.ignored_amount+"] object names ignored.";
   },
+  "process-ignored-default-paths":function(args={ignored_amount:""}){
+    return "Ignored ["+args.ignored_amount+"] paths from loaded cache by default ignore list[default-ignore-paths].";
+  },
   "process-ignored-paths":function(args={ignored_amount:""}){
-    return "Ignored ["+args.ignored_amount+"] paths from loaded cache.";
+    return "Ignored ["+args.ignored_amount+"] paths from loaded cache by user defined list[ignore-paths].";
   },
   "process-resolved-comments":function(args={num:""}){
     return "Resolved ["+args.num+"] comments.";

@@ -2,18 +2,10 @@ check options
 
 out_path
 log_path
-verbose
-ignore_default_ignore_paths
-default_ignore_paths
-ignore_paths
-ignore_objects
-invalid key
 
+should enumerate possible reasons why anything fails.
 
-process-stopped
-
-
-
+sort alphabetically?
 
 
 translate to html.

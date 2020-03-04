@@ -1,5 +1,6 @@
 /**
- * 
+ * Iterates through object_tree itmes and parses each comment and store the result.
+ * The parser is ./parseComment.js
  * @param {object} otree 
  * @param {objcet} otree
  */

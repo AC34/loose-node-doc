@@ -21,7 +21,7 @@ module.exports = {
   //paths fromo user's build script
   "default_ignore_paths":{
     data_type:"array",
-    default:["../node_modules/"]
+    default:["/node_modules/","/ignore_me/"]
   },
   "ignore_paths":{
     data_type:"array",

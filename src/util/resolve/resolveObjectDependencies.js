@@ -3,13 +3,13 @@
  * @param {object} cache_tree result of traverseCache.js
  * @return {object} merged tree
  */
-function resolveObjectDependencies(build_script,cache_tree, obj_names) {
+function resolveObjectDependencies(build_script, cache_tree, obj_names) {
   var tree_names = listTreeNames(obj_names);
   //console.log("tree_names"+tree_names);
   //adds parent and childeren infos
-  var root_obj = constructRootObject(cache_tree,build_script);
+  var root_obj = constructRootObject(cache_tree, build_script);
   //reconstruct tree from its roots
-  var tree = startReconstruction(root_obj, cache_tree,tree_names);
+  var tree = startReconstruction(root_obj, cache_tree, tree_names);
   return tree;
 }
 /**
@@ -17,23 +17,25 @@ function resolveObjectDependencies(build_script,cache_tree, obj_names) {
  * There is a need to avoid build_script.
  * @param {object} caches
  */
-function constructRootObject(caches,build_script) {
+function constructRootObject(caches, build_script) {
   var root_obj = {};
   var sources = [];
   var children = [];
   var exports = {};
   for (var path in caches) {
-    if (caches[path].parent === build_script) {
-      //at this point there are multiple entries that doesn't have parent path.
-      sources.push(path);
-      if (caches[path].children) {
-        children = children.concat(caches[path].children);
-      }
-      if (caches[path].exports) {
-        exports = Object.assign(caches[path].exports);
-      }
+    //if parent exists, then cannot be a root object
+    if (caches[path].parent) continue;
+    //need to avoid build_script path
+    if (caches[path].parent === build_script) continue;
+    //assigning all the paths that does't have parent
+    sources.push(path);
+    if (caches[path].children) {
+      children = children.concat(caches[path].children);
     }
-  }
+    if (caches[path].exports) {
+      exports = Object.assign(caches[path].exports);
+    }
+  }//for caches
   root_obj.sources = sources;
   root_obj.children = children;
   root_obj.exports = exports;
@@ -44,13 +46,16 @@ function constructRootObject(caches,build_script) {
  * @param {object} caches
  * @param {array} tree_names a list of usable nested object names
  */
-function startReconstruction(root_obj, caches,tree_names) {
+function startReconstruction(root_obj, caches, tree_names) {
   //console.log("root_obj"+JSON.stringify(root_obj));
   var tree = {};
   //console.log("root paths:" + JSON.stringify(root_obj.sources, null, "\t"));
   for (var i in root_obj.sources) {
     var source = root_obj.sources[i];
-    tree = Object.assign(tree, traverseExports("", source, caches, tree,tree_names));
+    tree = Object.assign(
+      tree,
+      traverseExports("", source, caches, tree, tree_names)
+    );
   }
   return tree;
 }
@@ -62,12 +67,12 @@ function startReconstruction(root_obj, caches,tree_names) {
  * @param {object} tree
  * @param {array} tree_names
  */
-function traverseExports(prefix, parent_path, caches, tree,tree_names) {
+function traverseExports(prefix, parent_path, caches, tree, tree_names) {
   var item = caches[parent_path];
   for (var key in item.exports) {
     var new_prefix = prefix !== "" ? prefix + "." + key : key;
     //Proceed if such pattern of name exists.
-    if(!tree_names.includes(new_prefix))continue;
+    if (!tree_names.includes(new_prefix)) continue;
     //console.log("prefix:" + new_prefix);
     var ex = item.exports[key];
     //initialize
@@ -81,7 +86,8 @@ function traverseExports(prefix, parent_path, caches, tree,tree_names) {
         if (caches[children[i]]) {
           tree = Object.assign(
             tree,
-            traverseExports(new_prefix, children[i], caches, tree,tree_names));
+            traverseExports(new_prefix, children[i], caches, tree, tree_names)
+          );
         }
       }
     } else {
@@ -96,13 +102,13 @@ function traverseExports(prefix, parent_path, caches, tree,tree_names) {
 }
 /**
  * extracts tree_names and returns as an array.
- * @param {object} obj_names 
+ * @param {object} obj_names
  * @return {array} tree_names
  */
-function listTreeNames(obj_names){
+function listTreeNames(obj_names) {
   var list = [];
-  for(var i in obj_names){
-    if(obj_names[i].tree_name){
+  for (var i in obj_names) {
+    if (obj_names[i].tree_name) {
       list.push(obj_names[i].tree_name);
     }
   }

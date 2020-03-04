@@ -40,7 +40,8 @@ console.log("ignore objects end:\n");
 console.log("ignore paths start:");
 options = {
   "enable_default_ignore_paths":false,
-  "ignore_paths":["node_modules"]
+  "ignore_paths":["node_modules"],
+  lang:"ja_JP"
 };
 lnd.generate(dxlb,options);
 console.log("ignore paths end:\n")

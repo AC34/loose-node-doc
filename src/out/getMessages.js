@@ -1,38 +1,35 @@
 /**
  * tries to fetch language file.
  * returns default(en-US) when anything goes wrong.
- * @param {string} lang_tag
+ * @param {string} lang
  * @return {object} language object
  */
-function getMessages(options, LND) {
-  var lang_tag = options.lang?options.lang:"en_US";
+function getMessages(lang,Console) {
   var en_US = require(__dirname+"/lang/en/US");
   var lang_s = require(__dirname+"/lang/language_specific");
   //not type of string
-  if (typeof lang_tag !== "string") {
-    LND.log(lang_s["illega-tag-type"](typeof lang_tag));
-    LND.log(lang_s["proceed-with-default-language"]());
-    console.log("wrong type tag");
+  if (typeof lang !== "string") {
+    Console.outAny(lang_s["illegal-tag-type"](typeof lang));
+    Console.outAny(lang_s["proceed-with-default-language"]());
     return en_US;
   }
-  //check variables
-  if (lang_tag.indexOf("_") !== 2) {
-    LND.log(lang_s["illegal-lang-tag-format"](lang_tag));
-    LND.log(lang_s["proceed-with-default-language"](typeof lang_tag));
-    console.log("missing underscore");
+  //wrong underscore position
+  if (lang.indexOf("_") !== 2) {
+    Console.outAny(lang_s["illegal-lang-tag-format"](lang));
+    Console.outAny(lang_s["proceed-with-default-language"](typeof lang));
     return en_US;
   }
-  var lang_code = lang_tag.split("_")[0];
-  var country_code = lang_tag.split("_")[1];
+  var lang_code = lang.split("_")[0];
+  var country_code = lang.split("_")[1];
   if (!supportsLanguage(lang_code)) {
-    LND.log(lang_s["unsupported-language-code"](lang_code));
-    LND.log(lang_s["proceed-with-default-language"](typeof lang_tag));
+    Console.outAny(lang_s["unsupported-language-code"](lang_code));
+    Console.outAny(lang_s["proceed-with-default-language"](typeof lang));
     return en_US;
   }
   if(!supportsCountry(lang_code,country_code)){
-    LND.log(lang_s["unsupported-country-code"](country_code));
-    LND.log(lang_s["proceed-with-default-language"](typeof lang_tag));
-    console.log("unsupported country");
+    Console.outAny(lang_s["unsupported-country-code"](country_code));
+    Console.outAny(lang_s["proceed-with-default-language"](typeof lang));
+    Console.log("unsupported country");
     return en_US;
   }
   //Even if anything fails here, its not recoverable by this file, anything should be recovered before releasing.

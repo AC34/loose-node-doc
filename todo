@@ -7,6 +7,12 @@ should enumerate possible reasons why anything fails.
 
 sort alphabetically?
 
+check internationalization by creating ja_JP
+ check by US keys.
+
+try html outputs.
+enable fetching names.
+
 
 translate to html.
 

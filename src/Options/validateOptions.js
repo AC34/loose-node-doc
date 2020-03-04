@@ -1,10 +1,10 @@
-function validateOptions(object, LND) {
+function validateOptions(object, Console) {
   var definition = require(__dirname + "/Options");
   var addition = {};
   //key existannce check
   for (var key in object) {
     if (!definition[key]) {
-      notifyInvalidKey(key,LND);
+      notifyInvalidKey(key,Console);
       continue;
     }
   }
@@ -16,14 +16,8 @@ function validateOptions(object, LND) {
       if(Array.isArray(object[key]))type="array";
       //other types
       if (type !== definition[key].data_type) {
-        LND.log(
-          LND.messages["option-wrong-datatype"](
-            key,
-            definition[key].data_type,
-            typeof object[key]
-          )
-        );
-        LND.log(LND.messages["proceed-with-default"](definition[key].default));
+        Console.outMessage("option-wrong-datatype",{"key":key,"expected":definition[key].data_type,"actual":typeof object[key]});
+        Console.outMessage("proceed-with-default",{"value":definition[key].default})
         //assigning default value
         addition[key] = definition[key].default;
       } else {
@@ -37,8 +31,8 @@ function validateOptions(object, LND) {
   var ret = Object.assign(object, addition);
   return ret;
 }
-function notifyInvalidKey(key,LND) {
-  LND.log(LND.messages["option-invalid-option-key"](key));
+function notifyInvalidKey(key,Console) {
+  Console.outMessage("option-invalid-option-key",{"key":key});
 }
 
 module.exports = validateOptions;

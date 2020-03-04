@@ -3,7 +3,6 @@
  * @param {array} ignores relative paths from caller script
  */
 function ignorePaths(cache_tree, ignores,root_dir) {
-  console.log("ignoring paths:" + JSON.stringify(ignores));
   if(!cache_tree||!ignores)return cache_tree;
   var ignores = resolveAbsolutePaths(root_dir,ignores);
   for (var path in cache_tree) {
@@ -62,7 +61,6 @@ function resolveAbsolutePaths(root_dir,paths) {
     if(path==="")continue;
     new_paths.push(resolve(root_dir + sep + path));
   }
-  console.log("resolved ignore paths:"+JSON.stringify(new_paths));
   return new_paths;
 }
 /**

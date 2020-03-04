@@ -1,4 +1,3 @@
-var getMessages = require("loose-node-doc/src/Options/getMessages");
 var validateOptions = require("./src/Options/validateOptions");
 var fs = require("fs");
 //traverses down object tree and finds object information
@@ -20,7 +19,8 @@ var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFi
 //locate where comments are in the files list, and stores them to the otree
 var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
 var parseComments = require("./src/util/parse/parseComments");
-getProjectRootDir();
+var FileIO = require("./src/out/FileIO");
+var Console = require("./src/out/Console");
 /**
  * LND(loose-node-doc).
  */
@@ -34,45 +34,38 @@ LND.generate = function(object, options) {
   //initial values
   if (!options) options = {};
   this.options = { verbose: true };
-  this.logs = [];
+  this.console = Console;
   //first of all, the system needs messages
   //anything that requires LND can now access LND.messages
-  this.messages = getMessages(options, this);
   //initializing options(updating and checking)
-  this.options = validateOptions(options, this);
-  if (this.options.verbose === true) {
-    this.log(this.messages["process-options-loaded"]());
+  this.options = validateOptions(options, Console);
+  //verbose,lang are updated.
+  this.console.updateMessages(this.options);
+  //notify that options are loaded.
+  this.console.outMessage("process-options-loaded");
+  //notify and quit  on undefined object.
+  if(checks.checkObjectStatus(this.console,object)){
+    return;//quit
   }
-  if (!object) {
-    this.log(this.messages["empty-object"]());
-    this.log(this.messages["process-stopped"]());
-    return;
-  } else {
-    this.log(this.messages["process-object-loaded"]());
-  }
-
   //path objects pair
   var obj_names = traverseObjectNames(object);
   var names_count = Object.keys(obj_names).length;
   if (names_count === 0) {
-    this.log(this.messages["object-names-empty"]());
-    this.log(this.messages["process-stopped"]());
+    this.console.outMessage("object-names-empty");
+    this.console.outMessage("process-stopped");
     return;
   } else {
-    this.log(
-      this.messages["process-object-names-loaded"](
-        Object.keys(obj_names).length
-      )
-    );
+    this.console.outMessage("process-object-names-loaded", {
+      number_of_keys: names_count
+    });
   }
   //ignore object names by given ignore list
   obj_names = ignoreObjects(obj_names, this.options.ignore_objects);
   if (this.options.verbose === true) {
-    this.log(
-      this.messages["process-ignored-objects"](
-        names_count - Object.keys(obj_names).length
-      )
-    );
+    var n = names_count - Object.keys(obj_names).length;
+    this.console.outMessage("process-ignored-objects", {
+      ignored_amount: n
+    });
   }
 
   //traverses require cache and returns an array
@@ -80,12 +73,14 @@ LND.generate = function(object, options) {
   var cache_tree = traverseCache();
   if (this.options.verbose === true) {
     if (Object.keys(cache_tree).length === 0) {
-      this.log(this.messages["empty-cache"]());
-      this.log(this.messages["process-stopped"]());
+      this.console.outMessage("empty-cache", {});
+      this.console.outMessage("process-stopped", {});
       return;
     } else {
       var num = Object.keys(cache_tree).length;
-      this.log(this.messages["process-traversed-caches"](num));
+      this.console.outMessage("process-traversed-caches", {
+        number_of_caches: num
+      });
     }
   }
 
@@ -107,10 +102,10 @@ LND.generate = function(object, options) {
       this.options.ignore_paths,
       getProjectRootDir()
     );
-    if (this.options.verbose === true) {
-      var ignored_num = before - Object.keys(cache_tree).length;
-      this.log(this.messages["process-ignored-paths"](ignored_num));
-    }
+    var ignored_num = before - Object.keys(cache_tree).length;
+    this.console.outMessage("process-ignored-paths", {
+      ignored_amount: ignored_num
+    });
   }
   fs.writeFileSync(
     __dirname + "/tmp/ctree.json",
@@ -141,9 +136,9 @@ LND.generate = function(object, options) {
   if (this.options.verbose === true) {
     var count = countOtreeComment(otree);
     if (count === 0) {
-      this.log(this.messages["zero-comments-resolved"]());
+      this.console.outMessage("zero-comments-resolved");
     } else {
-      this.log(this.messages["process-resolved-comments"](count));
+      this.console.outMessage("process-resolved-comments", { num: count });
     }
   }
   fs.writeFileSync(
@@ -151,15 +146,7 @@ LND.generate = function(object, options) {
     JSON.stringify(otree, null, "\t"),
     { encoding: "utf8", flag: "w" }
   );
-};
-/**
- * logging method.
- */
-LND.log = function(message) {
-  this.logs.push(message);
-  if (this.options.verbose === true) {
-    console.log(message);
-  }
+  //console.log("logs:"+this.console.logs);
 };
 /**
  * this file is meant to be called from build script.
@@ -203,7 +190,26 @@ function countOtreeComment(otree) {
   }
   return count;
 }
-LND.dumpLog = function() {};
-LND.dumpObjectTree = function() {};
+var checks = {
+  /**
+   * checks object is undefined.
+   * outputs status to console.
+   * returns false on undefined.
+   * @param {object} object
+   * @return {boolean} proceedable
+   */
+  checkObjectStatus: function(Console, object) {
+    if (!object) {
+      Console.outMessage("empty-object");
+      Console.outMessage("process-stopped");
+      return;
+    } else {
+      Console.outMessage("process-object-loaded");
+    }
+  },
+  checkObjectNamesCount:function(Console,count){
+
+  }
+};
 
 module.exports = LND;

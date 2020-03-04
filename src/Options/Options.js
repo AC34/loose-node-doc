@@ -1,9 +1,14 @@
 module.exports = {
-  //must end with .json
+  "lang":{
+    data_type:"string",
+    default:"en_US"
+  },
+  //from project root dir
   "out_path":{
     data_type:"string",
     default:"loose_doc_tree.json"
   },
+  //from project root dir
   "log_path":{
     data_type:"string",
     default:"loose_doc_log.json"

@@ -1,4 +1,5 @@
 /**
+ * This US.js file is the default language of the system. Any other translated languaeges must follow keys defined in this file.
  * keys must be in lowercase.
  * Every argument is an object.
  */

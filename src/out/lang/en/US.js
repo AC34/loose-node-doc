@@ -1,7 +1,6 @@
 /**
  * keys must be in lowercase.
- * @common-messages can be translated.
- * @language-related-messages will be ignored even if translated.
+ * Every argument is an object.
  */
 module.exports = {
   /**

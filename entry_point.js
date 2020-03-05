@@ -27,7 +27,10 @@ var Writer = require("loose-node-doc/src/Writer");
 /**
  * LND(loose-node-doc).
  */
-function LND() {}
+var LND= {
+  langs: require("loose-node-doc/src/out/lang/langs_list.json"),
+  options: require("loose-node-doc/src/Options/Options")
+}
 /**
  * Creates html document output.
  * @param {*} out_path
@@ -141,5 +144,6 @@ function getProjectRootDir() {
   path = path.join(sep);
   return path;
 }
+
 
 module.exports = LND;

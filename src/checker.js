@@ -1,3 +1,7 @@
+/**
+ * Functions defined here are unnecessary for main process, yet is very important for notifying user about what is going on during the process.
+ * "checks" is short for checkpoints.
+ */
 var checks = {
   /**
    * checks object is undefined.

@@ -13,7 +13,7 @@ module.exports = {
   "object_tree_path":{
     key:"object_tree_path",
     data_type:"string",
-    default:"loose_doc_tree.json"
+    default:"out/loose_doc_tree.json"
   },
   "write_logs":{
     key:"write_logs",
@@ -24,7 +24,7 @@ module.exports = {
   "log_path":{
     key:"log_path",
     data_type:"string",
-    default:"loose_doc_log.json"
+    default:"out/loose_doc_log.txt"
   },
   //console
   "verbose":{
@@ -42,7 +42,7 @@ module.exports = {
   "default_ignore_paths":{
     key:"default_ignore_paths",
     data_type:"array",
-    default:["/node_modules/","/ignore_me/"]
+    default:["/node_modules/"]
   },
   "ignore_paths":{
     key:"ignore_paths",

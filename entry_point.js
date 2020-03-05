@@ -28,7 +28,7 @@ var Writer = require("loose-node-doc/src/Writer");
  * LND(loose-node-doc).
  */
 var LND= {
-  langs: require("loose-node-doc/src/out/lang/langs_list.json"),
+  langs: require("loose-node-doc/src/out/lang/langs_list"),
   options: require("loose-node-doc/src/Options/Options")
 }
 /**

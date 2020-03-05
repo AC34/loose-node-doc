@@ -13,7 +13,7 @@ Type following at your project root.
 
 `npm install loose-node-doc --save-dev`
 
-### 2.Write genrator script
+### 2.Writing genrator script
 Create your generator script.
 In the script:
   1. require loose-node-doc.
@@ -170,11 +170,15 @@ You can however customize the outputs in two ways.
 
 ### 5 About
 #### 5.1 Intention 
-This generator is aimed at parsing single object Node.js app that exports some methods traceable from the root object. Doesn't work on browser-side js.
+This generator is aimed at parsing single object Node.js app that exports some methods traceable from the root object. 
+
+Doesn't work on browser-side js.
+
+Tracing ES5 requires.
 
 If your code has a tree structure that exports methods as branches, then this generator might be able to help you generate documents for your codes.
 
-However, this generator only salvages object comments of type "function", and ignores everything else.
+However, this generator only salvages comments of type "function", and ignores everything else.
 
 #### 5.2 Enviroment
 Developed on :

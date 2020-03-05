@@ -42,7 +42,7 @@ var my_app = require("my_app/entry_point");
 
 var options = {
   //using autocompletion
-  lnd.options.verbose.key:true,
+  lnd.options.lang.key:lnd.langs.en.US,
 
   //you can also type manually
   "some-other-settngs-key":"custom-value"
@@ -51,7 +51,7 @@ var options = {
 lnd.generate(my_app,options);
 //done by this line
 ```
-#### generating
+#### Generating
 Run your genrator script.
 
 `node gen-script.js`
@@ -72,7 +72,11 @@ Getting default value (e.g. key "verbose"):
   (you don't really have to set default value though.)
 
 #### 3.2 Options
-Default settings are enabled when no options are set. This is just a mattar of choice, you can simply give an empty object"{}" if you want all default settings.
+Default settings are enabled when no options are set. 
+
+This is just a mattar of choice. 
+
+You can simply give an empty object"{}" if you want all default settings enabled.
 
 General:
 |key|type|default|description|
@@ -80,23 +84,27 @@ General:
 |lang|string|"en_US"|language for logs. See 3.4|
 |verbose|boolean|true|Whether to show logs to terminal during the process.|
 
-Seeing outputs:
+Storing middle output:
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |write_object_tree|boolean|false|Whether to write parsed object information or not.|
 |object_tree_path|string|out/loose_doc_tree.json|Path for writing parsed object,from project root. Used when [write_object_tree] is true.|
+
+Storing logs:
+|key|type|default|description|
+|:---:|:---:|:---:|:---|
 |write_logs|boolean|false|Whether to write log or not. [log_path] is used for path.|
 |log_path|string|out/loose_doc_log.txt|Path for writing parsed object,from project root. Used when [write_logs] is true.|
-|enable_default_ignore_paths|boolean|true|Excludes pre defined paths,such as "node_modules" directories.|
 
 Excluding some objects by paths and names:
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
+|enable_default_ignore_paths|boolean|true|Excludes pre defined paths,such as "node_modules" directories.|
 |ignore_paths|array|an empty array|Excludes paths by this list. See 3.3 for ignoring.|
 |ignore_objects|array|an empty array|Excludes object names.Names must exclude root object name.See 3.3 for ignoring.|
 
 ##### 3.3 Ignoring objects
-loose-node-doc tries to find all the necessary paths from the given instance, and require cache. This approach simply might include all the unnecessary paths.
+loose-node-doc tries to find all the necessary paths from the given instance and require cache list. This approach simply might include many unnecessary paths.
 
 Ignoring objects can be done in two ways,
 by listing "ignore_paths" and "ignore_objects".
@@ -108,7 +116,11 @@ by listing "ignore_paths" and "ignore_objects".
   - If path is a directory, then paths under the directory is excluded from the result.
 2. Ignoring by names
 
-Names here means object names, representing its parent by dot as prefix. Names however ignores the root object name. You can see all the parsed objects by setting true for [write_object_tree]. 
+ - Names here means object names.
+
+ - Nexts are represented by dot.
+
+ - Excludes root object name.
 
 For example, object below 
 
@@ -134,8 +146,12 @@ If you want to exclude func1-1 from output,
   will do so.
 
 ##### 3.4 Choosing language
-You may have language choices.
-try choosing <loose-node-doc>.lang and autocompletion might be able to help you.
+You may choose language for terminal outputs and logs.
+try choosing by 
+
+`[loose-node-doc].lang`
+
+ and autocompletion might be able to help you.
 
 ##### 3.4 Format of options.
 Create the option as an object.
@@ -143,7 +159,7 @@ Create the option as an object.
 e.g.
 `var options = {option_key:"value",...}`
 
-### 4. Outputs
+### 4. Outputs and Customization
 
 #### Default
 
@@ -156,7 +172,7 @@ You can however customize the outputs in two ways.
 
 ### 5 About
 #### 5.1 Intention 
-This generator is aimed at parsing single object Node.js app that exports some methods traceable from the root object. Doesn't work on browser side js.
+This generator is aimed at parsing single object Node.js app that exports some methods traceable from the root object. Doesn't work on browser-side js.
 
 If your code has a tree structure that exports methods as branches, then this generator might be able to help you generate documents for your codes.
 
@@ -172,7 +188,9 @@ I've tried to use some document generators out there and couldn't have an expect
 
 I thought I did something wrong with system structure(single global object). But when I started simply dumping all required caches to console, I was seeing my app was fully loaded. 
 
-Therefore I started making this app,by traversing the loaded caches of require calls. Here is the result.
+Therefore I started making this app,by traversing the loaded caches of require calls.
+
+This project was born.
 
 ## Roadmap
 Everything should be ok by version 1.0.0.
@@ -180,5 +198,6 @@ Everything should be ok by version 1.0.0.
 If this project doesn't get updated, then that's a good news.
 
 Anything else  might be of:
-  1. Internationalization(translation on logs)
+  1. Internationalization(translation)
   2. Bug fixes
+  3. Presentation (homepage,typofix...)

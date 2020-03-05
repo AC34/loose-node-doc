@@ -2,8 +2,6 @@
 Quick n easy Node.js app document generator.
 
 ## 💬Anouncement
-Just getting started.
-
 Everything is under preparation.
 
 Don't use yet.

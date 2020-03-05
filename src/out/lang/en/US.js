@@ -2,6 +2,7 @@
  * This US.js file is the default language of the system. Any other translated languaeges must follow keys defined in this file.
  * keys must be in lowercase.
  * Every argument is an object.
+ * Refacotoring on keys should always be done cross project wide, do not jsut edit on this file only.
  */
 module.exports = {
   /**
@@ -53,10 +54,6 @@ module.exports = {
   "process-error-on-writing-file":function(args={path:"",error:""}){
     return "Error occured while writing to ["+args.path+"].\nError["+args.error+"].";
   },
-  /**
-   * 
-   * @param {object} args 
-   */
   "process-traversed-caches":function(args={number_of_caches:""}){
     return "Traversed cache and found ["+args.number_of_caches+"] files loaded.";
   },

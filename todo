@@ -1,4 +1,3 @@
-
 should enumerate possible reasons why anything fails.
 
 sort alphabetically?
@@ -11,6 +10,3 @@ enable fetching names.
 
 
 translate to html.
-
-
-filewriterのAbsolutePatを外に出す。Writerから読み込んで、success時とエラー時に使う

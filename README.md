@@ -145,7 +145,7 @@ try choosing by
 
 `[loose-node-doc].lang`
 
- and autocompletion might be able to help you.
+ and autocompletion might help you.
 
 ##### 3.4 Format of options.
 Create the option as an object.

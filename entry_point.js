@@ -1,5 +1,5 @@
 var validateOptions = require("./src/Options/validateOptions");
-//traverses down object tree and finds object information
+//traverses up object tree and finds object information
 var traverseObjectNames = require("loose-node-doc/src/util/traverse/traverseObjectNames");
 //reads cache hisotry and returns its list
 var traverseCache = require("loose-node-doc/src/util/traverse/traverseCache");
@@ -9,17 +9,20 @@ var ignorePaths = require("loose-node-doc/src/util/ignore/ignorePaths");
 var ignoreObjects = require("loose-node-doc/src/util/ignore/ignoreObject");
 //resolve objct tree sources
 var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
-//fetches code's own name
+//fetches code's own name(function,object etc...)
 var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
-//tries to salvage comment block from files
+//tries to salvage comment block from files, then adds to object_tree of resolveObjectDependencies()
 var resolveCodesFiles = require("loose-node-doc/src/util/resolve/resolveCodeFiles");
 //reads all the files from the cache tree of traverseCache()
 var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
 //locate where comments are in the files list, and stores them to the otree
 var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
 var parseComments = require("./src/util/parse/parseComments");
+//console
 var Console = require("./src/out/Console");
+//checkpoints for user notification
 var checker = require("./src/checker");
+//write data to path, given by options
 var Writer = require("loose-node-doc/src/Writer");
 /**
  * LND(loose-node-doc).

@@ -1,4 +1,5 @@
 src/Options/lang/definning_languages.txt
 src/Options/lang/langs_lister.js
+src/Options/options_lister.js
 test/**
 tmp

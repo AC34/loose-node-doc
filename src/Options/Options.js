@@ -3,10 +3,18 @@ module.exports = {
     data_type:"string",
     default:"en_US"
   },
+  "write_object_tree":{
+    data_type:"boolean",
+    default:false
+  },
   //from project root dir
-  "out_path":{
+  "object_tree_path":{
     data_type:"string",
     default:"loose_doc_tree.json"
+  },
+  "write_logs":{
+    data_type:"boolean",
+    default:false
   },
   //from project root dir
   "log_path":{

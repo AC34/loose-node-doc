@@ -1,2 +1,4 @@
 src/Options/lang/definning_languages.txt
 tmp
+test/options/log.txt
+test/options/otree.json

@@ -44,13 +44,19 @@ module.exports = {
   "process-object-names-loaded":function(args={number_of_keys:""}){
     return "["+args.number_of_keys+"] of object names loaded.";
   },
+  "process-invalid-object-tree-path":function(args={path:""}){
+    return "Given object tree path ["+args.path+"] was found to be invalid.";
+  },
+  "process-invalid-log-path":function(args={path:""}){
+    return "Given log tree path ["+args.path+"] was found to be invalid.";
+  },
+  "process-error-on-writing-file":function(args={path:"",error:""}){
+    return "Error occured while writing to ["+args.path+"].\nError["+args.error+"].";
+  },
   /**
    * 
    * @param {object} args 
    */
-/*  "process-ignored-object-names":function(args={number_of_names:""}){
-    return "Ignored object names. Proceeding with ["+args.number_of_names+"] keys.";
-  },*/
   "process-traversed-caches":function(args={number_of_caches:""}){
     return "Traversed cache and found ["+args.number_of_caches+"] files loaded.";
   },
@@ -65,5 +71,8 @@ module.exports = {
   },
   "process-resolved-comments":function(args={num:""}){
     return "Resolved ["+args.num+"] comments.";
+  },
+  "process-write-file-success":function(args={path:""}){
+    return "Successfuflly written to ["+args.path+"]";
   }
 }

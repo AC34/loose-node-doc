@@ -1,5 +1,4 @@
 var validateOptions = require("./src/Options/validateOptions");
-var fs = require("fs");
 //traverses down object tree and finds object information
 var traverseObjectNames = require("loose-node-doc/src/util/traverse/traverseObjectNames");
 //reads cache hisotry and returns its list
@@ -19,9 +18,9 @@ var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFi
 //locate where comments are in the files list, and stores them to the otree
 var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
 var parseComments = require("./src/util/parse/parseComments");
-var FileIO = require("./src/out/FileIO");
 var Console = require("./src/out/Console");
 var checker = require("./src/checker");
+var Writer = require("loose-node-doc/src/Writer");
 /**
  * LND(loose-node-doc).
  */
@@ -36,6 +35,7 @@ LND.generate = function(object, options) {
   if (!options) options = {};
   this.options = { verbose: true };
   this.console = Console;
+  this.writer = new Writer(getProjectRootDir(),this.console);
   //first of all, the system needs messages
   //anything that requires LND can now access LND.messages
   //initializing options(updating and checking)
@@ -89,21 +89,11 @@ LND.generate = function(object, options) {
     checker.checkCacheTreeIgnoreCounts(this.console,ignored_num);
   }
 
-  fs.writeFileSync(
-    __dirname + "/tmp/ctree.json",
-    JSON.stringify(cache_tree, null, "\t")
-  );
-
   //this file needs to be called directly
   var build_path = getBuildScriptPath();
   //traverses caches tree and resolve
   //{"name":{path,exports[codes/objects]},...}
   var otree = resolveObjectDependencies(build_path, cache_tree, obj_names);
-  fs.writeFileSync(
-    __dirname + "/tmp/rotree.json",
-    JSON.stringify(otree, null, "\t"),
-    { encoding: "utf8", flag: "w" }
-  );
 
   //{"name":{path,exports[codes/objects],name},...}
   otree = resolveCodeNames(otree, obj_names);
@@ -116,12 +106,9 @@ LND.generate = function(object, options) {
   otree = parseComments(otree);
   //notify user about the nnumber of resolved comments
   checker.checkResolvedComments(this.console,otree);
-  fs.writeFileSync(
-    __dirname + "/tmp/otree.json",
-    JSON.stringify(otree, null, "\t"),
-    { encoding: "utf8", flag: "w" }
-  );
-  //console.log("logs:"+this.console.logs);
+  //write datas if needed.
+  this.writer.writeOtree(options,otree);
+  this.writer.writeLog(options,this.console.logs);
 };
 /**
  * this file is meant to be called from build script.

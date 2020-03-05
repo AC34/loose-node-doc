@@ -41,7 +41,16 @@ console.log("ignore paths start:");
 options = {
   "enable_default_ignore_paths":false,
   "ignore_paths":["node_modules"],
-  lang:"ja_JP"
 };
 lnd.generate(dxlb,options);
 console.log("ignore paths end:\n")
+
+console.log("write start:");
+options = {
+  "write_object_tree":true,
+  "object_tree_path":"node_modules/loose-node-doc/test/options/otree.json",
+  "write_logs":true,
+  "log_path":"node_modules/loose-node-doc/test/options/log.txt",
+};
+lnd.generate(dxlb,options);
+console.log("write end:\n")

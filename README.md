@@ -62,12 +62,8 @@ This is one of the reasons loose-node-doc is not using package.json for settings
 
 You can avoid typing key names listed below by your editor(only if your editor supports).
 
-Getting key name(e.g. key "verbose") :  
-  * `<loose-node-doc>.options.verbose.key`
-
-Getting default value (e.g. key "verbose"):  
-  * `<loose-node-doc>.options.verbose.default`
-  (you don't really have to set default value though.)
+e.g.
+  * `<loose-node-doc>.option_keys.keyname`
 
 #### 3.2 Options
 Default settings are enabled when no options are set. 
@@ -116,7 +112,7 @@ by listing "ignore_paths" and "ignore_objects".
 
  - Names here means object names.
 
- - Nexts are represented by dot.
+ - Nests are represented by dot.
 
  - Excludes root object name.
 

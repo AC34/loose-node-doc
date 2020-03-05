@@ -29,7 +29,8 @@ var Writer = require("loose-node-doc/src/Writer");
  */
 var LND= {
   langs: require("loose-node-doc/src/out/lang/langs_list"),
-  options: require("loose-node-doc/src/Options/Options")
+  option_keys: require("loose-node-doc/src/Options/option_keys")
+
 }
 /**
  * Creates html document output.

@@ -1,14 +1,18 @@
 /**
- * merges function information otree.
+ * merges function information and adds otree.
  * @param {object} otree of resolveObjectDependencies.js
  * @param {array} rtree of TraverseModuleTree.js
  * @return {object} otree with line numbers of parents
  */
 function resolveCodesFiles(otree, files) {
   for (var name in otree) {
+    //only work ono type "function"
     if (otree[name].type !== "function")continue; 
       //console.log("otree["+name+"] is function");
+      //find exported code(given in string), from all the files.
       var match = matchFile(otree[name].exports, files);
+      if(!match.pos)continue;
+      //pos index starts from index 0
       if (match.pos < 0) continue;
       otree[name].pos = match.pos;
       otree[name].filename = match.path;

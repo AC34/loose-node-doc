@@ -10,7 +10,6 @@ function FileWriter(project_root_dir) {
   var rd = project_root_dir;
   if (rd.endsWith(sep)) rd = rd.substring(0, rd.length - 2);
   this.root_dir = rd;
-  console.log("FileIO instantiated with root dir. " + this.root_dir);
 }
 /**
  * returns error or true.

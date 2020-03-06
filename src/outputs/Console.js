@@ -1,8 +1,9 @@
 //using default options for initial values
-var options = require("../Options/Options");
-var getMessages = require("loose-node-doc/src/out/getMessages");
+var options = require("../options/Options");
+var getMessages = require("./getMessages");
 module.exports = {
   logs: [],
+  //load default
   verbose: options.verbose.default,
   //load default
   lang: options.lang.default,
@@ -21,7 +22,6 @@ module.exports = {
   outAny: function(message) {
     this.logs.push(message);
     if (this.verbose !== true) return;
-    console.log(message);
   },
   outMessage: function(key, args = {}) {
     if (!this.messageExists(key)) return;

@@ -8,6 +8,8 @@ function resolveObjectDependencies(build_script, cache_tree, obj_names) {
   //console.log("tree_names"+tree_names);
   //adds parent and childeren infos
   var root_obj = constructRootObject(cache_tree, build_script);
+  //console.log("build_script:"+build_script);
+  //console.log("root_obj"+JSON.stringify(root_obj));
   //reconstruct tree from its roots
   var tree = startReconstruction(root_obj, cache_tree, tree_names);
   return tree;
@@ -23,12 +25,18 @@ function constructRootObject(caches, build_script) {
   var children = [];
   var exports = {};
   for (var path in caches) {
-    //if parent exists, then cannot be a root object
-    if (caches[path].parent) continue;
-    //need to avoid build_script path
-    if (caches[path].parent === build_script) continue;
+    //avoid any lowest child
+    if(!caches[path].parent)continue;
+    //add if parent is build_script
+    if(caches[path].parent !== build_script)continue;
+    //if (caches[path].parent) continue;
+    //need to avoid build_script itself
+    if (path === build_script) continue;
     //assigning all the paths that does't have parent
-    sources.push(path);
+    //avoid duplicates
+    if(!sources.includes(caches[path].parent)){
+      sources.push(path);
+    }
     if (caches[path].children) {
       children = children.concat(caches[path].children);
     }
@@ -47,9 +55,8 @@ function constructRootObject(caches, build_script) {
  * @param {array} tree_names a list of usable nested object names
  */
 function startReconstruction(root_obj, caches, tree_names) {
-  //console.log("root_obj"+JSON.stringify(root_obj));
   var tree = {};
-  //console.log("root paths:" + JSON.stringify(root_obj.sources, null, "\t"));
+  console.log("root paths:" + JSON.stringify(root_obj.sources, null, "\t"));
   for (var i in root_obj.sources) {
     var source = root_obj.sources[i];
     tree = Object.assign(

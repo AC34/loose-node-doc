@@ -1,124 +1,83 @@
-var validateOptions = require("./src/Options/validateOptions");
-//traverses up object tree and finds object information
-var traverseObjectNames = require("loose-node-doc/src/util/traverse/traverseObjectNames");
-//reads cache hisotry and returns its list
-var traverseCache = require("loose-node-doc/src/util/traverse/traverseCache");
-//deletes certain paths from traverseCache() result
-var ignorePaths = require("loose-node-doc/src/util/ignore/ignorePaths");
-//ignores names starting with given list item
-var ignoreObjects = require("loose-node-doc/src/util/ignore/ignoreObject");
-//resolve objct tree sources
-var resolveObjectDependencies = require("loose-node-doc/src/util/resolve/resolveObjectDependencies");
-//fetches code's own name(function,object etc...)
-var resolveCodeNames = require("loose-node-doc/src/util/resolve/resolveCodeNames");
-//tries to salvage comment block from files, then adds to object_tree of resolveObjectDependencies()
-var resolveCodesFiles = require("loose-node-doc/src/util/resolve/resolveCodeFiles");
-//reads all the files from the cache tree of traverseCache()
-var loadAllRequiredFiles = require("loose-node-doc/src/util/IO/loadAllRequiredFiles");
-//locate where comments are in the files list, and stores them to the otree
-var resolveComments = require("loose-node-doc/src/util/resolve/resolveComments");
-var parseComments = require("./src/util/parse/parseComments");
-//console
-var Console = require("./src/out/Console");
-//checkpoints for user notification
-var checker = require("./src/checker");
-//write data to path, given by options
-var Writer = require("loose-node-doc/src/Writer");
 /**
  * LND(loose-node-doc).
  */
-var LND= {
-  langs: require("loose-node-doc/src/out/lang/langs_list"),
-  option_keys: require("loose-node-doc/src/Options/option_keys")
-
-}
+var LND = {
+  //for autocompletion of langauge choices
+  langs: require("loose-node-doc/src/outputs/lang/langs_list"),
+  //for autocompletion of option keys
+  option_keys: require("loose-node-doc/src/options/option_keys")
+};
 /**
  * Creates html document output.
- * @param {*} out_path
- * @param {object}
+ * @param {object} app_root_object
+ * @param {object} options
  */
-LND.generate = function(object, options) {
-  //initial values
-  if (!options) options = {};
+LND.generate = function(object, options = {}) {
+  //subsections and notifieers of main process
+  var processInterfaces = require("loose-node-doc/src/processInterfaces");
+  //"verbose:true" is required when validating options.
   this.options = { verbose: true };
-  this.console = Console;
-  this.writer = new Writer(getProjectRootDir(),this.console);
-  //first of all, the system needs messages
-  //anything that requires LND can now access LND.messages
-  //initializing options(updating and checking)
-  this.options = validateOptions(options, Console);
-  //verbose,lang are updated.
-  this.console.updateMessages(this.options);
-  //notify that options are loaded.
-  this.console.outMessage("process-options-loaded");
-  //notify and quit  on undefined object.
-  if (checker.checkObjectStatus(this.console, object)) {
-    return; //quit
-  }
-  //path objects pair
-  var obj_names = traverseObjectNames(object);
-  var names_count = Object.keys(obj_names).length;
-  checker.checkObjectNamesCount(this.console, names_count);
-
-  //ignore object names by given ignore list
-  obj_names = ignoreObjects(obj_names, this.options.ignore_objects);
-  checker.checkIgnoredObjects(
-    this.console,
-    names_count - Object.keys(obj_names).length
+  //first of all, the system needs messages for anything.
+  //initializing and updatse options(overriding blanks with default and checking types)
+  this.options = processInterfaces.validateOptions(options);
+  //[verbose,lang] are updated.
+  //now messages can be fully loaded.
+  processInterfaces.console.updateMessages(this.options);
+  //notify continue or quit on undefined object.
+  processInterfaces.checkObjectStatus(object);
+  /**
+   * From here is the main process.
+   */
+  /**
+   * list up all the object names
+   */
+  //worst scenario is that return could be an empty object.
+  var obj_names = processInterfaces.listObjectNames(object);
+  //ignore object by user defined ignore_objects option.
+  obj_names = processInterfaces.ignoreObjectNames(
+    obj_names,
+    this.options.ignore_objects
   );
-
-  //traverses require cache and returns an array
+  /**
+   * traverses require cache and returns an array
+   */
   //{"path":{exports[names/codes],parent},...}
-  var cache_tree = traverseCache();
-  checker.checkCacheTreeCounts(this.console,cache_tree);
-  
-  //removes files by pre defined paths array
-  if (this.options.enable_default_ignore_paths === true) {
-    var before = Object.keys(cache_tree).length;
-    //console.log("default ignores:"+this.options.default_ignore_paths);
-    cache_tree = ignorePaths(
-      cache_tree,
-      this.options.default_ignore_paths,
-      getProjectRootDir()
-    );
-    checker.checkDefaultCacheTreeIgnoreCounts(this.console,before-Object.keys(cache_tree).length);
-  }
-  
-  //removes files by user defined array
-  if (this.options.ignore_paths) {
-    var before = Object.keys(cache_tree).length;
-    cache_tree = ignorePaths(
-      cache_tree,
-      this.options.ignore_paths,
-      getProjectRootDir()
-    );
-    var ignored_num = before - Object.keys(cache_tree).length;
-    checker.checkCacheTreeIgnoreCounts(this.console,ignored_num);
-  }
+  var cache_tree = processInterfaces.listCacheTree();
+  //removes paths by pre-defined sets
+  //works only enable_default_ignore_paths is true
+  cache_tree = processInterfaces.ignoreCTreeByDefault(
+    cache_tree,
+    this.options,
+    getProjectRootDir()
+  );
+  //removes paths by user defined paths array
+  cache_tree = processInterfaces.ignoreCTreeByUserDefinition(
+    cache_tree,
+    this.options,
+    getProjectRootDir()
+  );
+  /**
+   * Now the project is traversed by object itself and require cache.
+   * Next step is to combine those informations into one tree information.
+   */
+  var otree = processInterfaces.resolveObjectTree(
+    getBuildScriptPath(),
+    obj_names,
+    cache_tree
+  );
+  //notify user about the number of resolved comments
+  processInterfaces.notifyResolvedCommentsCount(otree);
 
-  //this file needs to be called directly
-  var build_path = getBuildScriptPath();
-  //traverses caches tree and resolve
-  //{"name":{path,exports[codes/objects]},...}
-  var otree = resolveObjectDependencies(build_path, cache_tree, obj_names);
+  //write datas on demand.
+  processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);
+  processInterfaces.writeLogs(getProjectRootDir(), this.options);
 
-  //{"name":{path,exports[codes/objects],name},...}
-  otree = resolveCodeNames(otree, obj_names);
-
-  //update otree with position and filename
-  var all_files = loadAllRequiredFiles(cache_tree);
-
-  otree = resolveCodesFiles(otree, all_files);
-  otree = resolveComments(otree, all_files);
-  otree = parseComments(otree);
-  //notify user about the nnumber of resolved comments
-  checker.checkResolvedComments(this.console,otree);
-  //write datas if needed.
-  this.writer.writeOtree(options,otree);
-  this.writer.writeLog(options,this.console.logs);
+  //end of the whole process.
 };
 /**
  * this file is meant to be called from build script.
+ * !!build script path !== project root dir!!
+ * @return {string} build_script_path
  */
 function getBuildScriptPath() {
   var trace = new Error().stack.split("\n")[3];
@@ -133,6 +92,7 @@ function getBuildScriptPath() {
 /**
  * returns root project folder name.
  * does not end with directory separator.
+ * !!build script path !== project root dir!!
  * @return {string} dir_name
  */
 function getProjectRootDir() {
@@ -145,6 +105,5 @@ function getProjectRootDir() {
   path = path.join(sep);
   return path;
 }
-
 
 module.exports = LND;

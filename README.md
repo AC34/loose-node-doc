@@ -199,3 +199,4 @@ Anything else  might be of:
   1. Internationalization(translation)
   2. Bug fixes
   3. Presentation (homepage,typofix...)
+  4. adopting to ES6

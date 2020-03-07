@@ -16,7 +16,7 @@ function resolveObjectDependencies(build_script, cache_tree, obj_names) {
 }
 /**
  * Merges merges root
- * There is a need to avoid build_script.
+ * avoids build_script to be root.
  * @param {object} caches
  */
 function constructRootObject(caches, build_script) {
@@ -24,26 +24,19 @@ function constructRootObject(caches, build_script) {
   var sources = [];
   var children = [];
   var exports = {};
-  for (var path in caches) {
-    //avoid any lowest child
-    if(!caches[path].parent)continue;
-    //add if parent is build_script
-    if(caches[path].parent !== build_script)continue;
-    //if (caches[path].parent) continue;
-    //need to avoid build_script itself
-    if (path === build_script) continue;
-    //assigning all the paths that does't have parent
-    //avoid duplicates
-    if(!sources.includes(caches[path].parent)){
+  for(var path in caches){
+    //avoid build_path itself
+    if(path===build_script)continue;
+    //add childrens of build_path
+    if(caches[path].parent===build_script){
+      sources.push(caches[path].parent);
+    }
+    //neither build_script nor children
+    if(!caches[path].parent){
       sources.push(path);
     }
-    if (caches[path].children) {
-      children = children.concat(caches[path].children);
-    }
-    if (caches[path].exports) {
-      exports = Object.assign(caches[path].exports);
-    }
-  }//for caches
+  }
+
   root_obj.sources = sources;
   root_obj.children = children;
   root_obj.exports = exports;

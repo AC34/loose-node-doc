@@ -65,8 +65,13 @@ LND.generate = function(object, options = {}) {
     obj_names,
     cache_tree
   );
+  /**
+   * All preparations are done, now parse comments 
+   */
+  otree = processInterfaces.parseComments(otree,cache_tree,options);
   //notify user about the number of resolved comments
   processInterfaces.notifyResolvedCommentsCount(otree);
+  //override otree by user definition
 
   //write datas on demand.
   processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);

@@ -1,10 +1,10 @@
 /**
- * tries to extract comments from given files.
+ * tries to extract comments from given files. function positions needs to be told by resolveComments.js
  * empty strings are stored on failures.
  * @param {object} tree
  * @param {array} files
  */
-function resolveComments(otree,files) {
+function resolveFunctionComments(otree,files) {
   //create path based object
   var func_locs = locateFunctionPositions(otree);
   func_locs = extractComments(func_locs,files);
@@ -116,4 +116,4 @@ function updateObjectTree(otree,func_locs){
   }
   return otree;
 }
-module.exports = resolveComments;
+module.exports = resolveFunctionComments;

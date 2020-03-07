@@ -10,19 +10,19 @@
 var processInterfaces = {
   console: require("./outputs/Console"),
   /**
-   * 
-   * @param {*} object 
+   *
+   * @param {*} object
    */
-  validateOptions:function(object){
+  validateOptions: function(object) {
     var validate = require("./options/validateOptions");
-    return validate(object,this.console);
+    return validate(object, this.console);
   },
   /**
    * Quits the system if the object is undefined.
    * @param {object} object
    */
   checkObjectStatus: function(object) {
-    console.log("checkobjectstatus:"+object);
+    console.log("checkobjectstatus:" + object);
     if (!object) {
       this.console.outMessage("empty-object");
       this.console.outMessage("process-stopped");
@@ -146,7 +146,7 @@ var processInterfaces = {
     var before = Object.keys(cache_tree).length;
     cache_tree = ignorePaths(
       cache_tree,
-      this.options.ignore_paths,
+      options.ignore_paths,
       project_root
     );
     var after = before - Object.keys(cache_tree).length;
@@ -164,10 +164,6 @@ var processInterfaces = {
     //prepare
     var resolveObjectDependencies = require("./intakes/resolve/resolveObjectDependencies");
     var resolveCodeNames = require("./intakes/resolve/resolveCodeNames");
-    var loadAllRequiredFiles = require("./intakes/IO/loadAllRequiredFiles");
-    var resolveCodesFiles = require("./intakes/resolve/resolveCodeFiles");
-    var resolveComments = require("./intakes/resolve/resolveComments");
-    var parseComments = require("./intakes/parse/parseComments");
     //do reseolve things
     //traverses caches tree and resolve
     //{"name":{path,exports[codes/objects]},...}
@@ -175,13 +171,23 @@ var processInterfaces = {
     //adds function names (if exists)
     //{"name":{path,exports[codes/objects],name},...}
     otree = resolveCodeNames(otree, obj_names);
-    //load all files from cache tree
+    return otree;
+  },
+  parseComments:function(otree,cache_tree,options){
+    var loadAllRequiredFiles = require("./intakes/IO/loadAllRequiredFiles");
+    var resolveCodesFiles = require("./intakes/resolve/resolveCodeFiles");
+    var resolveComments = require("loose-node-doc/src/intakes/resolve/resolveFunctionComments");
+    var parseComments = require("./intakes/parse/parseComments");
+    var parseCommentsByTag = require("./intakes/resolve/resolveCommentsByTag");
+    //load all files from cache tree({path:content,...})
     var all_files = loadAllRequiredFiles(cache_tree);
     //children of type "function" now has .path(strinng) and pos attributes(number)
     otree = resolveCodesFiles(otree, all_files);
-    //comments are read and added, as string.
+    //"funtion" comments are read and added, as string.
     otree = resolveComments(otree, all_files);
-    //commenets are parsed and now object.
+    //now add options.trail_tag comments (not overriding already parsed function comments)
+    otree = parseCommentsByTag(otree,all_files,options.trail_tag);
+    //"function" commenets are parsed and now object.
     otree = parseComments(otree);
     return otree;
   },

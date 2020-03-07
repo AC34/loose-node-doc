@@ -1,4 +1,6 @@
 /**
+ * There could be duplicates, but loads all files.
+ * @todo avoid duplicates
  * @param {object} cache_tree
  * @return {object} {path:content,...}  
  */

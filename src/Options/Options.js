@@ -1,4 +1,5 @@
 module.exports = {
+
   "lang":{
     data_type:"string",
     default:"en_US"
@@ -48,5 +49,10 @@ module.exports = {
   "ignore_objects":{
     data_type:"array",
     default:[]
+  },
+  //from project root
+  "package_json_path":{
+    data_type:"string",
+    default:"package.json"
   }
 };

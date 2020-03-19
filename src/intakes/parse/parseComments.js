@@ -6,7 +6,7 @@
  * @param {objcet} otree
  */
 function parseComments(otree){
-  var parser = require("loose-node-doc/src/intakes/parse/parser/parseComment");
+  var parser = require("./parser/parseComment");
   for(var name in otree){
     if(otree[name].comment){
       otree[name].comment = parser(otree[name].comment);

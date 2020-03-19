@@ -1,5 +1,4 @@
 var lnd = require(__dirname+"/../../entry_point");
-
 var dxlb = require(__dirname+"/../../../../dxl-builder");
 
 console.log("illegal option key start:");
@@ -40,7 +39,7 @@ console.log("ignore objects end:\n");
 console.log("ignore paths start:");
 options = {
   "enable_default_ignore_paths":false,
-  "ignore_paths":["node_modules"],
+  "ignore_paths":["node_modulez"],
 };
 lnd.generate(dxlb,options);
 console.log("ignore paths end:\n")
@@ -48,9 +47,10 @@ console.log("ignore paths end:\n")
 console.log("write start:");
 options = {
   "write_object_tree":true,
-  "object_tree_path":"node_modules/loose-node-doc/test/options/otree.json",
+  "object_tree_path":"node_modulez/loose-node-doc/test/options/otree.json",
   "write_logs":true,
-  "log_path":"node_modules/loose-node-doc/test/options/log.txt",
+  "log_path":"node_modulez/loose-node-doc/test/options/log.txt",
 };
 lnd.generate(dxlb,options);
 console.log("write end:\n")
+

@@ -1,5 +1,5 @@
 /**
- * Iteratsee through all files and locates comments. then tries to salvage comments including @{tag name}.
+ * Iterates through all files and locates comments. then tries to salvage comments including @{tag name}.
  * tag meaning options.trail_tag(default "trail")
  * @param {string} otree
  * @param {object} files of loadAllRequiredfiles.js
@@ -12,6 +12,7 @@ function resolveCommentsByTag(otree, files, tag) {
   var formed = formNamesObject(comments,tag);
   return assignComments(otree,formed);
 }
+
 /**
  * lists comments from given string.
  * parses only multiline comments
@@ -36,6 +37,7 @@ function salvageComments(str, list = []) {
   //continue recursively
   return salvageComments(str, list);
 }
+
 /**
  * Re-forms comments list to names list.
  * reutrn value will be {name:{comment:(salvaged comment list)}}

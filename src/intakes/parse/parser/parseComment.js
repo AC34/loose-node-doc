@@ -12,6 +12,7 @@ function parseComment(comment_string) {
   comment_tree = parseLines(lines);
   return comment_tree;
 }
+
 /**
  * parses line by line
  * c_index meaning items starting with atmark.
@@ -35,16 +36,20 @@ function parseLines(lines, c_tree = {}, c_index = 0) {
     c_tree[c_index] += line + "\n";
     return parseLines(lines, c_tree, c_index); //proceed
   }
+
   //resolve tag (on index incrementation)
   if (Object.keys(c_tree[c_index]).length === 0) {
     if (line.indexOf("@") === 0)
       c_tree[c_index].tag = line.substring(1, line.indexOf(" "));
   }
+
   //update c_tree by parsing it
   c_tree = parseLine(line, c_tree, c_index);
   //proceed
   return parseLines(lines, c_tree, c_index);
+
 }
+
 /**
  * ignores unnecessary strings
  * @param {string} str
@@ -62,6 +67,7 @@ function trim(str) {
   //repeat on demand
   return str !== before ? trim(str) : str;
 }
+
 function resolveC_Index(line, c_index) {
   var at = "";
   if (line.indexOf("@") === 0) {
@@ -81,6 +87,7 @@ function resolveC_Index(line, c_index) {
     return c_index + 1;
   }
 }
+
 /**
  *
  * @param {string} line
@@ -90,6 +97,7 @@ function parseLine(line, c_tree, c_index) {
   var el = line.split(" ");
   //if (el.length<3) return c_tree; //abort on empty line
   el.shift();
+  if(el.length===0)return c_tree;
   //moving on to next block.
   if (isBlockDataTypes(el[0])) {
     //is data type. then shift.
@@ -120,6 +128,11 @@ function parseLine(line, c_tree, c_index) {
   c_tree[c_index].description += el.join(" ");
   return c_tree;
 }
+/**
+ * 
+ * @param {string} suspect 
+ * @return {boolean} 
+ */
 function isBlockDataTypes(suspect) {
   if (
     suspect.indexOf("{") === 0 &&
@@ -130,6 +143,11 @@ function isBlockDataTypes(suspect) {
     return false;
   }
 }
+/**
+ * 
+ * @param {string} d_block 
+ * @return {array} 
+ */
 function fetchDataTypes(d_block) {
   d_block = d_block.substring(1, d_block.length - 1);
   if (d_block.indexOf("|") > -1) {

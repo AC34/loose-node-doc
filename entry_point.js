@@ -3,9 +3,9 @@
  */
 var LND = {
   //for autocompletion of langauge choices
-  langs: require("loose-node-doc/src/outputs/lang/langs_list"),
+  langs: require("./src/outputs/lang/langs_list"),
   //for autocompletion of option keys
-  option_keys: require("loose-node-doc/src/options/option_keys")
+  option_keys: require("./src/Options/options_lister")
 };
 /**
  * Creates html document output.
@@ -14,7 +14,7 @@ var LND = {
  */
 LND.generate = function(object, options = {}) {
   //subsections and notifieers of main process
-  var processInterfaces = require("loose-node-doc/src/processInterfaces");
+  var processInterfaces = require("./src/processInterfaces");
   //"verbose:true" is required when validating options.
   this.options = { verbose: true };
   //first of all, the system needs messages for anything.
@@ -56,6 +56,7 @@ LND.generate = function(object, options = {}) {
     this.options,
     getProjectRootDir()
   );
+  //console.log("ctree:"+JSON.stringify(cache_tree));
   /**
    * Now the project is traversed by object itself and require cache.
    * Next step is to combine those informations into one tree information.
@@ -72,13 +73,14 @@ LND.generate = function(object, options = {}) {
   //notify user about the number of resolved comments
   processInterfaces.notifyResolvedCommentsCount(otree);
   //override otree by user definition
-
+  
   //write datas on demand.
   processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);
+  //processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);
   processInterfaces.writeLogs(getProjectRootDir(), this.options);
-
   //end of the whole process.
 };
+
 /**
  * this file is meant to be called from build script.
  * !!build script path !== project root dir!!
@@ -94,6 +96,7 @@ function getBuildScriptPath() {
   trace = trace.substring(0, trace.lastIndexOf(":"));
   return trace;
 }
+
 /**
  * returns root project folder name.
  * does not end with directory separator.

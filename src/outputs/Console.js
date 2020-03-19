@@ -1,6 +1,7 @@
 //using default options for initial values
-var options = require("../options/Options");
+var options = require("./../Options/Options");
 var getMessages = require("./getMessages");
+
 module.exports = {
   logs: [],
   //load default

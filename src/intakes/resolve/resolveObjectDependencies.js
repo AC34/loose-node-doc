@@ -5,11 +5,8 @@
  */
 function resolveObjectDependencies(build_script, cache_tree, obj_names) {
   var tree_names = listTreeNames(obj_names);
-  //console.log("tree_names"+tree_names);
   //adds parent and childeren infos
   var root_obj = constructRootObject(cache_tree, build_script);
-  //console.log("build_script:"+build_script);
-  //console.log("root_obj"+JSON.stringify(root_obj));
   //reconstruct tree from its roots
   var tree = startReconstruction(root_obj, cache_tree, tree_names);
   return tree;
@@ -26,17 +23,12 @@ function constructRootObject(caches, build_script) {
   var exports = {};
   for(var path in caches){
     //avoid build_path itself
-    if(path===build_script)continue;
-    //add childrens of build_path
+    //if(path===build_script)continue;
+    //add if parent is build script
     if(caches[path].parent===build_script){
-      sources.push(caches[path].parent);
-    }
-    //neither build_script nor children
-    if(!caches[path].parent){
       sources.push(path);
     }
   }
-
   root_obj.sources = sources;
   root_obj.children = children;
   root_obj.exports = exports;

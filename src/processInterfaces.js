@@ -4,17 +4,16 @@
  *  Substitution:processing main process parts.
  *  Notification:logging how the process is processed.
  * This object is not reponsible for:
- *  Maiin process flow:cotrolling which parts are called and when.
+ *  Main process flow:cotrolling which parts are called and when.
  *  Validation on options: checking option keys and values and its types.
  */
 var processInterfaces = {
   console: require("./outputs/Console"),
   /**
-   *
-   * @param {*} object
+   * @param {object} object
    */
   validateOptions: function(object) {
-    var validate = require("./options/validateOptions");
+    var validate = require("./Options/validateOptions");
     return validate(object, this.console);
   },
   /**
@@ -32,7 +31,6 @@ var processInterfaces = {
     this.console.outMessage("process-object-loaded");
   },
   /**
-   *
    * @return {object} obj_names
    */
   listObjectNames: function(object) {
@@ -176,7 +174,7 @@ var processInterfaces = {
   parseComments:function(otree,cache_tree,options){
     var loadAllRequiredFiles = require("./intakes/IO/loadAllRequiredFiles");
     var resolveCodesFiles = require("./intakes/resolve/resolveCodeFiles");
-    var resolveComments = require("loose-node-doc/src/intakes/resolve/resolveFunctionComments");
+    var resolveComments = require("./intakes/resolve/resolveFunctionComments");
     var parseComments = require("./intakes/parse/parseComments");
     var parseCommentsByTag = require("./intakes/resolve/resolveCommentsByTag");
     //load all files from cache tree({path:content,...})
@@ -206,7 +204,7 @@ var processInterfaces = {
     }
   },
   writeObjectTree: function(root_dir, options, otree) {
-    var FileWriter = require("loose-node-doc/src/outputs/FileWriter");
+    var FileWriter = require("./outputs/FileWriter");
     writer = new FileWriter(root_dir);
     //not writing
     if (!options.write_object_tree) return;
@@ -235,7 +233,7 @@ var processInterfaces = {
   writeLogs: function(root_dir, options) {
     //prepare
     var log_array = this.console.logs;
-    var FileWriter = require("loose-node-doc/src/outputs/FileWriter");
+    var FileWriter = require("./outputs/FileWriter");
     writer = new FileWriter(root_dir);
     //not writing
     if (!options.write_logs) return;
@@ -260,4 +258,5 @@ var processInterfaces = {
     }
   }
 };
+
 module.exports = processInterfaces;

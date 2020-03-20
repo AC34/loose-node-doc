@@ -85,37 +85,4 @@ LND.generate = function(object, options = {}) {
   //end of the whole process.
 };
 
-/**
- * this file is meant to be called from build script.
- * !!build script path !== project root dir!!
- * @return {string} build_script_path
- */
-function getBuildScriptPath() {
-  var trace = new Error().stack.split("\n")[3];
-  //removing brackets
-  trace = trace.substring(trace.indexOf("(") + 1, trace.lastIndexOf(")"));
-  //there arae two semi colons from the tail of the path
-  //and there can be zero or one semi colons from head, depending on OS.
-  trace = trace.substring(0, trace.lastIndexOf(":"));
-  trace = trace.substring(0, trace.lastIndexOf(":"));
-  return trace;
-}
-
-/**
- * returns root project folder name.
- * does not end with directory separator.
- * !!build script path !== project root dir!!
- * @return {string} dir_name
- */
-function getProjectRootDir() {
-  //isnt always guaranteed to be node_modules
-  var path = __dirname;
-  var sep = require("path").sep;
-  path = path.split(sep);
-  path.pop();
-  path.pop();
-  path = path.join(sep);
-  return path;
-}
-
 module.exports = LND;

@@ -38,6 +38,7 @@ module.exports = {
     default:true
   },
   //paths fromo user's build script
+  //project build path and loose-node-doc entrpoint path is also added dynamically
   "default_ignore_paths":{
     data_type:"array",
     default:["/node_modules/"]

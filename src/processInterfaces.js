@@ -102,20 +102,25 @@ var processInterfaces = {
    *
    * @param {object} cache_tree
    * @param {object} options
-   * @param {string} project_root directory
-   * @retur {object} cache_tree
+   * @param {object} ProjectInfo
+   * @return {object} cache_tree
    */
-  ignoreCTreeByDefault: function(cache_tree, options, project_root) {
+  ignoreCTreeByDefault: function(cache_tree, options, ProjectInfo) {
     //only on true
     if (options.enable_default_ignore_paths !== true) return cache_tree;
     //prepare
     var ignorePaths = require("./arrange/ignore/ignorePaths");
+    //add build script path to
+    var ignores = options.default_ignore_paths;
+    ignores = ignores.concat([
+      ProjectInfo.entry_point_path
+    ]);
     //do ignore
     var before = Object.keys(cache_tree).length;
     cache_tree = ignorePaths(
       cache_tree,
-      options.default_ignore_paths,
-      project_root
+      ignores,
+      ProjectInfo.project_root_dir
     );
     var after = Object.keys(cache_tree).length;
     //notify
@@ -132,10 +137,10 @@ var processInterfaces = {
    * by ignore_paths by user option.
    * @param {object} cache_tree
    * @param {object} options
-   * @param {string} project_root directory
+   * @param {object} ProjectInfo
    * @retur {object} cache_tree
    */
-  ignoreCTreeByUserDefinition: function(cache_tree, options, project_root) {
+  ignoreCTreeByUserDefinition: function(cache_tree, options, ProjectInfo) {
     //avoid empty list
     if (options.ignore_paths.length === 0) return cache_tree;
     //prepare
@@ -145,7 +150,7 @@ var processInterfaces = {
     cache_tree = ignorePaths(
       cache_tree,
       options.ignore_paths,
-      project_root
+      ProjectInfo.project_root_dir
     );
     var after = before - Object.keys(cache_tree).length;
     //notify
@@ -158,14 +163,21 @@ var processInterfaces = {
     }
     return cache_tree;
   },
-  resolveObjectTree: function(build_path, obj_names, cache_tree) {
+  /**
+   * 
+   * @param {object} ProjectInfo 
+   * @param {object} obj_names 
+   * @param {object} cache_tree 
+   * @return {object} object_tree
+   */
+  resolveObjectTree: function(ProjectInfo, obj_names, cache_tree) {
     //prepare
     var resolveObjectDependencies = require("./intakes/resolve/resolveObjectDependencies");
     var resolveCodeNames = require("./intakes/resolve/resolveCodeNames");
     //do reseolve things
     //traverses caches tree and resolve
     //{"name":{path,exports[codes/objects]},...}
-    var otree = resolveObjectDependencies(build_path, cache_tree, obj_names);
+    var otree = resolveObjectDependencies(ProjectInfo.build_script_path, cache_tree, obj_names);
     //adds function names (if exists)
     //{"name":{path,exports[codes/objects],name},...}
     otree = resolveCodeNames(otree, obj_names);
@@ -203,9 +215,15 @@ var processInterfaces = {
       this.console.outMessage("process-resolved-comments", { num: count });
     }
   },
-  writeObjectTree: function(root_dir, options, otree) {
+  /**
+   * 
+   * @param {object} ProjectInfo 
+   * @param {object} options 
+   * @param {object} otree 
+   */
+  writeObjectTree: function(ProjectInfo, options, otree) {
     var FileWriter = require("./outputs/FileWriter");
-    writer = new FileWriter(root_dir);
+    writer = new FileWriter(ProjectInfo.project_root_dir);
     //not writing
     if (!options.write_object_tree) return;
     if (options.write_object_tree === false) return;
@@ -230,11 +248,16 @@ var processInterfaces = {
       });
     }
   },
-  writeLogs: function(root_dir, options) {
+  /**
+   * 
+   * @param {object} ProjectInfo 
+   * @param {object} options 
+   */
+  writeLogs: function(ProjectInfo, options) {
     //prepare
     var log_array = this.console.logs;
     var FileWriter = require("./outputs/FileWriter");
-    writer = new FileWriter(root_dir);
+    writer = new FileWriter(ProjectInfo.project_root_dir);
     //not writing
     if (!options.write_logs) return;
     if (options.write_logs === false) return;

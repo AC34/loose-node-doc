@@ -1,4 +1,5 @@
-var sep = require("path").sep;
+var path = require("path");
+var sep = path.sep;
 /**
  * This function needs to be called from the entry point file.
  * @param {object} options
@@ -8,10 +9,10 @@ function getProjectInfo(options){
   var pi = Object.assign({},require("./model/ProjectInfo"));
   pi.build_script_path = resolveBuildScriptPath();
   pi.project_root_dir = resolveProjectRootDir();
-  pi.entry_point_dir = resolveEntryPointDir(); 
+  pi.entry_point_path = resolveEntryPointPath();
+  pi.entry_point_dir = path.dirname(pi.entry_point_path); 
   var package_json_path = resolvePackageFile(pi.entry_point_dir,options);
   pi.package_json = readPackageJson(package_json_path);
-  console.log("pi:"+JSON.stringify(pi));
   return pi; 
 }
 /**
@@ -32,7 +33,7 @@ function resolveProjectRootDir(){
 /**
  * @return {string} entry_point_dir
  */
-function resolveEntryPointDir(){
+function resolveEntryPointPath(){
   var trace = new Error().stack.split("\n")[3];
   //removing brackets
   trace = trace.substring(trace.indexOf("(") + 1, trace.lastIndexOf(")"));
@@ -40,7 +41,6 @@ function resolveEntryPointDir(){
   //and there can be zero or one semi colons from head, depending on OS.
   trace = trace.substring(0, trace.lastIndexOf(":"));
   trace = trace.substring(0, trace.lastIndexOf(":"));
-  trace = require("path").dirname(trace);
   return trace;
 } 
 function resolveBuildScriptPath(){
@@ -59,7 +59,6 @@ function resolveBuildScriptPath(){
  * @return {string}
  */
 function resolvePackageFile(entry_point_dir,options){
-  console.log("given options:"+JSON.stringify(options));
   var file = options.package_json_path;
   if(file.startsWith("./",""))file = file.replace("./","/");
   if(!file.startsWith("/",""))file = "/"+file;
@@ -69,12 +68,21 @@ function resolvePackageFile(entry_point_dir,options){
   return file;
 }
 /**
- * reads package.json file
+ * reads package.json file.
+ * empty object will be returned if reading failed.
  * @param {string} package_file_path 
  * @return {object} package.json
  */
 function readPackageJson(package_file_path){
-  
+  var fs = require("fs");    
+  //return empty object
+  if(!fs.existsSync(package_file_path))return {};
+  try{
+    return JSON.parse(fs.readFileSync(package_file_path));
+  }catch(e){
+    //read error or parse error
+    return {};
+  }
 }
 
 module.exports = getProjectInfo;

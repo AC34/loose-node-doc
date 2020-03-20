@@ -25,7 +25,7 @@ LND.generate = function(object, options = {}) {
   processInterfaces.console.updateMessages(this.options);
   //notify continue or quit on undefined object.
   processInterfaces.checkObjectStatus(object);
-  //now create constants
+  //now create ProjectInfo
   var getProjectInfo = require("./src/ProjectInfo/getProjectInfo");
   this.pi = getProjectInfo(this.options);
   /**
@@ -41,6 +41,7 @@ LND.generate = function(object, options = {}) {
     obj_names,
     this.options.ignore_objects
   );
+    
   /**
    * traverses require cache and returns an array
    */
@@ -51,13 +52,13 @@ LND.generate = function(object, options = {}) {
   cache_tree = processInterfaces.ignoreCTreeByDefault(
     cache_tree,
     this.options,
-    getProjectRootDir()
+    this.pi
   );
   //removes paths by user defined paths array
   cache_tree = processInterfaces.ignoreCTreeByUserDefinition(
     cache_tree,
     this.options,
-    getProjectRootDir()
+    this.pi
   );
   //console.log("ctree:"+JSON.stringify(cache_tree));
   /**
@@ -65,7 +66,7 @@ LND.generate = function(object, options = {}) {
    * Next step is to combine those informations into one tree information.
    */
   var otree = processInterfaces.resolveObjectTree(
-    getBuildScriptPath(),
+    this.pi,
     obj_names,
     cache_tree
   );
@@ -78,9 +79,9 @@ LND.generate = function(object, options = {}) {
   //override otree by user definition
   
   //write datas on demand.
-  processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);
-  //processInterfaces.writeObjectTree(getProjectRootDir(), this.options, otree);
-  processInterfaces.writeLogs(getProjectRootDir(), this.options);
+  processInterfaces.writeObjectTree(this.pi, this.options, otree);
+  //wrtes log
+  processInterfaces.writeLogs(this.pi, this.options);
   //end of the whole process.
 };
 

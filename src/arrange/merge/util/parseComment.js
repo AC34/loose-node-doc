@@ -28,6 +28,7 @@ function parseComment(otree_object){
  * comment:"comment str"
  * }
  * comment contains comment patternsitself.
+ * only parses comments conotaining @trail 
  * @param {string} file_string 
  * @return {array} locations
  */
@@ -53,9 +54,12 @@ function fetchComments(file_string){
       proceed = false;
       break;
     }
-    //add
     var comment = str.substring(start,end+2);
-    comments.push(comment);
+    //check @trail tag 
+    if(comment.indexOf()>-1){
+      //add
+      comments.push(comment);
+    }
     //update
     str = str.substring(end+2,str.length-1);
   }

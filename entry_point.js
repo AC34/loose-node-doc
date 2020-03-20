@@ -25,6 +25,9 @@ LND.generate = function(object, options = {}) {
   processInterfaces.console.updateMessages(this.options);
   //notify continue or quit on undefined object.
   processInterfaces.checkObjectStatus(object);
+  //now create constants
+  var getProjectInfo = require("./src/ProjectInfo/getProjectInfo");
+  this.pi = getProjectInfo(this.options);
   /**
    * From here is the main process.
    */

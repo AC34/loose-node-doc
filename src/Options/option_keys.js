@@ -12,5 +12,6 @@ module.exports ={
 	"verbose": "verbose",
 	"enable_default_ignore_paths": "enable_default_ignore_paths",
 	"ignore_paths": "ignore_paths",
-	"ignore_objects": "ignore_objects"
+	"ignore_objects": "ignore_objects",
+	"package_json_path": "package_json_path"
 }

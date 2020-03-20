@@ -3,11 +3,10 @@
  * @param {object} cache_tree result of traverseCache.js
  * @return {object} merged tree
  */
-function resolveObjectDependencies(build_script, cache_tree, obj_names) {
+function resolveObjectDependencies( cache_tree, obj_names) {
   var tree_names = listTreeNames(obj_names);
   //adds parent and childeren infos
-  var root_obj = constructRootObject(cache_tree, build_script);
-  //reconstruct tree from its roots
+  var root_obj = constructRootObject(cache_tree);
   var tree = startReconstruction(root_obj, cache_tree, tree_names);
   return tree;
 }
@@ -16,17 +15,17 @@ function resolveObjectDependencies(build_script, cache_tree, obj_names) {
  * avoids build_script to be root.
  * @param {object} caches
  */
-function constructRootObject(caches, build_script) {
+function constructRootObject(caches) {
   var root_obj = {};
   var sources = [];
   var children = [];
   var exports = {};
   for(var path in caches){
-    //avoid build_path itself
-    //if(path===build_script)continue;
-    //add if parent is build script
-    if(caches[path].parent===build_script){
+    //add if parent does not exist
+    if(!caches[path].parent){
       sources.push(path);
+      children = children.concat(caches[path].children);
+      exports = Object.assign(exports,caches[path].exports);
     }
   }
   root_obj.sources = sources;

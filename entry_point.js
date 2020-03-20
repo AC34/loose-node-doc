@@ -18,7 +18,7 @@ LND.generate = function(object, options = {}) {
   //"verbose:true" is required when validating options.
   this.options = { verbose: true };
   //first of all, the system needs messages for anything.
-  //initializing and updatse options(overriding blanks with default and checking types)
+  //initializing and updateing options(overriding blanks with default, and checking types)
   this.options = processInterfaces.validateOptions(options);
   //[verbose,lang] are updated.
   //now messages can be fully loaded.
@@ -41,7 +41,6 @@ LND.generate = function(object, options = {}) {
     obj_names,
     this.options.ignore_objects
   );
-    
   /**
    * traverses require cache and returns an array
    */
@@ -60,7 +59,7 @@ LND.generate = function(object, options = {}) {
     this.options,
     this.pi
   );
-  //console.log("ctree:"+JSON.stringify(cache_tree));
+  //console.log("ctree:"+JSON.stringify(cache_tree,null," "));
   /**
    * Now the project is traversed by object itself and require cache.
    * Next step is to combine those informations into one tree information.
@@ -80,7 +79,7 @@ LND.generate = function(object, options = {}) {
   
   //write datas on demand.
   processInterfaces.writeObjectTree(this.pi, this.options, otree);
-  //wrtes log
+  //writes log
   processInterfaces.writeLogs(this.pi, this.options);
   //end of the whole process.
 };

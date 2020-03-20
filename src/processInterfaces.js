@@ -21,7 +21,6 @@ var processInterfaces = {
    * @param {object} object
    */
   checkObjectStatus: function(object) {
-    console.log("checkobjectstatus:" + object);
     if (!object) {
       this.console.outMessage("empty-object");
       this.console.outMessage("process-stopped");
@@ -111,10 +110,17 @@ var processInterfaces = {
     //prepare
     var ignorePaths = require("./arrange/ignore/ignorePaths");
     //add build script path to
-    var ignores = options.default_ignore_paths;
-    ignores = ignores.concat([
-      ProjectInfo.entry_point_path
-    ]);
+    var ignores = [
+      //"loose-node-doc" entry_point
+      ProjectInfo.entry_point_path,
+      //"loose-node-doc" dir
+      ProjectInfo.entry_point_dir,
+      //"node_modules" for most of the time
+      require("path").dirname(ProjectInfo.entry_point_dir),
+      //build script itself
+      ProjectInfo.build_script_path
+    ];
+    console.log("ignores:"+JSON.stringify(ignores,null," "));
     //do ignore
     var before = Object.keys(cache_tree).length;
     cache_tree = ignorePaths(
@@ -174,12 +180,10 @@ var processInterfaces = {
     //prepare
     var resolveObjectDependencies = require("./intakes/resolve/resolveObjectDependencies");
     var resolveCodeNames = require("./intakes/resolve/resolveCodeNames");
-    //do reseolve things
-    //traverses caches tree and resolve
+    //traverses caches tree and transform tree as:
     //{"name":{path,exports[codes/objects]},...}
-    var otree = resolveObjectDependencies(ProjectInfo.build_script_path, cache_tree, obj_names);
-    //adds function names (if exists)
-    //{"name":{path,exports[codes/objects],name},...}
+    var otree = resolveObjectDependencies( cache_tree, obj_names);
+    //console.log("objectTreeResolved:"+JSON.stringify(otree,null," "));        //{"name":{path,exports[codes/objects],name},...}
     otree = resolveCodeNames(otree, obj_names);
     return otree;
   },

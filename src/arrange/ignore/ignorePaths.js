@@ -6,6 +6,13 @@ function ignorePaths(cache_tree, ignores,root_dir) {
   if(!cache_tree||!ignores)return cache_tree;
   var ignores = resolveAbsolutePaths(root_dir,ignores);
   for (var path in cache_tree) {
+    //self (cache_tree key itself)
+    if (path.startsWith(ignore)) {
+        delete cache_tree[path];
+        //key does  not exist from this point
+        //cannot ignore anymore
+        break;
+    }
     //remove from parent ,children and self
     for (var i in ignores) {
       var ignore = ignores[i];
@@ -29,13 +36,6 @@ function ignorePaths(cache_tree, ignores,root_dir) {
         }
         cache_tree[path].children = new_children;
       }
-      //self (cache_tree key itself)
-      if (path.startsWith(ignore)) {
-        delete cache_tree[path];
-        //key does  not exist from this point
-        //cannot ignore anymore
-        break;
-      }
     }//ignores
   }//cache
   return cache_tree;
@@ -46,11 +46,17 @@ function ignorePaths(cache_tree, ignores,root_dir) {
  * @return {array} paths
  */
 function resolveAbsolutePaths(root_dir,paths) {
-  var sep = require("path").sep;
-  var resolve = require("path").resolve;
+  var path = require("path");
+  var sep = path.sep;
+  var resolve = path.resolve;
   var new_paths = [];
   for (var i in paths) {
     var path = paths[i];
+    //already an absolute path
+    if(path.startsWith(root_dir)) {
+      new_paths.push(path);
+      continue;
+    }
     //delete heading ./
     if (path.startsWith("./")) path = path.replace("./", "");
     //delete heading /

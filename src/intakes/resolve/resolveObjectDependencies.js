@@ -105,4 +105,5 @@ function listTreeNames(obj_names) {
   }
   return list;
 }
+
 module.exports = resolveObjectDependencies;

@@ -219,6 +219,13 @@ var processInterfaces = {
       this.console.outMessage("process-resolved-comments", { num: count });
     }
   },
+  overrideOtreeByTrailTags:function(otree){
+    var merge = require("./arrange/merge/mergeUserDefinedComments.js");
+    //notify
+     
+    //then return
+    return merge(otree);
+  },
   /**
    * 
    * @param {object} ProjectInfo 

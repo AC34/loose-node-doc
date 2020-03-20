@@ -1,4 +1,3 @@
-
 var ProjectInfo = {
   project_root_dir:"",
   entry_point_path:"",
@@ -6,7 +5,7 @@ var ProjectInfo = {
   build_script_path:"",
   package_json:"",
   html_template:{
-    
+
   }
 };
 

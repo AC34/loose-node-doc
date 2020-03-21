@@ -9,14 +9,13 @@ var makeFromTag = require("./factory/makeTaggedElement");
  * @param {object} ProjectInfo 
  */
 function commentToHtml(name,comments,options,ProjectInfo){
-  var f = options.html_variagbles;
+  var f = options.html_format;
   var t = ProjectInfo.html_template;
-
-
+   
 }
 
 function tagsToElements(){
-  
+
 }
 
 module.exports = commentToHtml;

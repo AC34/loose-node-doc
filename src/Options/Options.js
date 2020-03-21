@@ -54,12 +54,12 @@ module.exports = {
     data_type:"object",
     default:""
   },
-  "html_variables":{
+  "html_format":{
     //expecting ul or ol
     g_navi:"div",
     g_navi_list:"ul",
     item:"dl",
     item_name:"dt",
-    
+
   }
 };

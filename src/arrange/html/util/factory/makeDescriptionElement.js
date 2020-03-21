@@ -5,7 +5,7 @@
  * @param {string} html_variables 
  * @return {string} html
  */
-function makeDescriptionElement(description,html_template,html_variables){
+function makeDescriptionElement(description,html_template,html_format){
   
 }
 

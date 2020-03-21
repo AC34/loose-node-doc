@@ -5,7 +5,7 @@
  * @param {object} html_variables 
  * @return {string} html
  */
-function makeExampleElement(example,html_template,html_variables){
-  
+function makeExampleElement(example,html_template,html_format){
+
 }
 module.exports = makeExampleElement;

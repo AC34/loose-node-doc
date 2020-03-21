@@ -17,7 +17,6 @@ var ProjectInfo = {
     item_details_class:"item-details",
     item_param_datatypes_class:"param-data-types",
     item_example_class:"example",
-    
   }
 };
 

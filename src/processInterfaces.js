@@ -239,10 +239,12 @@ var processInterfaces = {
    */
   writeObjectTree: function(ProjectInfo, options, otree) {
     var FileWriter = require("./outputs/FileWriter");
+    var toRelative = require("./outputs/filter/otreeToRelativePaths");
     writer = new FileWriter(ProjectInfo.project_root_dir);
     //not writing
     if (!options.write_object_tree) return;
     if (options.write_object_tree === false) return;
+    //prepare
     var file_path = writer.getAbsolutePath(options.object_tree_path);
     //not writable then notify.
     if (!writer.isWritablePath(file_path)) {
@@ -250,6 +252,8 @@ var processInterfaces = {
         path: options.object_tree_path
       });
     }
+    //convert absolute paths to relative paths
+    otree = toRelative(otree,ProjectInfo.project_root_dir);
     //write
     var result = writer.writeObject(file_path, otree);
     if (result === true) {

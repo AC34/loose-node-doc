@@ -76,6 +76,7 @@ LND.generate = function(object, options = {}) {
   //notify user about the number of resolved comments
   processInterfaces.notifyResolvedCommentsCount(otree);
   //override otree by user definition
+  //only picking @trail tags
   otree = processInterfaces.overrideOtreeByTrailTags(otree);
   //write datas on demand.
   processInterfaces.writeObjectTree(this.pi, this.options, otree);

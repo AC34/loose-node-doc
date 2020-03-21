@@ -5,7 +5,7 @@
 function mergeUserDefinedComments(otree) {
   //salvage comments
   var parsed = parseComments(otree);
-
+  
   //merge objects
   return Object.assign({},otree,parsed);
 }

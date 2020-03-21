@@ -53,5 +53,13 @@ module.exports = {
   "user_comments":{
     data_type:"object",
     default:""
+  },
+  "html_variables":{
+    //expecting ul or ol
+    g_navi:"div",
+    g_navi_list:"ul",
+    item:"dl",
+    item_name:"dt",
+    
   }
 };

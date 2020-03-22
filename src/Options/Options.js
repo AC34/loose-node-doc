@@ -120,6 +120,8 @@ module.exports = {
       item: "dl",
       item_name: "dt",
       item_description: "dd",
+      item_details:"div",
+      item_details_item:"dd",
       example: "code"
     }
   }

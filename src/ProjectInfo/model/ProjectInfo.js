@@ -15,9 +15,11 @@ var ProjectInfo = {
     documentation_id:"documentation",
     item_name_class:"object-name",
     item_description_class:"description",
-    item_details_class:"item-details",
     item_param_datatypes_class:"param-data-types",
     item_example_class:"example",
+    item_details_class:"details",
+    item_details_datatypes_class:"data-types",
+     
   }
 };
 

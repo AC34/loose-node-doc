@@ -13,7 +13,6 @@ function commentToHtml(name, comments, options, ProjectInfo) {
   var ret = "";
   //name
   ret += makeElement(f.item_name, "", t.item_name_class, name);
-
   //description
   if (comments[0]) {
     ret += makeElement(
@@ -25,11 +24,11 @@ function commentToHtml(name, comments, options, ProjectInfo) {
   }
   //index > 0 are tagged lines
   for (var i in comments) {
-    if (!comments[i].comment) break;
+    if(i===0)continue;
     ret += makeTaggedElement(comments[i], t, f);
   }
   //wrap by item wrapper
-  ret = makeElement(f.item, makeNameId(name, t), "", ret);
+  ret = makeElement(f.item, makeNameId(name, t), t.item_class, ret);
   return ret;
 }
 function makeNameId(name, html_template) {

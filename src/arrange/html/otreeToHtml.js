@@ -2,9 +2,9 @@ var makeElement = require("./util/makeElement");
 /**
  * Creates Html from object trree.
  * html rules are defined both by options and ProjectInfo.
- * @param {*} otree
- * @param {*} options
- * @param {*} ProjectInfo
+ * @param {object} otree
+ * @param {object} options
+ * @param {object} ProjectInfo
  */
 function otreeToHtml(otree, options, ProjectInfo) {
   var html = "";
@@ -22,5 +22,4 @@ function otreeToHtml(otree, options, ProjectInfo) {
   );
   return html;
 }
-
 module.exports = otreeToHtml;

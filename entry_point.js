@@ -90,4 +90,5 @@ LND.generate = function(object, options = {}) {
   processInterfaces.writeLogs(this.pi, this.options);
   //end of the whole process.
 };
+
 module.exports = LND;

@@ -78,11 +78,15 @@ LND.generate = function(object, options = {}) {
   //override otree by user definition
   //only picking @trail tags
   otree = processInterfaces.overrideOtreeByTrailTags(otree);
+  //create html part(not the whole page)
+  var html = processInterfaces.makeHtml(otree,this.options,this.pi);
+  console.log("html:"+html); 
+  //make html into page
+  html = processInterfaces.makeHtmlPage(html,this.options,this.pi);
   //write datas on demand.
   processInterfaces.writeObjectTree(this.pi, this.options, otree);
   //writes log
   processInterfaces.writeLogs(this.pi, this.options);
   //end of the whole process.
 };
-
 module.exports = LND;

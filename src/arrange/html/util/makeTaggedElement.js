@@ -6,7 +6,8 @@
  * @param {string} html
  */
 function makeTaggedElement(taglines,html_template,html_format){
-  
+   
+  return taglines;
 }
 /**
  * detects whether the given string block is a datatype declaration

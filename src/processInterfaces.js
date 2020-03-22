@@ -231,6 +231,28 @@ var processInterfaces = {
     //then return
     return merge(otree);
   },
+  makeHtml:function(otree,options,ProjectInfo){
+    var toHtml = require("./arrange/html/otreeToHtml");
+    //notify
+
+    //make html
+    return toHtml(otree,options,ProjectInfo);
+  },
+  /**
+   * 
+   * @param {string} html 
+   * @param {object} options 
+   * @param {object} ProjectInfo 
+   */
+  makeHtmlPage:function(html,options,ProjectInfo){
+    var createPage = require("./arrange/html_page/createPage");
+    var page = createPage(html,options,ProjectInfo);
+    //notify
+    return page;
+  },
+  writeHtmlPage:function(html,options,ProjectInfo){
+    
+  },
   /**
    * 
    * @param {object} ProjectInfo 

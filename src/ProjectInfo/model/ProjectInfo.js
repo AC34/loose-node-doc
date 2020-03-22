@@ -7,11 +7,12 @@ var ProjectInfo = {
   html_template:{
     g_navi_id:"g-navi",
     g_navi_ul_id:"g-links",
-    about_id:"about",
+    notification_class:"notification",
     documentation_id:"documentation",
     item_class:"doc-item",
     item_id_prefix:"id-",
     item_id_dot_replacer:"-",
+    documentation_id:"documentation",
     item_name_class:"object-name",
     item_description_class:"description",
     item_details_class:"item-details",

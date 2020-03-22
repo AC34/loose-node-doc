@@ -6,11 +6,13 @@
  * @param {*} ProjectInfo 
  */
 function otreeToHtml(otree,options,ProjectInfo){
+  var html = "";
   var toHtml = require("./util/commentToHtml");
   for(var name in otree){
     if(!otree[name].comment)continue;
-    otree[name].comment = toHtml(name,otree[name].comment,options,ProjectInfo);
+    html += toHtml(name,otree[name].comment,options,ProjectInfo);
   }
+  return html;
 }
 
 module.exports = otreeToHtml;

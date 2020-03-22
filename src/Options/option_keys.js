@@ -14,5 +14,16 @@ module.exports ={
 	"ignore_paths": "ignore_paths",
 	"ignore_objects": "ignore_objects",
 	"package_json_path": "package_json_path",
-	"user_comments": "user_comments"
+	"user_comments": "user_comments",
+	"html_template_name": "html_template_name",
+	"html_site_title": "html_site_title",
+	"html_site_description": "html_site_description",
+	"html_gnavi_links": "html_gnavi_links",
+	"html_notifications": "html_notifications",
+	"html_about_html": "html_about_html",
+	"html_version_html": "html_version_html",
+	"html_custom_css": "html_custom_css",
+	"html_custom_script": "html_custom_script",
+	"html_meta": "html_meta",
+	"html_format": "html_format"
 }

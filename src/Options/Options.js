@@ -61,7 +61,7 @@ module.exports = {
   //title,h1,meta:ogp
   html_site_title:{
     data_type:"string",
-    default:""
+    default:"my page"
   },
   html_site_description:{
     data_type:"string",
@@ -69,7 +69,9 @@ module.exports = {
   },
   html_gnavi_links:{
     datatype:"array",
-    default:{}
+    default:{
+      "home":"index.html"
+    }
   },
   html_notifications:{
     data_type:"array",
@@ -103,7 +105,7 @@ module.exports = {
       og_site_name:"www.example.com",
       og_url:"",
       og_image:"",
-      custom_html:"<meta name='twitter:card' content='this is the homepage(@homepage) of my package version:version'>"
+      custom_html:""
     }
   },
   html_format: {
@@ -111,6 +113,7 @@ module.exports = {
     default: {
       lang:"en",
       g_navi: "div",
+      documentation:"div",
       //expecting ul or ol
       g_navi_list: "ul",
       notifications:"p",

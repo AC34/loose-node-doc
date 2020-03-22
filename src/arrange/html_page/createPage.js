@@ -11,6 +11,8 @@ function createPage(html, options, ProjectInfo) {
   var templ = loadTemplate(ProjectInfo, options);
   //assign language
   templ = addLanguage(templ, options);
+  //assign titles
+  templ = insertTitles(templ,options);
   //assign meta tags
   templ = insertMetas(templ,options,ProjectInfo);
   //assign custom css
@@ -27,7 +29,6 @@ function createPage(html, options, ProjectInfo) {
   templ = insertAboutHtml(templ, options);
   //html
   templ = insertHtml(templ,html);
-  console.log("html:"+templ);
   //done
   return templ;
 }
@@ -54,12 +55,18 @@ function loadTemplate(ProjectInfo, options) {
     var template = fs.readFileSync(template_path, "UTF-8");
     return template;
   } catch (e) {
-    returnfalse;
+    return false;
   }
 }
+/**
+ * add lang attribute to html tag
+ * @param {string} html 
+ * @param {object} options 
+ * @return {string} 
+ */
 function addLanguage(html, options) {
   var pattern = "<html>";
-  var rep = "<html lang=+" + options.html_format.lang + '">';
+  var rep = "<html lang='" + options.html_format.lang + "'>";
   return html.replace(pattern, rep);
 }
 /**
@@ -72,7 +79,7 @@ function addLanguage(html, options) {
 function insertGNavi(html, options, ProjectInfo) {
   var createGNavi = require("./util/createGNavi");
   var gnavi = createGNavi(options, ProjectInfo);
-  html.replace("<!--g-navi-->", gnavi);
+  html = html.replace("<!--g-navi-links-->", gnavi);
   return html;
 }
 /**
@@ -89,13 +96,14 @@ function insertNotifications(html, options, ProjectInfo) {
   return html;
 }
 /**
+ * insert version element
  * @param {string} html 
  * @param {object} options 
  * @param {object} ProjectInfo 
  * @return {string} html
  */
 function insertVersion(html, options, ProjectInfo) {
-  var version = options.html_version_html.replace("@version",ProjectInfo.version);
+  var version = options.html_version_html.replace("@version",ProjectInfo.package_json.version);
   return html.replace("<!--version-->",version);
 }
 /**
@@ -142,5 +150,20 @@ function insertMetas(html,options,ProjectInfo){
   var metas = createMetas(html,options,ProjectInfo); 
   return html.replace("<!--custom_metas-->",metas);
 }
-
+/**
+ *  
+ * @param {string} html 
+ * @param {object} options 
+ * @param {object} ProjectInfo 
+ */
+function insertTitles(html,options,ProjectInfo){
+  //title tag
+  var title = "<title>"+options.html_site_title+"</title>";
+  var title_pat = new RegExp("<!--page_title-->","g");
+  html =  html.replace(title_pat,title);
+  //h1
+  var h1 = "<h1>"+options.html_site_title+"</h1>"
+  var h1_pat = new RegExp("<!--h1_page_title-->","g");
+  return html.replace(h1_pat,h1);
+}
 module.exports = createPage;

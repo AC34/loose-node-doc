@@ -11,7 +11,7 @@ function makeElement(element,id,cls,content){
   var head = "<"+element;
   if(id!=="")head += " id=\""+id+"\"";
   if(cls!=="")head += " cls=\""+cls+"\""
-  head +">";
+  head +=">";
   var tale = "</"+element+">";
   content = trim(content);
   return head+content+tale;

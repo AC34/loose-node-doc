@@ -80,7 +80,6 @@ LND.generate = function(object, options = {}) {
   otree = processInterfaces.overrideOtreeByTrailTags(otree);
   //create html part(not the whole page)
   var html = processInterfaces.makeHtml(otree,this.options,this.pi);
-  console.log("html:"+html); 
   //make html into page
   html = processInterfaces.makeHtmlPage(html,this.options,this.pi);
   //write html to file

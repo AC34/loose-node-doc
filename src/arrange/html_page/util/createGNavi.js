@@ -9,10 +9,10 @@ function createGNavi(options,ProjectInfo){
   var f = options.html_format;
   var t = ProjectInfo.html_template;
   var list = options.html_gnavi_links;
-  if(Object.keys(list).length)return "";
+  if(Object.keys(list).length===0)return "";
   list = createList(list); 
+  if(list==="")return "";//abort on empty
   list = makeElement(f.g_navi_list,t.g_navi_ul_id,"",list);
-  list = makeElement(f.g_navi,f.g_navi_id,"",list); 
   return list;
 }
 function createList(list){

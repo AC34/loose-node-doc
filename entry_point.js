@@ -83,6 +83,8 @@ LND.generate = function(object, options = {}) {
   console.log("html:"+html); 
   //make html into page
   html = processInterfaces.makeHtmlPage(html,this.options,this.pi);
+  //write html to file
+  processInterfaces.writeHtmlPage(html,this.options,this.pi);
   //write datas on demand.
   processInterfaces.writeObjectTree(this.pi, this.options, otree);
   //writes log

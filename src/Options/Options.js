@@ -49,9 +49,10 @@ module.exports = {
     data_type: "string",
     default: "package.json"
   },
-  user_comments: {
-    data_type: "object",
-    default: ""
+  //from root
+  html_path:{
+    data_type:"string",
+    default:"out/@version/index.html"
   },
   html_template_name: {
     data_type: "string",

@@ -33,7 +33,7 @@ FileWriter.prototype.writeObject = function(file_path, object) {
  * @param {array} logs
  * @return {boolean|string} true or error message
  */
-FileWriter.prototype.writeText = function(log_path, logs) {
+FileWriter.prototype.writeLogs = function(log_path, logs) {
   logs = logs.join("\n");
   assureDirExistance(log_path);
   try {
@@ -43,6 +43,15 @@ FileWriter.prototype.writeText = function(log_path, logs) {
     return e;
   }
 };
+FileWriter.prototype.writeHtml = function(html_path,html){
+  assureDirExistance(html_path);
+  try {
+    fs.writeFileSync(html_path, html, { encoding: "utf8", flags: "w" });
+    return true;
+  } catch (e) {
+    return e;
+  }
+}
 /**
  * Tell if path is somewhat writable path.
  * empty, missing file attribute,is directory, will be false.
@@ -74,7 +83,7 @@ function assureDirExistance(file_path) {
   }
 }
 /**
- *
+ * prepends root directory to given path
  * @param {file_path} file_path
  */
 FileWriter.prototype.getAbsolutePath= function(file_path) {
@@ -85,5 +94,9 @@ FileWriter.prototype.getAbsolutePath= function(file_path) {
   var dir = this.root_dir.split(sep);
   return dir.concat(file_path).join(sep);
 }
-
+FileWriter.prototype.replaceVersionPattern = function(path,ProjectInfo){
+  var version = ProjectInfo.package_json.version;
+  var pattern = new RegExp("@version","g");
+  return path.replace(pattern,version);
+}
 module.exports = FileWriter;

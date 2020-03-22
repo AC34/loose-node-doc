@@ -14,9 +14,9 @@ function createPage(html, options, ProjectInfo) {
   //assign meta tags
   templ = insertMetas(templ,options,ProjectInfo);
   //assign custom css
-  templ = insertCSS(html,options);
+  templ = insertCSS(templ,options);
   //assign custom script
-  templ = insertScript(html,options);
+  templ = insertScript(templ,options);
   //assign gnavi
   templ = insertGNavi(templ, options, ProjectInfo);
   //assign notifications
@@ -27,6 +27,7 @@ function createPage(html, options, ProjectInfo) {
   templ = insertAboutHtml(templ, options);
   //html
   templ = insertHtml(templ,html);
+  console.log("html:"+templ);
   //done
   return templ;
 }
@@ -127,7 +128,7 @@ function insertScript(html,options){
  * @return {string} html
  */
 function insertHtml(template,html){
-  return html.replace("<!--documentation-->",html);
+  return template.replace("<!--documentation-->",html);
 }
 /**
  * creates meta tags and placees them. 

@@ -7,6 +7,7 @@ var makeElement = require("../../html/util/makeElement");
  */
 function createNotifications(html, options, ProjectInfo) {
   var n = "";
+  var notifications = options.html_notifications;
   for (var i in notifications) {
     n += makeElement(
       options.html_format.notification,
@@ -18,4 +19,4 @@ function createNotifications(html, options, ProjectInfo) {
   return n;
 }
 
-module.exports = createAbout;
+module.exports = createNotifications;

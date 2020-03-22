@@ -1,4 +1,4 @@
-var makeElement = require("./../../html/util/util/makeElement");
+var makeElement = require("./../../html/util/makeElement");
 /**
  * Creates gnavi based on options.html_gnavi_links. if there is no link, the empty string is returned.
  * @param {object} options 

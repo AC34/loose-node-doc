@@ -49,7 +49,7 @@ function replacenPatterns(str,ProjectInfo){
   str = str.replace(version_pat,version);
   //@homepage
   var hp_pat = new RegExp("@homepage","g");
-  var hp = ProjectInfo.package_jsono.homepage;
+  var hp = ProjectInfo.package_json.homepage;
   if(!hp)return str;//abort on empty
   str = str.replace(hp_pat,hp);
   return str;

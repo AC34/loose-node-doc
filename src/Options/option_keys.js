@@ -14,7 +14,7 @@ module.exports ={
 	"ignore_paths": "ignore_paths",
 	"ignore_objects": "ignore_objects",
 	"package_json_path": "package_json_path",
-	"user_comments": "user_comments",
+	"html_path": "html_path",
 	"html_template_name": "html_template_name",
 	"html_site_title": "html_site_title",
 	"html_site_description": "html_site_description",

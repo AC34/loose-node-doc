@@ -239,7 +239,6 @@ var processInterfaces = {
     return toHtml(otree,options,ProjectInfo);
   },
   /**
-   * 
    * @param {string} html 
    * @param {object} options 
    * @param {object} ProjectInfo 
@@ -247,11 +246,19 @@ var processInterfaces = {
   makeHtmlPage:function(html,options,ProjectInfo){
     var createPage = require("./arrange/html_page/createPage");
     var page = createPage(html,options,ProjectInfo);
-    //notify
     return page;
   },
   writeHtmlPage:function(html,options,ProjectInfo){
-    
+    var FileWriter = require("./outputs/FileWriter");
+    var writer = new FileWriter(ProjectInfo.project_root_dir);
+    var html_file = writer.getAbsolutePath(options.html_path); 
+    html_file = writer.replaceVersionPattern(html_file,ProjectInfo);
+    var success = writer.writeHtml(html_file,html);  
+    //notify
+    if(success){
+
+    }else{
+    }
   },
   /**
    * 
@@ -311,7 +318,7 @@ var processInterfaces = {
       });
     }
     //write
-    var result = writer.writeText(log_path, log_array);
+    var result = writer.writeLogs(log_path, log_array);
     if (result === true) {
       this.console.outMessage("process-write-file-success", { path: log_path });
     } else {

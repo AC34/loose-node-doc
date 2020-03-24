@@ -53,6 +53,15 @@ function switchByTag(comment, html_template, html_format) {
     return makeExampleElement(comment, html_template, html_format);
   }
   if (comment.tag === "link") {
+    var link = makeElement(
+      html_format.link,
+      {
+        target: "_blank",
+        class: html_template.item_link_class
+      },
+      comment.name
+    );
+    return makeElement(html_format.item_details_item,{},link);
   }
   if (comment.tag === "trail") {
     return ""; //ignore

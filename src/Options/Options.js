@@ -126,7 +126,8 @@ module.exports = {
       item_details_datatype:"dd",
       example_wrap:"div",
       example: "code",
-      example_caption:"dd"
+      example_caption:"dd",
+      link:"a"
     }
   }
 };

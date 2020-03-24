@@ -20,6 +20,7 @@ var ProjectInfo = {
     item_example_class:"example",
     item_details_class:"details",
     item_details_datatypes_class:"data-types",
+    item_link_class:"reference_link"
   }
 };
 module.exports = ProjectInfo;

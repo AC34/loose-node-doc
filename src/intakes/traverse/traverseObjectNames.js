@@ -25,7 +25,8 @@ function createObjectTree(prefix,obj,tree){
  * @return object
  */
 function traverseObjectNames(object){
-  return createObjectTree("",object,{});
+  var ret = createObjectTree("",object,{});
+  return ret;
 }
 
 module.exports = traverseObjectNames;

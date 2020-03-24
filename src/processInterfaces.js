@@ -110,7 +110,7 @@ var processInterfaces = {
     var ignorePaths = require("./arrange/ignore/ignorePaths");
     //add build script path to
     var ignores = [
-      //"loose-node-doc" entry_point
+      //"loose-node-doc" entry_point file
       ProjectInfo.entry_point_path,
       //"loose-node-doc" dir
       ProjectInfo.entry_point_dir,
@@ -168,7 +168,6 @@ var processInterfaces = {
     return cache_tree;
   },
   /**
-   * 
    * @param {object} ProjectInfo 
    * @param {object} obj_names 
    * @param {object} cache_tree 
@@ -179,9 +178,9 @@ var processInterfaces = {
     var resolveObjectDependencies = require("./intakes/resolve/resolveObjectDependencies");
     var resolveCodeNames = require("./intakes/resolve/resolveCodeNames");
     //traverses caches tree and transform tree as:
-    //{"name":{path,exports[codes/objects]},...}
+    //{"name":{path,exports[codes/objects],children[array]},...}
     var otree = resolveObjectDependencies( cache_tree, obj_names);
-    //console.log("objectTreeResolved:"+JSON.stringify(otree,null," "));        //{"name":{path,exports[codes/objects],name},...}
+    //{"name":{path,exports[codes/objects],name},...}
     otree = resolveCodeNames(otree, obj_names);
     return otree;
   },
@@ -258,6 +257,7 @@ var processInterfaces = {
     if(success){
 
     }else{
+
     }
   },
   /**

@@ -14,21 +14,21 @@ function createCacheTree() {
     //initialize
     tree[file] = {};
     if (item.parent) {
-      //console.log("parent keys:" + Object.keys(item.parent));
-      //console.log("parent id:"+item.parent.id);
       tree[file].parent = item.parent.filename;
     }
-    //doesnt work good on circular reference.
-    /*if (item.children) {
-      }
-    }*/
+    //resolving parent is enough, no  process for children here.
     if (item.exports) {
       tree[file].exports = item.exports;
     }
   }
-  //work out parents and children
-  return resolveChildren(tree);
+  tree = resolveChildren(tree); 
+  return tree;
 }
+/**
+ * define children by "parent" attributes. some of tree[path].children will be filled with paths.
+ * @param {object} tree 
+ * @return {object} tree
+ */
 function resolveChildren(tree){
   for(var path in tree){
     //if root, dosnt have a parent

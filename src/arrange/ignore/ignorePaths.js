@@ -8,14 +8,8 @@ function ignorePaths(cache_tree, ignores, root_dir) {
   for (var path in cache_tree) {
     //remove from parent ,children and self
     for (var i in ignores) {
-      var new_children = {};
+      var new_children = [];
       var ignore = ignores[i];
-      //self (cache_tree key itself)
-      if (path.startsWith(ignore)) {
-        delete cache_tree[path];
-        //key does  not exist from this point
-        break;
-      }
       //parent(string)
       if (cache_tree[path].parent) {
         if (cache_tree[path].parent.startsWith(ignore)) {
@@ -23,16 +17,22 @@ function ignorePaths(cache_tree, ignores, root_dir) {
         }
       }
       //children(array)
-      for (var k in cache_tree[path].children) {
-        if (cache_tree[path].children[k].startsWith(ignore)) {
-          //console.log("deleting:children:"+cache_tree[path].children[k]);
-        } else {
-          if(!new_children[cache_tree[path].children[k]]){
-            new_children[new_children.length] = "";
+      if (cache_tree[path].children) {
+        for (var k in cache_tree[path].children) {
+          if (cache_tree[path].children[k].startsWith(ignore)) {
+            //console.log("deleting:children:"+cache_tree[path].children[k]);
+          } else {
+            new_children.push(cache_tree[path].children[k]);
           }
         }
+        cache_tree[path].children = new_children;
       }
-      cache_tree[path].children = Object.keys(new_children);
+      //self (cache_tree key itself)
+      if (path.startsWith(ignore)) {
+        delete cache_tree[path];
+        //key does  not exist from this point
+        break;
+      }
     } //i in ignores
   } //path in caches
   return cache_tree;

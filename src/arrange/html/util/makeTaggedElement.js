@@ -21,7 +21,9 @@ function makeTaggedElement(taglines, html_template, html_format) {
     ret += makeElement(html_format.item_details_item, {}, taglines.name);
   }
   //wrap with details
-  ret = makeElement(html_format.item_details, {}, ret);
+  ret = makeElement(html_format.item_details, {
+    class:html_template.item_details_class
+  }, ret);
   return ret;
 }
 function makeDataTypeElement(types, html_template, html_format) {

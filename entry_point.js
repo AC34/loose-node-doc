@@ -53,13 +53,14 @@ LND.generate = function(object, options = {}) {
     this.options,
     this.pi
   );
+  //console.log("ignored ctree:"+JSON.stringify(cache_tree,null," "));
   //removes paths by user defined paths array
   cache_tree = processInterfaces.ignoreCTreeByUserDefinition(
     cache_tree,
     this.options,
     this.pi
   );
-  //console.log("ctree:"+JSON.stringify(cache_tree,null," "));
+  //console.log("default ignored:"+JSON.stringify(cache_tree,null," "));
   /**
    * Now the project is traversed by object itself and require cache.
    * Next step is to combine those informations into one tree information.

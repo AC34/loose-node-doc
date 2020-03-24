@@ -57,7 +57,8 @@ function switchByTag(comment, html_template, html_format) {
       html_format.link,
       {
         target: "_blank",
-        class: html_template.item_link_class
+        class: html_template.item_link_class,
+        href:comment.name
       },
       comment.name
     );

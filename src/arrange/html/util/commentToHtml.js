@@ -12,13 +12,20 @@ function commentToHtml(name, comments, options, ProjectInfo) {
   var t = ProjectInfo.html_template;
   var ret = "";
   //name
-  ret += makeElement(f.item_name, "", t.item_name_class, name);
+  ret += makeElement(
+    f.item_name,
+    {
+      class: t.item_name_class
+    },
+    name
+  );
   //description
   if (comments[0]) {
     ret += makeElement(
       f.item_description,
-      "",
-      t.item_description_class,
+      {
+        class: t.item_description_class
+      },
       comments[0]
     );
   }
@@ -28,7 +35,11 @@ function commentToHtml(name, comments, options, ProjectInfo) {
     ret += switchByTag(comments[i], t, f);
   }
   //wrap by item wrapper
-  ret = makeElement(f.item, makeNameId(name, t), t.item_class, ret);
+  ret = makeElement(
+    f.item,
+    { id: makeNameId(name, t), class: t.item_class },
+    ret
+  );
   return ret;
 }
 function makeNameId(name, html_template) {
@@ -39,8 +50,14 @@ function switchByTag(comment, html_template, html_format) {
   if (!comment.tag) return "";
   //example
   if (comment.tag === "example") {
-    return makeExampleElement(comment,html_template,html_format);
+    return makeExampleElement(comment, html_template, html_format);
   }
+  if (comment.tag === "link") {
+  }
+  if (comment.tag === "trail") {
+    return ""; //ignore
+  }
+  //other tags
   return makeTaggedElement(comment, html_template, html_format);
 }
 module.exports = commentToHtml;

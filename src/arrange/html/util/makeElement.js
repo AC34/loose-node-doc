@@ -3,18 +3,17 @@ var trim = require("./trimForHtml");
  * Creates element by given values.
  * id and cls can be an empty string
  * @param {string} element
- * @param {string} id
- * @param {string} cls
+ * @param {object} attr
  * @param {string} content
  */
-function makeElement(element, id, cls, content) {
+function makeElement(element, attrs, content) {
   var head = "<" + element;
-  if (id !== "") head += ' id="' + id + '"';
-  if (cls !== "") head += ' class="' + cls + '"';
+  for (var attr in attrs) {
+    head += " " + attr + '="' + attrs[attr] + '"';
+  }
   head += ">";
   var tale = "</" + element + ">";
   content = trim(content);
   return head + content + tale;
 }
-
 module.exports = makeElement;

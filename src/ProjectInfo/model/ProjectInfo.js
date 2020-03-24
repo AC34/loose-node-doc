@@ -22,5 +22,4 @@ var ProjectInfo = {
     item_details_datatypes_class:"data-types",
   }
 };
-
 module.exports = ProjectInfo;

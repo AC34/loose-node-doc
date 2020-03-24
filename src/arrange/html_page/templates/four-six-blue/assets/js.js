@@ -50,7 +50,7 @@ function createList() {
 }
 //create and adds search element to DOM
 function prepareSearcher() {
-  $("<div id='search'>").prependTo("#api-navi");
+  $("<div id='search'>").appendTo("#api-navi");
   $("<input id='search_bar' type='text' placeholder='narrow down'>").appendTo(
     "#search"
   );

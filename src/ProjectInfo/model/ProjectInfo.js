@@ -4,6 +4,7 @@ var ProjectInfo = {
   entry_point_dir:"",
   build_script_path:"",
   package_json:"",
+  //ids/classes for html
   html_template:{
     g_navi_id:"g-navi",
     g_navi_ul_id:"g-links",
@@ -19,7 +20,6 @@ var ProjectInfo = {
     item_example_class:"example",
     item_details_class:"details",
     item_details_datatypes_class:"data-types",
-     
   }
 };
 

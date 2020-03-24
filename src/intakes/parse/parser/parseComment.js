@@ -12,7 +12,6 @@ function parseComment(comment_string) {
   comment_tree = parseLines(lines);
   return comment_tree;
 }
-
 /**
  * parses line by line
  * c_index meaning items starting with atmark.
@@ -28,28 +27,27 @@ function parseLines(lines, c_tree = {}, c_index = 0) {
   if (line === "") return parseLines(lines, c_tree, c_index);
   //updating index (only when needed by the line)
   c_index = resolveC_Index(line, c_index);
-  if (!c_tree[c_index] && c_index > 0)c_tree[c_index] = {}; //initialize object
-  
+  if (!c_tree[c_index] && c_index > 0) c_tree[c_index] = {}; //initialize object
   //update initial description (only when index=0)
   if (c_index === 0) {
     if (!c_tree[c_index]) c_tree[c_index] = "";
     c_tree[c_index] += line + "\n";
     return parseLines(lines, c_tree, c_index); //proceed
   }
-
   //resolve tag (on index incrementation)
   if (Object.keys(c_tree[c_index]).length === 0) {
-    if (line.indexOf("@") === 0)
-      c_tree[c_index].tag = line.substring(1, line.indexOf(" "));
+    if (line.indexOf("@") === 0) var sp_pos = line.indexOf(" ");
+    if (sp_pos === -1) {
+      c_tree[c_index].tag = line.substring(1, line.length); //all line
+    } else {
+      c_tree[c_index].tag = line.substring(1, line.indexOf(" ")); //tag only
+    }
   }
-
   //update c_tree by parsing it
   c_tree = parseLine(line, c_tree, c_index);
   //proceed
   return parseLines(lines, c_tree, c_index);
-
 }
-
 /**
  * ignores unnecessary strings
  * @param {string} str
@@ -67,7 +65,6 @@ function trim(str) {
   //repeat on demand
   return str !== before ? trim(str) : str;
 }
-
 function resolveC_Index(line, c_index) {
   var at = "";
   if (line.indexOf("@") === 0) {
@@ -87,7 +84,6 @@ function resolveC_Index(line, c_index) {
     return c_index + 1;
   }
 }
-
 /**
  *
  * @param {string} line
@@ -95,9 +91,13 @@ function resolveC_Index(line, c_index) {
 function parseLine(line, c_tree, c_index) {
   //There is a chance of next line being description of previous @ definition(roughly saying). Anything else is under the initial description.
   var el = line.split(" ");
-  //if (el.length<3) return c_tree; //abort on empty line
-  el.shift();
-  if(el.length===0)return c_tree;
+  //shift tag
+  var tagline = false;
+  if (el[0].startsWith("@")) {
+    el.shift();
+    tagline = true;
+  }
+  if (el.length === 0) return c_tree;
   //moving on to next block.
   if (isBlockDataTypes(el[0])) {
     //is data type. then shift.
@@ -114,7 +114,7 @@ function parseLine(line, c_tree, c_index) {
     }
   } else {
     //if there is only one clause after @, then  it should be treated as a name
-    if (!c_tree[c_index].name && el.length === 1) {
+    if (!c_tree[c_index].name && el.length === 1 && tagline === true) {
       //treat as name ,then shift
       c_tree[c_index].name = el[0];
       if (!el[1]) return c_tree;
@@ -129,9 +129,8 @@ function parseLine(line, c_tree, c_index) {
   return c_tree;
 }
 /**
- * 
- * @param {string} suspect 
- * @return {boolean} 
+ * @param {string} suspect
+ * @return {boolean}
  */
 function isBlockDataTypes(suspect) {
   if (
@@ -144,9 +143,8 @@ function isBlockDataTypes(suspect) {
   }
 }
 /**
- * 
- * @param {string} d_block 
- * @return {array} 
+ * @param {string} d_block
+ * @return {array}
  */
 function fetchDataTypes(d_block) {
   d_block = d_block.substring(1, d_block.length - 1);

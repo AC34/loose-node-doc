@@ -122,7 +122,11 @@ module.exports = {
       item_description: "dd",
       item_details:"div",
       item_details_item:"dd",
-      example: "code"
+      item_details_datatypes:"div",
+      item_details_datatype:"dd",
+      example_wrap:"div",
+      example: "code",
+      example_caption:"dd"
     }
   }
 };

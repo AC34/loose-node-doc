@@ -119,7 +119,6 @@ var processInterfaces = {
       //build script itself
       ProjectInfo.build_script_path
     ];
-    console.log("ignores:"+JSON.stringify(ignores,null," "));
     //do ignore
     var before = Object.keys(cache_tree).length;
     cache_tree = ignorePaths(
@@ -251,8 +250,10 @@ var processInterfaces = {
     var FileWriter = require("./outputs/FileWriter");
     var writer = new FileWriter(ProjectInfo.project_root_dir);
     var html_file = writer.getAbsolutePath(options.html_path); 
+    var copyAssets = require("./arrange/html_page/util/copyAssets");
     html_file = writer.replaceVersionPattern(html_file,ProjectInfo);
-    var success = writer.writeHtml(html_file,html);  
+    var success = writer.writeHtml(html_file,html);
+    copyAssets(ProjectInfo,options);
     //notify
     if(success){
 

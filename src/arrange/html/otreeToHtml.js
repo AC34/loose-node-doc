@@ -1,6 +1,5 @@
 var makeElement = require("./util/makeElement");
 var toHtml = require("./util/commentToHtml");
-
 /**
  * Creates Html from object trree.
  * html rules are defined both by options and ProjectInfo.

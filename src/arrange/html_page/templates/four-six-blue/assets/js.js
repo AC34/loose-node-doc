@@ -3,7 +3,10 @@
 window.last_focus_search_term = "";
 window.focus_class_name = "api_cycle_focus";
 window.is_names_list_scrolling = false;
+window.scroll_time_ms = 400;
 //for searching
+//db starts from 0
+//item-id-without#:{keywords:"",search_id:""}
 window.search_db = {};
 //css variables
 window.window_switch_point = 850;
@@ -25,6 +28,7 @@ function setUpLocalNavi() {
   prepareListNavigator(); //list navigator
   prepareEvents(); //initializses events
   handleWindowResize();//resize
+  navigateToLocalId();//page load event
 }
 //create api list and adds its elements to DOM
 function createList() {
@@ -150,6 +154,18 @@ function handleWindowResize() {
     });
   }
 }
+//navigate to url with id when page is loaded.
+function navigateToLocalId(){
+  var url = document.location.href;  
+  if(url.indexOf("#")===-1)return;//do nothing
+  var id = url.substring(url.indexOf("#")+1,url.length);
+  //change list focus
+  console.log("id="+id);
+  console.log("search_id:"+getSearchIdByItemId(id));
+  window.api_focus_cycle_point = getSearchIdByItemId(id);
+  updateListFocus();
+  moveToListFocusedItemOnDoc();
+}
 //navi toggling functionalities
 function toggleNavi() {
   //toggle can be called by link when window < window.window_switch_point
@@ -190,6 +206,7 @@ function toggleNavi() {
 }
 //searches keywords
 function search(keycode = undefined) {
+  console.log("db:"+JSON.stringify(window.search_db));
   //format
   if (typeof keycode !== "number") keycode = undefined;
   if (!window.search_timer) {
@@ -233,6 +250,16 @@ function search(keycode = undefined) {
   }
   //let focus move
   moveOntoSearchedItems(keycode);
+}
+//-1 when not found.
+//id is without #
+function getSearchIdByItemId(id=""){
+  for(var db_id in window.search_db){
+    if(db_id === id){
+      return window.search_db[db_id].search_id;
+    }
+  }
+  return -1;
 }
 //highlights currently focused
 function moveOntoSearchedItems(key = -1) {
@@ -343,7 +370,7 @@ function updateListFocus() {
       //update by animation
       window.is_names_list_scrolling = true;
       list.stop(); //callback can be too early
-      list.animate({ scrollTop: dest }, 200, function() {
+      list.animate({ scrollTop: dest }, window.scroll_time_ms, function() {
         window.is_names_list_scrolling = false;
       });
     }
@@ -385,5 +412,6 @@ function moveToListFocusedItemOnDoc() {
     dest -= header_offset;//header is staying on wider window
   }
   //now scroll
-  $("#main").animate({ scrollTop: dest }, 0);
+  $("#main").stop();
+  $("#main").animate({ scrollTop: dest }, window.scroll_time_ms);
 }

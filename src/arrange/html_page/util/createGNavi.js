@@ -12,15 +12,19 @@ function createGNavi(options,ProjectInfo){
   if(Object.keys(list).length===0)return "";
   list = createList(list); 
   if(list==="")return "";//abort on empty
-  list = makeElement(f.g_navi_list,t.g_navi_ul_id,"",list);
+  list = makeElement(f.g_navi_list,{
+    id:t.g_navi_ul_id
+  },list);
   return list;
 }
 function createList(list){
   var ret = "";
   for(var name in list){
     var a = "<a href=\""+list[name]+"\""+">"+name+"</a>";
-    ret += makeElement("li","","",a);
+    var a = makeElement("a",{href:list[name]},name);
+    ret += makeElement("li",{},a);
   }
+  console.log("created GNavi:"+ret);
   return ret;
 }
 module.exports = createGNavi;

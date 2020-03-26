@@ -12,7 +12,6 @@ function makeExampleElement(comment, html_template, html_format) {
   if (cap !== "") {
     cap = replaceCaption(cap, html_format);
   }
-  console.log("replaced cap:" + cap);
   var code = makeElement(
     html_format.exampke,
     {},
@@ -52,5 +51,4 @@ function replaceCaption(str, html_format) {
   str = str.replace(tale_pt, tale_rp);
   return str;
 }
-
 module.exports = makeExampleElement;

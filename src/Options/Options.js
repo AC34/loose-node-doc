@@ -75,7 +75,7 @@ module.exports = {
   },
   html_notifications:{
     data_type:"array",
-    default:[]
+    default:["this is notification 1."]
   },
   html_about_html:{
     data_type:"string",

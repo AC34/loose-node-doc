@@ -97,8 +97,8 @@ function prepareEvents() {
     window.api_focus_last_focus_by_search = undefined;
   });
   //add search function
-  $("#search_bar").keydown(e => search(e.keyCode));
-  $("#names-list").keydown(e => moveOntoSearchedItems(e.keyCode));
+  $("#search_bar").keydown(e => search(e.code));
+  $("#names-list").keydown(e => moveOntoSearchedItems(e.code));
   //disable default behavior
   $("#names-list>li>a").each((i, item) => {
     $(item).click(e => {

@@ -3,13 +3,20 @@
 window.last_focus_search_term = "";
 window.focus_class_name = "api_cycle_focus";
 window.is_names_list_scrolling = false;
+window.is_main_scroll_auto = false;
 window.scroll_time_ms = 400;
+window.main_scroll_event_delay = 100;
+window.user_scroll_detect_delay = 100;
+window.is_user_scrolling_main = false;
+
 //for searching
 //db starts from 0
 //item-id-without#:{keywords:"",search_id:""}
 window.search_db = {};
 //css variables
 window.window_switch_point = 850;
+//utilities
+window.util = {};
 //init
 $(document).ready(function() {
   setUpLocalNavi();
@@ -20,15 +27,19 @@ $(document).ready(function() {
  */
 function setUpLocalNavi() {
   //prepare toggler
-  $("<div id='navi-toggler' class='page-handler'>").text("📜").appendTo("#main");
+  $("<div id='navi-toggler' class='page-handler'>")
+    .text("📜")
+    .appendTo("#main");
   //to top button
-  $("<div id='to-top' class='page-handler'>").text("🔺").appendTo("#main");
+  $("<div id='to-top' class='page-handler'>")
+    .text("🔺")
+    .appendTo("#main");
   createList(); //before prepareSearcher()
   prepareSearcher(); //search input
   prepareListNavigator(); //list navigator
   prepareEvents(); //initializses events
-  handleWindowResize();//resize
-  navigateToLocalId();//page load event
+  handleWindowResize(); //resize
+  navigateToLocalId(); //page load event
 }
 //create api list and adds its elements to DOM
 function createList() {
@@ -81,51 +92,73 @@ function prepareEvents() {
     $("#search_bar").val("");
     search(); //empty search
     //empty focus
-    clearApiFocus();
+    window.util.clearApiFocus();
     //initialize focus
     window.api_focus_last_focus_by_search = undefined;
   });
   //add search function
   $("#search_bar").keydown(e => search(e.keyCode));
+  $("#names-list").keydown(e => moveOntoSearchedItems(e.keyCode));
   //disable default behavior
   $("#names-list>li>a").each((i, item) => {
     $(item).click(e => {
       e.preventDefault();
     });
   });
+
   //clicks on jquery
   $("#names-list>li").each((i, item) => {
     //disable children events
-    $(item)
-      .children()
-      .each((i, item) => {
-        $(item).css("pointer-events", "none");
-      });
     //delare event on li
     $(item).click(e => {
       //update current focus
-      clearApiFocus();
-      window.api_focus_cycle_point = e.target.id;
-      updateListFocus();
+      window.util.clearApiFocus();
+      window.api_focus_cycle_id = e.target.id;
+      window.util.updateLocationBarId(
+        window.util.getItemIdBySearchId(e.target.id)
+      );
+      updateListFocusClass();
       //move to the location
       moveToListFocusedItemOnDoc();
       //exit navi on mobile/tablet
       toggleNavi();
     });
   });
-  //navigate up and down
+  //tab focus supprot on #names-list items
+  $("#names-list>li>a").each((i, item) => {
+    $(item).focusin(e => {
+      var id = e.target.parentElement.id;
+      window.util.clearApiFocus();
+      window.api_focus_cycle_id = id;
+      window.util.updateLocationBarId(
+        window.util.getItemIdBySearchId(e.target.id)
+      );
+      updateListFocusClass();
+      moveToListFocusedItemOnDoc();
+    });
+    $(item).focusout(e => {
+      window.util.clearApiFocus();
+    });
+  });
+  //navar te up and down
   $("#navi-up").click(e => {
     //38 = up key
     moveOntoSearchedItems(38);
     moveToListFocusedItemOnDoc();
+    window.util.updateLocationBarId(
+      window.util.getItemIdBySearchId(window.api_focus_cycle_id)
+    );
   });
   $("#navi-down").click(e => {
     //40 = down key
     moveOntoSearchedItems(40);
     moveToListFocusedItemOnDoc();
+    window.util.updateLocationBarId(
+      window.util.getItemIdBySearchId(window.api_focus_cycle_id)
+    );
   });
   $("#navi-confirm").click(e => {
-    if($("."+window.focus_class_name).length===0)return;
+    if ($("." + window.focus_class_name).length === 0) return;
     moveToListFocusedItemOnDoc();
     toggleNavi();
   });
@@ -134,9 +167,13 @@ function prepareEvents() {
   //window resize events
   $(window).resize(handleWindowResize);
   //to top button
-  $("#to-top").click(()=>{
-    $("#main").stop();
-    $("#main").animate({scrollTop:0},200);
+  $("#to-top").click(() => {
+    window.util.scrollMainElement(0);
+    window.util.clearLocationBarId();
+    window.util.clearApiFocus();
+  });
+  $("#main").scroll(() => {
+    handleMainScrollEvent();
   });
 }
 //resize handler
@@ -147,29 +184,48 @@ function handleWindowResize() {
       $(window).height() - $("#search").height() - $("#list-navigator").height()
   });
   //api-navi visibility
-  if($(window).width()>window.window_switch_point&&$("#api-navi").css("display")==="none"){
+  if (
+    $(window).width() > window.window_switch_point &&
+    $("#api-navi").css("display") === "none"
+  ) {
     $("#api-navi").css({
-      display:"flex",
-      opacity:1
+      display: "flex",
+      opacity: 1
     });
   }
 }
+function handleMainScrollEvent() {
+  if (window.is_user_scrolling_main) return;
+  window.is_user_scrolling_main = true;
+  setTimeout(() => {
+    window.is_user_scrolling_main = false;
+  }, window.user_scroll_detect_delay);
+  //user sroll only
+  if (window.is_main_scroll_auto === true) return;
+  var id = window.util.locateCurrentlyFocusedItemId();
+  if (id === "") {
+    window.util.clearLocationBarId();
+  } else {
+    window.util.updateLocationBarId(id);
+  }
+  window.util.clearApiFocus();
+  window.api_focus_cycle_id = window.util.getSearchIdByItemId(id);
+  if (window.api_focus_cycle_id !== "") updateListFocusClass();
+}
 //navigate to url with id when page is loaded.
-function navigateToLocalId(){
-  var url = document.location.href;  
-  if(url.indexOf("#")===-1)return;//do nothing
-  var id = url.substring(url.indexOf("#")+1,url.length);
+function navigateToLocalId() {
+  var url = document.location.href;
+  if (url.indexOf("#") === -1) return; //do nothing
+  var id = url.substring(url.indexOf("#") + 1, url.length);
   //change list focus
-  console.log("id="+id);
-  console.log("search_id:"+getSearchIdByItemId(id));
-  window.api_focus_cycle_point = getSearchIdByItemId(id);
-  updateListFocus();
+  window.api_focus_cycle_id = window.util.getSearchIdByItemId(id);
+  updateListFocusClass();
   moveToListFocusedItemOnDoc();
 }
 //navi toggling functionalities
 function toggleNavi() {
   //toggle can be called by link when window < window.window_switch_point
-  //toggle can only happen on mobile/tablet/smalls screens 
+  //toggle can only happen on mobile/tablet/smalls screens
   if ($(window).width() <= window.window_switch_point) {
     if ($("#api-navi").css("display") === "none") {
       $("#api-navi").stop();
@@ -184,7 +240,7 @@ function toggleNavi() {
         200
       );
       //adjust toggler
-      $("#navi-toggler").css("left","80vw");
+      $("#navi-toggler").css("left", "80vw");
     } else {
       //hide
       $("#api-navi").stop();
@@ -200,13 +256,12 @@ function toggleNavi() {
         }
       );
       //adjust toggler
-      $("#navi-toggler").css("left",0);
+      $("#navi-toggler").css("left", 0);
     }
   }
 }
 //searches keywords
 function search(keycode = undefined) {
-  console.log("db:"+JSON.stringify(window.search_db));
   //format
   if (typeof keycode !== "number") keycode = undefined;
   if (!window.search_timer) {
@@ -223,7 +278,7 @@ function search(keycode = undefined) {
     $("#search_bar").val("");
     search(); //empty search
     //empty focus
-    clearApiFocus();
+    window.util.clearApiFocus();
     //initialize focus
     window.api_focus_last_focus_by_search = undefined;
   });
@@ -236,6 +291,7 @@ function search(keycode = undefined) {
     moveOntoSearchedItems(keycode);
     return; //end
   }
+  //update list states
   for (var id in window.search_db) {
     var item = window.search_db[id];
     if (item.keywords.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
@@ -248,18 +304,11 @@ function search(keycode = undefined) {
         .addClass("search_inactive");
     }
   }
+  window.util.updateLocationBarId(
+    window.util.getItemIdBySearchId(window.api_focus_cycle_id)
+  );
   //let focus move
   moveOntoSearchedItems(keycode);
-}
-//-1 when not found.
-//id is without #
-function getSearchIdByItemId(id=""){
-  for(var db_id in window.search_db){
-    if(db_id === id){
-      return window.search_db[db_id].search_id;
-    }
-  }
-  return -1;
 }
 //highlights currently focused
 function moveOntoSearchedItems(key = -1) {
@@ -307,7 +356,7 @@ function moveOntoSearchedItems(key = -1) {
   if (continuous === true) {
     if (list.has(focus_class_name)) {
       list.each((i, item) => {
-        if (item.id === window.api_focus_cycle_point) {
+        if (item.id === window.api_focus_cycle_id) {
           index = i; //current index
           return false; //jquery each exit
         }
@@ -325,64 +374,17 @@ function moveOntoSearchedItems(key = -1) {
     //end of the list when diff is minus
     if (diff < 0) index = list.length - 1;
   }
-
   //clear the last focus
-  clearApiFocus();
-  window.api_focus_cycle_point = list[index].id;
-  updateListFocus();
+  window.util.clearApiFocus();
+  window.api_focus_cycle_id = list[index].id;
+  updateListFocusClass();
   moveToListFocusedItemOnDoc();
   return; //done
 } //moveOntoSearchedItems
 //focuses on api list
-function updateListFocus() {
-  var id = window.api_focus_cycle_point;
+function updateListFocusClass() {
+  var id = window.api_focus_cycle_id;
   $("#" + id).addClass(window.focus_class_name);
-  //now focus
-  adjustScroll();
-  function adjustScroll() {
-    //only if something is focused
-    if (!$("#names-list").find("." + window.focus_class_name).length > 0)
-      return;
-    //prepare variables
-    var item = $("." + window.focus_class_name)[0];
-    var list = $("#names-list");
-    var sct = $(list).scrollTop();
-    var l_offset = $(list).offset().top;
-    var list_btm = $(list).height();
-    var item_top = $(item).offset().top - l_offset;
-    var item_btm = item_top + $(item).height() + l_offset;
-
-    if (0 > item_top) {
-      var dest = sct - Math.abs(item_top);
-    } else if (list_btm < item_btm) {
-      var dest = sct + item_btm - list_btm;
-    } else {
-      return; //otherwise, do nothing.
-    }
-    //now scroll
-    if (window.is_names_list_scrolling === true) {
-      //user is moving too fast
-      list.stop();
-      list.animate({ scrollTop: dest }, 0, () => {
-        window.is_names_list_scrolling = false;
-      });
-    } else {
-      //update by animation
-      window.is_names_list_scrolling = true;
-      list.stop(); //callback can be too early
-      list.animate({ scrollTop: dest }, window.scroll_time_ms, function() {
-        window.is_names_list_scrolling = false;
-      });
-    }
-  }
-}
-//clears whats focused on updateListFocus()
-function clearApiFocus() {
-  window.api_focus_cycle_point = "";
-  $("." + window.focus_class_name).each((i, item) => {
-    $(item).removeClass(window.focus_class_name);
-    return;
-  });
 }
 /**
  * adjusts scroll of #documentation item, by the focused item on #names-list
@@ -407,11 +409,127 @@ function moveToListFocusedItemOnDoc() {
   var header_offset = $("header").height();
   var doc_top = $("#main").scrollTop();
   //determine destination
-  var dest = Math.abs(doc_top) + item_top;//this is base
-  if($(window).width()>window.window_switch_point){
-    dest -= header_offset;//header is staying on wider window
+  var dest = Math.abs(doc_top) + item_top; //this is base
+  if ($(window).width() > window.window_switch_point) {
+    dest -= header_offset; //header is staying on wider window
+  }
+  window.util.scrollMainElement(dest);
+}
+/**
+ * Utilities
+ */
+//clears whats focused on updateListFocusClass()
+window.util.clearApiFocus = function() {
+  window.api_focus_cycle_id = "";
+  $("." + window.focus_class_name).each((i, item) => {
+    $(item).removeClass(window.focus_class_name);
+    return;
+  });
+};
+//clears the hash
+window.util.clearLocationBarId = function() {
+  var url = document.location.href;
+  if (url.indexOf("#") === -1) return;
+  url = url.substring(0, url.indexOf("#")); //remove id clause
+  history.pushState({}, "", url);
+};
+//moves #main to the given id location
+//without #
+window.util.updateLocationBarId = function(id_name) {
+  if (history.pushState) {
+    history.pushState(null, null, "#" + id_name);
+  } else {
+    location.hash = "#myhash";
+  }
+};
+//returns the id
+window.util.locateCurrentlyFocusedItemId = function() {
+  var offset_start = $("header").height();
+  var offset_end = $(window).height();
+  //#about is visible more than half
+  //meaning no item is yet being clearly scrolled to top
+  var about = $("#about").offset().top + $("#about").height() / 2;
+  if (offset_start < about && about < offset_end) return "";
+  //check item location
+  for (var id in window.search_db) {
+    var top = document.getElementById(id).getBoundingClientRect().top;
+    if (offset_start < top && top < offset_end) return id;
+  }
+  return "";
+};
+//returns item ids
+window.util.enumerateVisibleItems = function() {
+  var range = $(window).height();
+  var ret = [];
+  for (var id in window.search_db) {
+    var rect = document.getElementById(id).getBoundingClientRect();
+    if (0 < rect.top && rect.bottom < range) {
+      ret.push(id);
+    }
+  }
+  return ret;
+};
+//empty string when not found.
+//id is without #
+window.util.getSearchIdByItemId = function(id = "") {
+  for (var db_id in window.search_db) {
+    if (db_id === id) {
+      return window.search_db[db_id].search_id;
+    }
+  }
+  return "";
+};
+//scrolls to currently focused list item
+window.util.adjustListScroll = function() {
+  //only if something is focused
+  if (!$("#names-list").find("." + window.focus_class_name).length > 0) return;
+  //prepare variables
+  var item = $("." + window.focus_class_name)[0];
+  var list = $("#names-list");
+  var sct = $(list).scrollTop();
+  var l_offset = $(list).offset().top;
+  var list_btm = $(list).height();
+  var item_top = $(item).offset().top - l_offset;
+  var item_btm = item_top + $(item).height() + l_offset;
+  if (0 > item_top) {
+    var dest = sct - Math.abs(item_top);
+  } else if (list_btm < item_btm) {
+    var dest = sct + item_btm - list_btm;
+  } else {
+    return; //otherwise, do nothing.
   }
   //now scroll
-  $("#main").stop();
-  $("#main").animate({ scrollTop: dest }, window.scroll_time_ms);
-}
+  if (window.is_names_list_scrolling === true) {
+    //user is moving too fast
+    list.stop();
+    list.animate({ scrollTop: dest }, 0, () => {
+      window.is_names_list_scrolling = false;
+    });
+  } else {
+    //update by animation
+    window.is_names_list_scrolling = true;
+    list.stop(); //callback can be too early
+    list.animate({ scrollTop: dest }, window.scroll_time_ms, function() {
+      window.is_names_list_scrolling = false;
+    });
+  }
+};
+window.util.scrollMainElement = function(dest = 0) {
+  //do not force scroll while user is scrolling
+  if (window.is_user_scrolling_main === true) return;
+  if (window.is_main_scroll_auto === true) {
+    $("#main").stop();
+  }
+  window.is_main_scroll_auto = true;
+  $("#main").animate({ scrollTop: dest }, window.scroll_time_ms, () => {
+    setTimeout(() => {
+      window.is_main_scroll_auto = false;
+    }, window.main_scroll_event_delay);
+  });
+};
+window.util.getItemIdBySearchId = function(search_id) {
+  for (var sid in window.search_db) {
+    if (window.search_db[sid].search_id === search_id) return sid;
+  }
+  return "";
+};

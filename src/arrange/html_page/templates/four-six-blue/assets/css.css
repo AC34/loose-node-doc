@@ -80,6 +80,7 @@ header h1 {
 }
 #about > * {
   margin: 8px 0px;
+  text-indent: 0.5em;
 }
 #main {
   width: 100vw;
@@ -113,7 +114,6 @@ header h1 {
   text-decoration: none;
   color: rgb(41, 124, 192);
   font-style: italic;
-  
 }
 #documentation .doc-item a:hover {
   text-decoration: underline;
@@ -369,7 +369,11 @@ header h1 {
   margin-bottom: 100px;
 }
 #names-list li a {
+  pointer-events: none;
   text-decoration: none;
+}
+#names-list li a:focus{
+  outline:none;
 }
 /*for local search functionality*/
 #names-list li.search_active {
@@ -453,11 +457,9 @@ header h1 {
 }
 
 #to-top.page-handler {
-  border-right: none;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  right: 0px;
-  bottom: 5px;
+  position: sticky;
+  left: 600px;
+  bottom: 4px;
 }
 
 #navi-toggler.page-handler {
@@ -466,7 +468,6 @@ header h1 {
   border-bottom-left-radius: 0px;
   left: 0px;
   bottom: 50px;
-  border-left: none;
 }
 
 @media screen and (min-width: 851px) {
@@ -510,5 +511,11 @@ header h1 {
   #names-list li {
     margin-top: 8px;
     margin-bottom: 8px;
+  }
+  #to-top.page-handler {
+    border-right:none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    left:100%;
   }
 }

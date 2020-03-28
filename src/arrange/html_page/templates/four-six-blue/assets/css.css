@@ -129,6 +129,7 @@ header h1 {
   box-sizing: border-box;
   margin: 8px 0;
   padding: 3em 0px;
+  padding-top:0;
   border-top: 1px solid #dcdcdc;
   border-radius: 2px;
 }
@@ -140,8 +141,6 @@ header h1 {
   padding: 0;
   height: 1.5em;
   width: auto;
-  position: relative;
-  top: -1.5em;
 }
 
 #documentation .doc-item .copy-to-clipboard {

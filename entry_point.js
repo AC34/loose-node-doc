@@ -71,20 +71,20 @@ LND.generate = function(object, options = {}) {
     cache_tree
   );
   /**
-   * All preparations are done, now parse comments 
+   * All preparations are done, now parse comments
    */
-  otree = processInterfaces.parseComments(otree,cache_tree,options);
+  otree = processInterfaces.parseComments(otree, cache_tree, options);
   //notify user about the number of resolved comments
   processInterfaces.notifyResolvedCommentsCount(otree);
   //override otree by user definition
   //only picking @trail tags
   otree = processInterfaces.overrideOtreeByTrailTags(otree);
   //create html part(not the whole page)
-  var html = processInterfaces.makeHtml(otree,this.options,this.pi);
+  var html = processInterfaces.makeHtml(otree, this.options, this.pi);
   //make html into page
-  html = processInterfaces.makeHtmlPage(html,this.options,this.pi);
+  html = processInterfaces.makeHtmlPage(html, this.options, this.pi);
   //write html to file
-  processInterfaces.writeHtmlPage(html,this.options,this.pi);
+  processInterfaces.writeHtmlPage(html, this.options, this.pi);
   //write datas on demand.
   processInterfaces.writeObjectTree(this.pi, this.options, otree);
   //writes log

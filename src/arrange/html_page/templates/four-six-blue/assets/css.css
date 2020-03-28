@@ -5,7 +5,6 @@
   color: #252525;
   letter-spacing: 0.02em;
 }
-
 .modal-notification {
   position: fixed;
   margin: 0 auto;
@@ -23,7 +22,6 @@
   display: flex;
   flex-direction: row;
 }
-
 #main header {
   width: auto;
   height: auto;
@@ -35,7 +33,6 @@
   /*number of tool-box can grow up*/
   z-index: 10000;
 }
-
 header h1 {
   color: white;
   letter-spacing: 0.04em;
@@ -48,7 +45,6 @@ header h1 {
   word-break: break-all;
   font-size: 1.5em;
 }
-
 #g-navi {
   margin-top: 4px;
   width: 100%;
@@ -56,13 +52,11 @@ header h1 {
   background: rgba(232, 232, 232, 1) 100%;
   height: auto;
 }
-
 #g-navi > * {
   width: 100%;
   text-align: center;
   margin-bottom: 4px;
 }
-
 #g-navi #g-links {
   display: flex;
   flex-direction: row;
@@ -70,7 +64,6 @@ header h1 {
   list-style-type: none;
   background-color: #ffffff;
 }
-
 #g-navi a {
   margin-top: 1px;
   margin-right: 1px;
@@ -82,16 +75,13 @@ header h1 {
   font-size: 1.1em;
   text-decoration: none;
 }
-
 #g-navi a:first-child {
   margin-left: 1px;
 }
-
 #g-navi a:after {
   content: "↗️";
   font-size: 0.7em;
 }
-
 #g-navi a:hover {
   background-color: #dcdcdc;
 }
@@ -124,16 +114,14 @@ header h1 {
   /*about half way */
   padding-bottom: 50vh;
 }
-
 #documentation .doc-item {
   box-sizing: border-box;
   margin: 8px 0;
   padding: 3em 0px;
-  padding-top:0;
+  padding-top: 0;
   border-top: 1px solid #dcdcdc;
   border-radius: 2px;
 }
-
 #documentation .doc-item .item-tool-box {
   display: flex;
   flex-direction: row-reverse;
@@ -142,7 +130,6 @@ header h1 {
   height: 1.5em;
   width: auto;
 }
-
 #documentation .doc-item .copy-to-clipboard {
   display: block;
   height: inherit;
@@ -154,19 +141,16 @@ header h1 {
   margin: 0;
   margin-right: 4px;
 }
-
 #documentation .doc-item .copy-to-clipboard:focus {
   outline: none;
 }
-
 #documentation .doc-item .object-name {
   text-indent: 4px;
 }
-#documentation .doc-item >*:not(.item-toolbox) {
+#documentation .doc-item > *:not(.item-toolbox) {
   margin: 1em 0px;
   margin-left: 4px;
 }
-
 #documentation .doc-item a {
   word-wrap: break-word;
   text-decoration: none;
@@ -218,7 +202,6 @@ header h1 {
   font-size: 0.9em;
   padding-right: 0.2em;
 }
-
 #documentation .doc-item .details .data-types > * {
   font-style: italic;
   color: #505050;

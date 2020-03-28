@@ -163,9 +163,9 @@ header h1 {
 #documentation .doc-item .object-name {
   text-indent: 4px;
 }
-#documentation .doc-item > *:not(.object-name, .item-toolbox) {
+#documentation .doc-item >*:not(.item-toolbox) {
   margin: 1em 0px;
-  margin-left: 1em;
+  margin-left: 4px;
 }
 
 #documentation .doc-item a {

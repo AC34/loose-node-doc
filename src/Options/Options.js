@@ -79,7 +79,7 @@ module.exports = {
   },
   html_about_html:{
     data_type:"string",
-    default:"<p>about html here</p>"
+    default:"<p>additional html here</p>"
   },
   //replaces first occurance of @version with version string.
   html_version_html:{

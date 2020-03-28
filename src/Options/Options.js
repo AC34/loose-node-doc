@@ -61,7 +61,7 @@ module.exports = {
   //title,h1,meta:ogp
   html_site_title:{
     data_type:"string",
-    default:"my page"
+    default:"my project documentation"
   },
   html_site_description:{
     data_type:"string",

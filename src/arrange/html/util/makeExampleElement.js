@@ -10,17 +10,17 @@ var makeElement = require("./makeElement.js");
 function makeExampleElement(comment, html_template, html_format) {
   var cap = extractCaption(comment.description);
   if (cap !== "") {
-    cap = replaceCaption(cap, html_format);
+    cap = replaceCaption(cap, html_format,html_template);
   }
   var code = makeElement(
-    html_format.exampke,
+    html_format.example,
     {},
     avoidCaption(comment.description)
   );
   var example = makeElement(
     html_format.example_wrap,
     {
-      class: html_template.item_example_class
+      class:html_template.item_example_class
     },
     cap + code
   );
@@ -42,13 +42,14 @@ function avoidCaption(str) {
  * @param {string} str
  * @return {string} str
  */
-function replaceCaption(str, html_format) {
+function replaceCaption(str, html_format,html_template) {
   var head_pt = new RegExp("<caption>", "g");
-  var head_rp = "<" + html_format.example_caption + ">";
+  var head_rp = "<"+html_format.example_caption+" class=\""+html_template.item_example_caption_class+"\">";
   var tale_pt = new RegExp("</caption>", "g");
   var tale_rp = "</" + html_format.example_caption + ">";
   str = str.replace(head_pt, head_rp);
   str = str.replace(tale_pt, tale_rp);
   return str;
 }
+
 module.exports = makeExampleElement;

@@ -21,7 +21,9 @@ function createList(list){
   var ret = "";
   for(var name in list){
     var a = "<a href=\""+list[name]+"\""+">"+name+"</a>";
-    var a = makeElement("a",{href:list[name]},name);
+    var a = makeElement("a",{
+      href:list[name],
+    },name);
     ret += makeElement("li",{},a);
   }
   console.log("created GNavi:"+ret);

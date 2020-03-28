@@ -18,9 +18,11 @@ var ProjectInfo = {
     item_description_class:"description",
     item_param_datatypes_class:"param-data-types",
     item_example_class:"example",
+    item_example_caption_class:"example-title",
     item_details_class:"details",
     item_details_datatypes_class:"data-types",
-    item_link_class:"reference_link"
+    item_link_class:"reference_link",
+    example_caption_class:"example-caption",
   }
 };
 module.exports = ProjectInfo;

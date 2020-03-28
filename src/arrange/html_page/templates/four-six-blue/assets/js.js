@@ -8,6 +8,10 @@ window.scroll_time_ms = 400;
 window.main_scroll_event_delay = 100;
 window.user_scroll_detect_delay = 100;
 window.is_user_scrolling_main = false;
+window.dialog_notifiy_time = 2500;
+window.dialog_fadeout_time = 1000;
+window.modal_notoification_class = "modal-notification";
+window.main_level_2_class= "main-level-2";
 
 //for searching
 //db starts from 0
@@ -19,9 +23,20 @@ window.window_switch_point = 850;
 window.util = {};
 //init
 $(document).ready(function() {
-  setUpLocalNavi();
+  initializePage();
 });
-
+//initialization
+function initializePage(){
+  setUpLocalNavi();
+  createList(); //before prepareSearcher()
+  prepareSearcher(); //search input
+  prepareListNavigator(); //list navigator
+  prepareGNavi();//make gnavi li level-2 item
+  prepareEvents(); //initializses events
+  handleWindowResize(); //resize
+  navigateToLocalId(); //page load event
+  prepareDocItemTools();//link copy, etc.
+}
 /**
  * sets up local search functionality
  */
@@ -34,12 +49,6 @@ function setUpLocalNavi() {
   $("<div id='to-top' class='page-handler'>")
     .text("🔺")
     .appendTo("#main");
-  createList(); //before prepareSearcher()
-  prepareSearcher(); //search input
-  prepareListNavigator(); //list navigator
-  prepareEvents(); //initializses events
-  handleWindowResize(); //resize
-  navigateToLocalId(); //page load event
 }
 //create api list and adds its elements to DOM
 function createList() {
@@ -63,13 +72,65 @@ function createList() {
   });
   $("#api-navi").append(ul);
 }
+
+//add clipboard copy buttons and its events
+function prepareDocItemTools() {
+  //add
+  $(".doc-item").each((i, item) => {
+    var box = $('<div class="item-tool-box"></div>');
+    var action =
+      "onClick=\"copyDocItemUrlToClipboard('" +
+      item.id.replace("#", "") +
+      "');\"";
+    var button = $(
+      '<button class="copy-to-clipboard main-level-2" ' +
+        action +
+        ">copy url📎</button>"
+    );
+    $(button).appendTo(box);
+    $(box).prependTo(item);
+  });
+}
+//id = without #
+function copyDocItemUrlToClipboard(id = "") {
+  if (id === "") return;
+  var url = document.location.href;
+  if (url.indexOf("#") > -1) url = url.substring(0, url.indexOf("#"));
+  url += "#" + id;
+  var input = document.createElement("input");
+  document.body.appendChild(input);
+  input.value = url;
+  input.select();
+  document.execCommand("copy");
+  document.body.removeChild(input);
+  var top = $("#" + id).offset().top;
+  //notify
+  var $n = $(
+    '<div class="' + window.modal_notoification_class + ' main-level-2"></div>'
+  );
+  var $p = $("<p>copied url to clipboard.(" + url + ")</p>");
+  var $parent = $("#" + id);
+  $n.css({
+    visibility: 1,
+    top: $parent.offset().top,
+    width: $parent.width(),
+    left: $parent.offset().left
+  });
+  $p.appendTo($n);
+  $n.appendTo($("#main"));
+  $n.delay(window.dialog_notifiy_time)
+    .fadeOut(window.dialog_fadeout_time)
+    .queue(function(){
+      this.remove();
+    });
+}
 //create and adds search element to DOM
 function prepareSearcher() {
   $("<div id='search'>").appendTo("#api-navi");
   $("<input id='search_bar' type='text' placeholder='narrow down'>").appendTo(
     "#search"
   );
-  $("<button id='bar_clear' class='button'>➖</button>").appendTo("#search");
+  $("<button id='obar_clear' class='button'>➖</button>").appendTo("#search");
 }
 //creates and adds navigator to #main
 function prepareListNavigator() {
@@ -105,7 +166,6 @@ function prepareEvents() {
       e.preventDefault();
     });
   });
-
   //clicks on jquery
   $("#names-list>li").each((i, item) => {
     //disable children events
@@ -174,6 +234,21 @@ function prepareEvents() {
   });
   $("#main").scroll(() => {
     handleMainScrollEvent();
+    controlHeaderLevel();
+  });
+}
+function controlHeaderLevel(){
+  console.log("top:"+$("#main").scrollTop());
+  if($("#main").scrollTop()===0){
+    $("#main header").removeClass("main-level-2");
+  }else{
+    console.log("header level up");
+    $("#main header").addClass("main-level-2");
+  }
+}
+function prepareGNavi(){
+  $("#g-navi li").each((i,item)=>{
+    $(item).addClass(window.main_level_2_class);
   });
 }
 //resize handler

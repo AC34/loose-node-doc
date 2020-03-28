@@ -123,9 +123,9 @@ function parseLine(line, c_tree, c_index) {
   }
   //abort on end
   if (el.length === 0) return c_tree;
-  //meaning rest as description
+  //meaning rest is description
   if (!c_tree[c_index].description) c_tree[c_index].description = "";
-  c_tree[c_index].description += el.join(" ");
+  c_tree[c_index].description += el.join(" ")+"\n";
   return c_tree;
 }
 /**

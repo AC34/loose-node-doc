@@ -4,7 +4,7 @@
   "description": "tries to generate loosely constructed Node.js project document in html by traversing require cache.",
   "main": "entry_point.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/options/optionstest.js"
   },
   "repository": {
     "type": "git",

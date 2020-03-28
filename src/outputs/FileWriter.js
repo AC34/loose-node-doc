@@ -43,7 +43,7 @@ FileWriter.prototype.writeLogs = function(log_path, logs) {
     return e;
   }
 };
-FileWriter.prototype.writeHtml = function(html_path,html){
+FileWriter.prototype.writeHtml = function(html_path, html) {
   assureDirExistance(html_path);
   try {
     fs.writeFileSync(html_path, html, { encoding: "utf8", flags: "w" });
@@ -51,7 +51,7 @@ FileWriter.prototype.writeHtml = function(html_path,html){
   } catch (e) {
     return e;
   }
-}
+};
 /**
  * Tell if path is somewhat writable path.
  * empty, missing file attribute,is directory, will be false.
@@ -86,17 +86,17 @@ function assureDirExistance(file_path) {
  * prepends root directory to given path
  * @param {file_path} file_path
  */
-FileWriter.prototype.getAbsolutePath= function(file_path) {
+FileWriter.prototype.getAbsolutePath = function(file_path) {
   //fix dir
   if (file_path.startsWith("./")) file_path = file_path.replace("./", "");
   if (file_path.startsWith("/")) file_path = file_path.replace("/", "");
   file_path = file_path.split("/");
   var dir = this.root_dir.split(sep);
   return dir.concat(file_path).join(sep);
-}
-FileWriter.prototype.replaceVersionPattern = function(path,ProjectInfo){
+};
+FileWriter.prototype.replaceVersionPattern = function(path, ProjectInfo) {
   var version = ProjectInfo.package_json.version;
-  var pattern = new RegExp("@version","g");
-  return path.replace(pattern,version);
-}
+  var pattern = new RegExp("@version", "g");
+  return path.replace(pattern, version);
+};
 module.exports = FileWriter;

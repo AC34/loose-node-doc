@@ -24,7 +24,7 @@ function constructRootObject(caches) {
     //add if parent does not exist
     if (!caches[path].parent) {
       sources.push(path);
-      for(var i in caches[path].children){
+      for (var i in caches[path].children) {
         children.push(caches[path].children[i]);
       }
       exps = Object.assign(exps, caches[path].exports);

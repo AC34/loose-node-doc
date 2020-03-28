@@ -50,84 +50,84 @@ module.exports = {
     default: "package.json"
   },
   //from root
-  html_path:{
-    data_type:"string",
-    default:"out/@version/index.html"
+  html_path: {
+    data_type: "string",
+    default: "out/@version/index.html"
   },
   html_template_name: {
     data_type: "string",
     default: "four-six-blue"
   },
   //title,h1,meta:ogp
-  html_site_title:{
-    data_type:"string",
-    default:"my project documentation"
+  html_site_title: {
+    data_type: "string",
+    default: "my project documentation"
   },
-  html_site_description:{
-    data_type:"string",
-    default:""
+  html_site_description: {
+    data_type: "string",
+    default: ""
   },
-  html_gnavi_links:{
-    datatype:"array",
-    default:{
-      "home":"index.html"
+  html_gnavi_links: {
+    datatype: "array",
+    default: {
+      home: "index.html"
     }
   },
-  html_notifications:{
-    data_type:"array",
-    default:["this is notification 1."]
+  html_notifications: {
+    data_type: "array",
+    default: ["this is notification 1."]
   },
-  html_about_html:{
-    data_type:"string",
-    default:"<p>additional html here</p>"
+  html_about_html: {
+    data_type: "string",
+    default: "<p>additional html here</p>"
   },
   //replaces first occurance of @version with version string.
-  html_version_html:{
-    data_type:"string",
-    default:"<p>version:@version</p>"
+  html_version_html: {
+    data_type: "string",
+    default: "<p>version:@version</p>"
   },
-  html_custom_css:{
-    data_type:"string",
-    default:""
+  html_custom_css: {
+    data_type: "string",
+    default: ""
   },
-  html_custom_script:{
-    data_type:"string",
-    default:""
+  html_custom_script: {
+    data_type: "string",
+    default: ""
   },
   //for html
-  //all values can use @version,@homepage 
-  html_meta:{
-    data_type:"object",
-    default:{
-      keywords:"",
-      description:"this is description of my package of version:@verseion",
-      author:"ac34",
-      og_site_name:"www.example.com",
-      og_url:"",
-      og_image:"",
-      custom_html:""
+  //all values can use @version,@homepage
+  html_meta: {
+    data_type: "object",
+    default: {
+      keywords: "",
+      description: "this is description of my package of version:@verseion",
+      author: "ac34",
+      og_site_name: "www.example.com",
+      og_url: "",
+      og_image: "",
+      custom_html: ""
     }
   },
   html_format: {
     data_type: "object",
     default: {
-      lang:"en",
+      lang: "en",
       g_navi: "div",
-      documentation:"div",
+      documentation: "div",
       //expecting ul or ol
       g_navi_list: "ul",
-      notifications:"p",
+      notifications: "p",
       item: "dl",
       item_name: "dt",
       item_description: "dd",
-      item_details:"div",
-      item_details_item:"dd",
-      item_details_datatypes:"div",
-      item_details_datatype:"dd",
-      example_wrap:"div",
+      item_details: "div",
+      item_details_item: "dd",
+      item_details_datatypes: "div",
+      item_details_datatype: "dd",
+      example_wrap: "div",
       example: "code",
-      example_caption:"dd",
-      link:"a"
+      example_caption: "dd",
+      link: "a"
     }
   }
 };

@@ -26,7 +26,7 @@ module.exports = {
   },
   outMessage: function(key, args = {}) {
     if (!this.messageExists(key)) return;
-    var message = args==={}?this.messages[key]():this.messages[key](args);
+    var message = args === {} ? this.messages[key]() : this.messages[key](args);
     this.logs.push(message);
     if (this.verbose !== true) return;
     console.log(message);

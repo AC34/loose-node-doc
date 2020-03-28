@@ -2,13 +2,13 @@
  * Iterates through object_tree itmes and parses each comment and store the result.
  *
  * The parser is ./parseComment.js
- * @param {object} otree 
+ * @param {object} otree
  * @param {objcet} otree
  */
-function parseComments(otree){
+function parseComments(otree) {
   var parser = require("./parser/parseComment");
-  for(var name in otree){
-    if(otree[name].comment){
+  for (var name in otree) {
+    if (otree[name].comment) {
       otree[name].comment = parser(otree[name].comment);
     }
   }

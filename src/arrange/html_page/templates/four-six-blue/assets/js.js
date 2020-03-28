@@ -238,11 +238,9 @@ function prepareEvents() {
   });
 }
 function controlHeaderLevel(){
-  console.log("top:"+$("#main").scrollTop());
   if($("#main").scrollTop()===0){
     $("#main header").removeClass("main-level-2");
   }else{
-    console.log("header level up");
     $("#main header").addClass("main-level-2");
   }
 }

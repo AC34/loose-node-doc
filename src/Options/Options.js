@@ -51,7 +51,7 @@ module.exports = {
   },
   html_template_name: {
     data_type: "string",
-    default: "four-six-blue"
+    default: "4-6-blue"
   },
   //title,h1,meta:ogp
   html_site_title: {
@@ -60,7 +60,7 @@ module.exports = {
   },
   html_site_description: {
     data_type: "string",
-    default: ""
+    default: "my project's documentation page."
   },
   html_gnavi_links: {
     datatype: "array",

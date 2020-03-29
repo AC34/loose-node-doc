@@ -18,7 +18,7 @@ You can simply give an empty object"{}" if you want all default settings enabled
 General:
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
-|lang|string|"en_US"|language for logs. See 3.4|
+|lang|string|"en_US"|language for logs. See 3.2|
 |verbose|boolean|true|Whether to show logs to terminal during the process.|
 |package_json_path|string|"package.json"|path of package.json file from project root directory.|
 

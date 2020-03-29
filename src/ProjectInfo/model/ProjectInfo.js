@@ -4,6 +4,8 @@ var ProjectInfo = {
   entry_point_dir: "",
   build_script_path: "",
   package_json: "",
+  //without @
+  trail_tag:"trail",
   //ids/classes for html
   html_template: {
     g_navi_id: "g-navi",

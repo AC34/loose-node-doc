@@ -21,11 +21,6 @@ module.exports = {
     data_type: "string",
     default: "out/loose_doc_log.txt"
   },
-  //without @
-  trail_tag: {
-    data_type: "string",
-    default: "trail"
-  },
   //console
   verbose: {
     data_type: "boolean",

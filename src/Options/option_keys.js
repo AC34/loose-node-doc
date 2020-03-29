@@ -8,7 +8,6 @@ module.exports ={
 	"object_tree_path": "object_tree_path",
 	"write_logs": "write_logs",
 	"log_path": "log_path",
-	"trail_tag": "trail_tag",
 	"verbose": "verbose",
 	"enable_default_ignore_paths": "enable_default_ignore_paths",
 	"ignore_paths": "ignore_paths",

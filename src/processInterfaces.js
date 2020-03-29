@@ -184,7 +184,7 @@ var processInterfaces = {
     otree = resolveCodeNames(otree, obj_names);
     return otree;
   },
-  parseComments:function(otree,cache_tree,options){
+  parseComments:function(otree,cache_tree,project_info){
     var loadAllRequiredFiles = require("./intakes/IO/loadAllRequiredFiles");
     var resolveCodesFiles = require("./intakes/resolve/resolveCodeFiles");
     var resolveComments = require("./intakes/resolve/resolveFunctionComments");
@@ -197,7 +197,7 @@ var processInterfaces = {
     //"funtion" comments are read and added, as string.
     otree = resolveComments(otree, all_files);
     //now add options.trail_tag comments (not overriding already parsed function comments)
-    otree = parseCommentsByTag(otree,all_files,options.trail_tag);
+    otree = parseCommentsByTag(otree,all_files,project_info.trail_tag);
     //"function" commenets are parsed and now object.
     otree = parseComments(otree);
     return otree;
@@ -215,18 +215,6 @@ var processInterfaces = {
     } else {
       this.console.outMessage("process-resolved-comments", { num: count });
     }
-  },
-  /**
-   * salvages user comments 
-   * @param {object} otree 
-   * @return {object} otree
-   */
-  overrideOtreeByTrailTags:function(otree){
-    var merge = require("./arrange/merge/mergeUserDefinedComments.js");
-    //notify
-     
-    //then return
-    return merge(otree);
   },
   makeHtml:function(otree,options,ProjectInfo){
     var toHtml = require("./arrange/html/otreeToHtml");

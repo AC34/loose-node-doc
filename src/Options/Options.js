@@ -62,19 +62,19 @@ module.exports = {
     data_type: "string",
     default: "my project's documentation page."
   },
+  html_notifications: {
+    data_type: "array",
+    default: ["this is notification 1."]
+  },
   html_gnavi_links: {
     datatype: "array",
     default: {
       home: "index.html"
     }
   },
-  html_notifications: {
-    data_type: "array",
-    default: ["this is notification 1."]
-  },
   html_about_html: {
     data_type: "string",
-    default: "<p>additional html here</p>"
+    default: "<p>This is my documentation.</p>"
   },
   //replaces first occurance of @version with version string.
   html_version_html: {

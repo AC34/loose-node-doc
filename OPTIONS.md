@@ -83,7 +83,7 @@ empty values will be ignored.
 Html elements
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
-|html_format.lang|string|"en"|See https://www.w3schools.com/tags/att_global_lang.asp for more details.|
+|html_format.lang|string|"en"|See https://www.w3schools.com/tags/att_global_lang.asp for details.|
 |html_format.g_navi|string|"div"|element name for global navigation|
 |html_format.documentation|string|"div"|element name for #documentation|
 |html_format.g_navi_list|string|"ul"|element name for list type. This is supposed to be ul or ol.|
@@ -104,7 +104,72 @@ Html elements for documentation items.
 |html_format.link|string|"a"|element name for @link tag text.|
 
 #### 3 Step by step
+##### 3.1 Format of options.
+Create the option as an object.
 
-##### Choosing output html lang 
+e.g.
+`var options = {option_key:"value",...}`
 
+##### 3.2 Choosing language for terminal and logs.
+You may choose language for terminal outputs and logs.
+try choosing by 
+
+`[loose-node-doc].lang`
+
+
+#### 3.3 Customizing output html
+There are 2 ways to customize  output html.
+##### 3.3.1 By template and setting html options
+This is the easiest path to have your documentation page.
+Default settings will put default values. You might want to at least change the follwing settings to suit your project:
+  1. html_site_title
+  2. html_site_description
+  3. html_notifications (can be blank array)
+  4. html_about_html
+  5. html_gnavi_links 
+
+##### 3.3.2 By bare object tree
+Setting "write_object_tree" to true will give you the bare data of your project. See the data and take advantage of your freedom with it.
+
+#### 4. Controlling html content
+
+loose-node-doc tries to find all the necessary paths from the given instance and "require" cache list. This approach simply might include many unnecessary paths.
+
+Ignoring objects can be done by either listing "ignore_paths" and "ignore_objects".
+
+##### 4.1. Ignoring paths
+  - paths are understood as it is from your project root folder(not the OS root).
+  - loose-node-doc is automatically removed.
+  - You can start the path by blank,"./" or "/".
+  - If path is a file, then a file is excluded from the result.
+  - If path is a directory, then paths under the directory is excluded from the result.
+
+##### 4.2. Ignoring by names
+
+ - Names here means object names.
+ - Nests are represented by dot.
+ - Excludes root object name.
+
+For example, object below 
+
+```
+exported_root:{
+  name1:{
+    name1-1:func1-1(){},
+    name1-2:func1-2(){}"
+  },
+  name2:{}
+}
+```
+is listed as 
+```
+name1.name1-1
+name1.name1-2
+name2
+```
+If you want to exclude func1-1 from output,
+
+` ignore_name:["name1.name1-1"]`
+
+  will do so.
 

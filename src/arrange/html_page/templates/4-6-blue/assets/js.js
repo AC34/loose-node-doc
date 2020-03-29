@@ -85,7 +85,7 @@ function prepareDocItemTools() {
     var button = $(
       '<button class="copy-to-clipboard main-level-2" ' +
         action +
-        ">copy url📎</button>"
+        ">copy url📋</button>"
     );
     $(button).appendTo(box);
     $(box).prependTo(item);

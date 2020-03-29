@@ -67,9 +67,9 @@ module.exports = {
     default: ["this is notification 1."]
   },
   html_gnavi_links: {
-    datatype: "array",
+    datatype: "object",
     default: {
-      home: "index.html"
+      "self": "./"
     }
   },
   html_about_html: {
@@ -83,11 +83,11 @@ module.exports = {
   },
   html_custom_css: {
     data_type: "string",
-    default: ""
+    default: "<script></script>"
   },
   html_custom_script: {
     data_type: "string",
-    default: ""
+    default: "<style></style>"
   },
   //for html
   //all values can use @version,@homepage
@@ -95,9 +95,9 @@ module.exports = {
     data_type: "object",
     default: {
       keywords: "",
-      description: "this is description of my package of version:@verseion",
-      author: "ac34",
-      og_site_name: "www.example.com",
+      description: "this is description page of my package version:@version",
+      author: "",
+      og_site_name: "",
       og_url: "",
       og_image: "",
       custom_html: ""

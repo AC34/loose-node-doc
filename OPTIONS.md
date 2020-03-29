@@ -1,6 +1,6 @@
 # Setting Options
 
-#### 1 Autocompletion for Options
+#### 1 Autocompletion
 This is one of the reasons loose-node-doc is not using package.json for settings.
 
 You can avoid typing key names listed below by your editor(only if your editor supports).
@@ -173,3 +173,7 @@ If you want to exclude func1-1 from output,
 
   will do so.
 
+##### 4.3. @trail tag
+Auto parsing of your project will only try to pick functions in the object. If you want any object to be picked, put @trail tag in your comments.
+
+nameing rule for @trail tag is explained above in "Ignoring by names" section.

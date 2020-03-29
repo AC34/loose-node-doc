@@ -71,7 +71,7 @@ Everything should be ok by version 1.0.0.
 If this project doesn't get updated, then that's a good news.
 
 Future updates might be of:
-  1. Internationalization(translation)
+  1. Internationalization
   2. Bug fixes
-  3. Presentation (homepage,typofix...)
-  4. adopting to ES6
+  3. Presentation (homepage,typofix,Q&A...)
+

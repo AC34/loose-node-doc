@@ -57,15 +57,15 @@ Run your genrator script.
 done.
 
 ### 3.Setting options
+You can set various options, see [options page](./OPTIONS.md) for more information.
 
 ##### 3.3 Ignoring objects
-loose-node-doc tries to find all the necessary paths from the given instance and require cache list. This approach simply might include many unnecessary paths.
+loose-node-doc tries to find all the necessary paths from the given instance and "require" cache list. This approach simply might include many unnecessary paths.
 
-Ignoring objects can be done in two ways,
-by listing "ignore_paths" and "ignore_objects".
+Ignoring objects can be done by either listing "ignore_paths" and "ignore_objects".
 1. Ignoring paths
   - paths are understood as it is from your project root folder(not the OS root).
-  - "node_modules" is already ignored by default.
+  - loose-node-doc is automatically removed.
   - You can start the path by blank,"./" or "/".
   - If path is a file, then a file is excluded from the result.
   - If path is a directory, then paths under the directory is excluded from the result.

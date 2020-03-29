@@ -1,7 +1,6 @@
 # Setting Options
 
-
-#### 3.1 Autocompletion can help
+#### 1 Autocompletion for Options
 This is one of the reasons loose-node-doc is not using package.json for settings.
 
 You can avoid typing key names listed below by your editor(only if your editor supports).
@@ -9,7 +8,7 @@ You can avoid typing key names listed below by your editor(only if your editor s
 e.g.
   * `<loose-node-doc>.option_keys.keyname`
 
-#### 3.2 Options
+#### 2 Options list
 Default settings are enabled when no options are set. 
 
 This is just a mattar of choice. 
@@ -84,7 +83,7 @@ empty values will be ignored.
 Html elements
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
-|html_format.lang|string|"en"|
+|html_format.lang|string|"en"|See https://www.w3schools.com/tags/att_global_lang.asp for more details.|
 |html_format.g_navi|string|"div"|element name for global navigation|
 |html_format.documentation|string|"div"|element name for #documentation|
 |html_format.g_navi_list|string|"ul"|element name for list type. This is supposed to be ul or ol.|
@@ -103,4 +102,9 @@ Html elements for documentation items.
 |html_format.example|string|"code"|element name for @example tag.|
 |html_format.example_caption|string|"dd"|replacement element name of &lt;captoin&gt; tag of @example block|
 |html_format.link|string|"a"|element name for @link tag text.|
+
+#### 3 Step by step
+
+##### Choosing output html lang 
+
 

@@ -3,6 +3,6 @@ var dxlb = require(__dirname+"/../../../../dxl-builder");
 
 console.log("templating start:");
 var options = {
-  "html_template_name":"4-6-red"
+  "html_template_name":"4-6-orange"
 };
 lnd.generate(dxlb,options);

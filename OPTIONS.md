@@ -80,7 +80,7 @@ empty values will be ignored.
 |html_meta.og_image|string|""|image url for meta element "og:image_url"|
 |html_meta.custom_html|string|""|additional html for meta elements.|
 
-Html elements
+Html elements for page
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_format.lang|string|"en"|See https://www.w3schools.com/tags/att_global_lang.asp for details.|

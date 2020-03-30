@@ -22,7 +22,7 @@ function writeList(list){
   var str = prefix;
   for(var i in list){
     str += "\""+list[i]+"\":\""+list[i]+"\"";
-    if(list+1<list.length)str+=",";
+    if(i<list.length)str+=",";
   }
   str += suffix;
   fs.writeFileSync(target,str,"UTF-8");

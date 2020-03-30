@@ -176,4 +176,4 @@ If you want to exclude func1-1 from output,
 ##### 4.3. @trail tag
 Auto parsing of your project will only try to pick functions in the object. If you want any object to be picked, put @trail tag in your comments.
 
-nameing rule for @trail tag is explained above in "Ignoring by names" section.
+nameing rule for @trail tag is same as explained above in "Ignoring by names" section.

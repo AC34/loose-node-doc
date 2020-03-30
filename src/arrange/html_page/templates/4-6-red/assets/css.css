@@ -29,7 +29,7 @@
   flex-direction: row;
   position: sticky;
   top: 0;
-  background: rgb(60, 60, 139);
+  background: rgb(211, 48, 19);
   /*number of tool-box can grow up*/
   z-index: 10000;
 }
@@ -326,7 +326,7 @@ header h1 {
 }
 #search #search_bar:focus {
   outline: none;
-  border: 1px solid rgb(60, 60, 139);
+  border: 1px solid rgb(211,48,29);
 }
 #api-navi .button {
   border: none;
@@ -443,7 +443,7 @@ header h1 {
 }
 /*focus on api items in #names-list*/
 #names-list li.api_cycle_focus {
-  background: rgb(60, 60, 139);
+  background: rgb(211,48,29);
 }
 
 #names-list li.api_cycle_focus a {
@@ -489,7 +489,7 @@ header h1 {
   text-align: center;
   border-radius: 5px;
   box-sizing: border;
-  border: 2px solid rgb(60, 60, 139);
+  border: 2px solid rgb(211,48,29);
   background: #ebebeb;
   position: fixed;
   -webkit-touch-callout: none;

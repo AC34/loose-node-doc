@@ -73,7 +73,7 @@ empty values will be ignored.
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_meta.keywords|string|""|keywords for meta element "keywords".|
-|html_meta.description|string|"this is description page of my package version:@verseion"|this different from description element itself.|
+|html_meta.description|string|"this is the documentation of my project (version:@version)"|this different from description element itself.|
 |html_meta.author|string|""|author name|
 |html_meta.og_site_name|string|""|text for meta element "og:site_name".|
 |html_meta.og_url|string|""|text for "og:site_url".|

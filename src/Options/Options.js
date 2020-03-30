@@ -95,7 +95,7 @@ module.exports = {
     data_type: "object",
     default: {
       keywords: "",
-      description: "this is description page of my package version:@version",
+      description: "this is the documentation of my project (version:@version)",
       author: "",
       og_site_name: "",
       og_url: "",

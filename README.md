@@ -27,7 +27,7 @@ In the script:
 ### 3.Available method
 &lt;loose-node-doc&gt;.generate(app_object,options) : 
   - This method is the only method provided by loose-node-doc.
-
+  
   Arguments:
   1. target app object (required).    
   2. options (optional)

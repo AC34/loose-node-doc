@@ -19,8 +19,7 @@ langauges for terminal and logs
 ##### 1.1 Avaialble languages
 Currently available languagse are as follows:
 
-
- - en<span></span>.US
+<!--terminal-langs-->
 
 #### 2 Options list
 Default settings are enabled when no options are set. 
@@ -142,9 +141,7 @@ Default settings will put default values. You might want to at least change the 
 #### 3.3.2 Available templates
 Currently avaialble template are below: 
 
-
- - 4-6-blue
-
+<!--templates-list-->
 
 ##### 3.3.3 By bare object tree
 Setting "write_object_tree" to true will give you the bare data of your project. See the data and take advantage of your freedom with it.

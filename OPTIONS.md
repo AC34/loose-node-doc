@@ -1,17 +1,23 @@
 # Setting Options
 
+[back to README.md](./README.md)
+
 #### 1 Autocompletion
 This is one of the reasons loose-node-doc is not using package.json for settings.
 
 You can avoid typing key names listed below by your editor(only if your editor supports).
 
-e.g.
-  * `<loose-node-doc>.option_keys.keyname`
+option keys
+  * `<loose-node-doc>.option_keys.<keyname>`
+
+langauges for terminal and logs
+  * `<loose-node-doc>.langs.<language>.<country>`
+
+html tempaltes
+  * `<loose-node-doc>.<template-name>`
 
 #### 2 Options list
 Default settings are enabled when no options are set. 
-
-This is just a mattar of choice. 
 
 You can simply give an empty object"{}" if you want all default settings enabled.
 

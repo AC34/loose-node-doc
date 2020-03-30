@@ -77,7 +77,7 @@ empty values will be ignored.
 |html_meta.author|string|""|author name|
 |html_meta.og_site_name|string|""|text for meta element "og:site_name".|
 |html_meta.og_url|string|""|text for "og:site_url".|
-|html_meta.og_image|string|""|image url for meta element "og:iamge_url"|
+|html_meta.og_image|string|""|image url for meta element "og:image_url"|
 |html_meta.custom_html|string|""|additional html for meta elements.|
 
 Html elements

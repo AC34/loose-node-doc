@@ -1,7 +1,7 @@
 # loose-node-doc
 Quick n easy Node.js app document generator.
 
-Works for tree structured module(only one global static instance)
+Works for tree structured module(Everythihng needs to rest within one global object)
 
 ## 💬Anouncement
 Everything is under preparation.

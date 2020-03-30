@@ -18,11 +18,35 @@ module.exports ={
 	"html_site_title": "html_site_title",
 	"html_site_description": "html_site_description",
 	"html_notifications": "html_notifications",
-	"html_gnavi_links": "html_gnavi_links",
 	"html_about_html": "html_about_html",
 	"html_version_html": "html_version_html",
 	"html_custom_css": "html_custom_css",
 	"html_custom_script": "html_custom_script",
-	"html_meta": "html_meta",
-	"html_format": "html_format"
+	"html_meta": {
+		"keywords": "keywords",
+		"description": "description",
+		"author": "author",
+		"og_site_name": "og_site_name",
+		"og_url": "og_url",
+		"og_image": "og_image",
+		"custom_html": "custom_html"
+	},
+	"html_format": {
+		"lang": "lang",
+		"g_navi": "g_navi",
+		"documentation": "documentation",
+		"g_navi_list": "g_navi_list",
+		"notifications": "notifications",
+		"item": "item",
+		"item_name": "item_name",
+		"item_description": "item_description",
+		"item_details": "item_details",
+		"item_details_item": "item_details_item",
+		"item_details_datatypes": "item_details_datatypes",
+		"item_details_datatype": "item_details_datatype",
+		"example_wrap": "example_wrap",
+		"example": "example",
+		"example_caption": "example_caption",
+		"link": "link"
+	}
 }

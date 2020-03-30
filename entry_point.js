@@ -5,7 +5,7 @@ var LND = {
   //for autocompletion of langauge choices
   langs: require("./src/outputs/lang/langs_list"),
   //for autocompletion of option keys
-  option_keys: require("./src/Options/options_lister")
+  option_keys: require("./src/Options/option_keys")
 };
 /**
  * Creates html document output.

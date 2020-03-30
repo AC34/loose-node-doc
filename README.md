@@ -56,7 +56,7 @@ Run your genrator script.
 done.
 
 ### 3.Setting options
-You can set various options, see [options page](./OPTIONS.md) for more information.
+See [options page](./OPTIONS.md) for more information.
 
 ### 4 About
 #### 4.1 Enviroment

@@ -1,6 +1,8 @@
 # loose-node-doc
 Quick n easy Node.js app document generator.
 
+Works for tree structured module(only one global static instance)
+
 ## 💬Anouncement
 Everything is under preparation.
 
@@ -14,7 +16,7 @@ Type following at your project root.
 `npm install loose-node-doc --save-dev`
 
 ### 2.Writing genrator script
-Create your generator script.
+Create your generator script(gen-script.js in this page).
 In the script:
   1. require loose-node-doc.
   2. require your app.
@@ -22,8 +24,8 @@ In the script:
   4. then call generate method. 
   5. done
 
-### 3.API
-.generate(app_object,options) : 
+### 3.Available method
+&lt;loose-node-doc&gt;.generate(app_object,options) : 
   - This method is the only method provided by loose-node-doc.
 
   Arguments:
@@ -42,12 +44,9 @@ var options = {
   //using autocompletion
   lnd.options.lang.key:lnd.langs.en.US,
 
-  //you can also type manually
-  "some-other-settngs-key":"custom-value"
 }
 
-lnd.generate(my_app,options);
-//done by this line
+lnd.generate(my_app,options);//running
 ```
 #### Generating
 Run your genrator script.

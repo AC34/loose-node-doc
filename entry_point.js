@@ -78,11 +78,8 @@ LND.generate = function(object, options = {}) {
   otree = processInterfaces.parseComments(otree, cache_tree, this.pi);
   //notify user about the number of resolved comments
   processInterfaces.notifyResolvedCommentsCount(otree);
-  //override otree by user definition
-  //create html part(not the whole page)
-  var html = processInterfaces.makeHtml(otree, this.options, this.pi);
   //make html into page
-  html = processInterfaces.makeHtmlPage(html, this.options, this.pi);
+  html = processInterfaces.makeHtmlPage(otree, this.options, this.pi);
   //write html to file
   processInterfaces.writeHtmlPage(html, this.options, this.pi);
   //write datas on demand.

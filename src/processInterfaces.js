@@ -216,21 +216,20 @@ var processInterfaces = {
       this.console.outMessage("process-resolved-comments", { num: count });
     }
   },
-  makeHtml:function(otree,options,ProjectInfo){
-    var toHtml = require("./arrange/html/otreeToHtml");
-    //notify
-
-    //make html
-    return toHtml(otree,options,ProjectInfo);
-  },
   /**
    * @param {string} html 
    * @param {object} options 
    * @param {object} ProjectInfo 
    */
-  makeHtmlPage:function(html,options,ProjectInfo){
+  makeHtmlPage:function(otree,options,ProjectInfo){
+    //prepare
+    var toHtml = require("./arrange/html/otreeToHtml");
     var createPage = require("./arrange/html_page/createPage");
+    //convert
+    var html = toHtml(otree,options,ProjectInfo);
     var page = createPage(html,options,ProjectInfo);
+    //notify
+    this.console.outMessage("rocess-html-template-created",{theme_name:options.html_termplate_name}); 
     return page;
   },
   writeHtmlPage:function(html,options,ProjectInfo){
@@ -243,9 +242,9 @@ var processInterfaces = {
     copyAssets(ProjectInfo,options);
     //notify
     if(success){
-
+      this.console.outMessage("process-write-html-success",{path:options.html_path});
     }else{
-
+      this.console.outMessage("process-write-html-failure",{path:options.html_path});
     }
   },
   /**
@@ -275,12 +274,12 @@ var processInterfaces = {
     var result = writer.writeObject(file_path, otree);
     if (result === true) {
       this.console.outMessage("process-write-file-success", {
-        path: file_path
+        path: options.object_tree_path 
       });
     } else {
       //error string is returned
       this.console.outMessage("process-error-on-writing-file", {
-        path: file_path,
+        path: options.object_tree_path,
         error: result
       });
     }

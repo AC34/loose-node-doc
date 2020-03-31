@@ -12,7 +12,6 @@ var file = __dirname + sep + "langs_list.js";
 
 //start
 var langs = createLangNamesObject();
-//console.log("languages eumearted:"+JSON.stringify(langs));
 langs = enumerateLanguages(langs);
 //write
 var comment = "/*\n"+
@@ -48,7 +47,6 @@ function enumerateLanguages(langs_object){
     var items = fs.readdirSync(__dirname+sep+lang);
     for(var item in items){
       var path = items[item];
-      console.log("enumerated langs:"+path);
       //country files are always two_letters upper cases with .js
       //dot needs to be at positon 2
       if(path.indexOf(".")!==2)continue;

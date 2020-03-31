@@ -1,4 +1,10 @@
 before publish
+  login:
+    npm set init.author.name (name)
+    npm set init.author.email (email)
+    npm login
 
+  versioning:
+    npm version major/minor/patch
 publish
-
+  npm publish

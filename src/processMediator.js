@@ -7,7 +7,7 @@
  *  Main process flow:cotrolling which parts are called and when.
  *  Validation on options: checking option keys and values and its types.
  */
-var processInterfaces = {
+var processMediator = {
   console: require("./outputs/Console"),
   /**
    * @param {object} object
@@ -318,4 +318,4 @@ var processInterfaces = {
   }
 };
 
-module.exports = processInterfaces;
+module.exports = processMediator;

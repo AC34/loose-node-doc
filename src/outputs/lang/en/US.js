@@ -69,7 +69,19 @@ module.exports = {
   "process-resolved-comments":function(args={num:""}){
     return "Resolved ["+args.num+"] comments.";
   },
+  "process-html-template-created":function(args={theme_name:""}){
+    return "Created html page by theme["+args.theme_name+"]";
+  },
+  "process-write-html-success":function(args={path:""}){
+    return "Successfully written html to ["+args.path+"]";
+  },
+  "process-write-html-failure":function(args={path:""}){
+    return "Writing html to ["+args.path+"] failed.";
+  },
   "process-write-file-success":function(args={path:""}){
-    return "Successfuflly written to ["+args.path+"]";
+    return "Successfuflly written file to ["+args.path+"]";
+  },
+  "process-write-file-failure":function(args={path:""}){
+    return "Writing file to ["+args+path+"] failed.";
   }
 }

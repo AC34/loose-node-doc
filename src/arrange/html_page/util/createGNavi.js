@@ -26,7 +26,6 @@ function createList(list){
     },name);
     ret += makeElement("li",{},a);
   }
-  console.log("created GNavi:"+ret);
   return ret;
 }
 module.exports = createGNavi;

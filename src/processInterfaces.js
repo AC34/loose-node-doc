@@ -229,7 +229,7 @@ var processInterfaces = {
     var html = toHtml(otree,options,ProjectInfo);
     var page = createPage(html,options,ProjectInfo);
     //notify
-    this.console.outMessage("rocess-html-template-created",{theme_name:options.html_termplate_name}); 
+    this.console.outMessage("process-html-template-created",{theme_name:options.html_termplate_name}); 
     return page;
   },
   writeHtmlPage:function(html,options,ProjectInfo){

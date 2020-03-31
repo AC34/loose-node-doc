@@ -1,10 +1,11 @@
 {
   "name": "loose-node-doc",
   "version": "0.0.0",
-  "description": "tries to generate loosely constructed Node.js project document in html by traversing require cache.",
+  "description": "Loosely tries to create node.js project documentation html page from require cache and user definitions.",
   "main": "entry_point.js",
   "scripts": {
-    "test": "node test/options/optionstest.js"
+    "test": "node test/options/optionstest.js",
+    "prepare":"node build/prepare.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,5 @@
   "bugs": {
     "url": "https://github.com/AC34/loose-node-doc/issues"
   },
-  "homepage": "https://github.com/AC34/loose-node-doc#readme"
+  "homepage": "https://github.com/AC34/loose-node-doce#readme"
 }

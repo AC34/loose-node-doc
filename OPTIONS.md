@@ -139,9 +139,9 @@ var options = {option_key:"value",...}
 ##### 3.2 Choosing language for terminal and logs.
 You may choose language for terminal outputs and logs.
 try choosing by 
-
-`[loose-node-doc].lang`
-
+```
+[loose-node-doc].lang
+```
 
 #### 3.3 Customizing output html
 There are 2 ways to customize  output html.

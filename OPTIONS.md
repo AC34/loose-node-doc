@@ -28,6 +28,7 @@ Default settings are enabled when no options are set.
 You can simply give an empty object"{}" if you want all default settings enabled.
 
 General:
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |lang|string|"en_US"|language for logs. See 3.2|
@@ -35,18 +36,21 @@ General:
 |package_json_path|string|"package.json"|path of package.json file from project root directory.|
 
 Storing middle output:
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |write_object_tree|boolean|false|Whether to write parsed object information or not.|
 |object_tree_path|string|out/loose_doc_tree.json|Path for writing parsed object,from project root. Used when [write_object_tree] is true.|
 
 Storing logs:
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |write_logs|boolean|false|Whether to write log or not. [log_path] is used for path.|
 |log_path|string|out/loose_doc_log.txt|Path for writing parsed object,from project root. Used when [write_logs] is true.|
 
 Excluding some objects by paths and names:
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |enable_default_ignore_paths|boolean|true|Excludes pre defined paths,such as "node_modules" directories.|
@@ -54,12 +58,14 @@ Excluding some objects by paths and names:
 |ignore_objects|array|an empty array|Excludes object names.Names must exclude root object name.See 3.3 for ignoring.|
 
 Basic html page variables.
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_path|string|"out/@version/index.html"|path from proejct root. pattern "@version" will be replaced by version string declared in package.json|
 |html_template_name|string|"4-6-blue"|template name.|
 
 Texts for embedding.
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_site_title|string|"my project documentation"|This is the page title. used for title,h1 elements.|
@@ -67,6 +73,7 @@ Texts for embedding.
 |html_notifications|array|["this is notification 1"]|a list of notifications to embed at the top of the page.|
 
 Htmls for embedding.
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_about_html|"string"|"&lt;p&gt;This is my documentation.&lt;/p&gt;"|Introduction html of the page.|
@@ -75,13 +82,15 @@ Htmls for embedding.
 |html_custom_css|string|"&lt;script&gt;&lt;/script&gt;"|Custom script element and code.|
 
 Embedding global navi links.
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_gnavi_links|object|{"self":"./"}|Pairs of (link name:link)|
 
 html meta informations.
 (all variables can use @version,@homepage for package.json values(version,homepage).
-empty values will be ignored.
+empty values will be ignored.)
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_meta.keywords|string|""|Keywords for meta element "keywords".|
@@ -93,6 +102,7 @@ empty values will be ignored.
 |html_meta.custom_html|string|""|Additional html for meta elements.|
 
 Html elements for page
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_format.lang|string|"en"|See https://www.w3schools.com/tags/att_global_lang.asp for details.|
@@ -102,6 +112,7 @@ Html elements for page
 |html_format.notifications|string|"p"|Element name for notifications texts. notifications text are set by html_notifications|
 
 Html elements for documentation items.
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_format.item|string|"dl"|Element name for the wrapper element of documentation item|
@@ -120,14 +131,17 @@ Html elements for documentation items.
 Create the option as an object.
 
 e.g.
-`var options = {option_key:"value",...}`
+
+```
+var options = {option_key:"value",...}
+```
 
 ##### 3.2 Choosing language for terminal and logs.
 You may choose language for terminal outputs and logs.
 try choosing by 
-
-`[loose-node-doc].lang`
-
+```
+[loose-node-doc].lang
+```
 
 #### 3.3 Customizing output html
 There are 2 ways to customize  output html.

@@ -28,6 +28,7 @@ Default settings are enabled when no options are set.
 You can simply give an empty object"{}" if you want all default settings enabled.
 
 General:
+
 |key|type|default|description|
 |:-----:|:---:|:---:|:---|
 |lang|string|"en_US"|language for logs. See 3.2|

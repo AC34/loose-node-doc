@@ -5,7 +5,11 @@ var sep = require("path").sep;
 var file = __dirname + sep + "option_keys.js";
 var options = require("./Options");
 //false on ignore key
-var ignore = { default_ignore_paths: false, html_gnavi_links: { self: false } };
+//empty string "" for first level only
+var ignore = {
+  default_ignore_paths: false,
+  html_gnavi_links: ""
+};
 var list = listKeys(options);
 var comment =
   "/*\n" +
@@ -21,6 +25,13 @@ function listKeys(options) {
   for (var key in options) {
     //ignore
     if (ignoreFirst(key)) continue;
+    //empty string
+    if (ignore[key] === "") {
+      console.log("type string!");
+      list[key] = key;
+      continue;
+    }
+
     list[key] = key;
     //adding second level keys from here
     if (typeof options[key].default !== "object") continue;
@@ -31,21 +42,28 @@ function listKeys(options) {
       list[key] = {};
       var keys2 = Object.keys(options[key].default);
       for (var i in keys2) {
+        console.log(
+          "checking ignore:" + ignoreSecond(key, keys2[i]) + "2:" + keys2[i]
+        );
         if (ignoreSecond(key, keys2[i])) continue;
-        list[key][keys2[i]] = keys2[i];
+        list[key][keys2[i]] = key + "." + keys2[i];
       }
     }
   }
   return list;
 }
+
 //tells if first level element should be modified
 function ignoreFirst(key) {
   if (!ignore[key]) return false;
-  return true;
+  if (ignore[key] === false) return true;
+  return false;
 }
+
 //tells if second level elemtn should be ignored
 function ignoreSecond(first, second) {
   if (!ignore[first]) return false;
-  if (ignore[first][second]) return true;
+  if (ignore[first][second] === false) return true;
+  if (ignore[first]) return false;
   return false;
 }

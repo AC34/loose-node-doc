@@ -88,8 +88,8 @@ Embedding global navi links.
 |html_gnavi_links|object|{"self":"./"}|Pairs of (link name:link)|
 
 html meta informations.
-(all variables can use @version,@homepage for package.json values(version,homepage).
-empty values will be ignored.)
+(all variables can use @version,@homepage for package.json values(version,homepage)).
+empty values will be ignored.
 
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
@@ -131,7 +131,6 @@ Html elements for documentation items.
 Create the option as an object.
 
 e.g.
-
 ```
 var options = {option_key:"value",...}
 ```
@@ -139,9 +138,11 @@ var options = {option_key:"value",...}
 ##### 3.2 Choosing language for terminal and logs.
 You may choose language for terminal outputs and logs.
 try choosing by 
+
 ```
 [loose-node-doc].lang
 ```
+
 
 #### 3.3 Customizing output html
 There are 2 ways to customize  output html.
@@ -153,6 +154,7 @@ Default settings will put default values. You might want to at least change the 
   3. html_notifications (can be blank array)
   4. html_about_html
   5. html_gnavi_links 
+
 #### 3.3.2 Available templates
 Currently avaialble template are below: 
 

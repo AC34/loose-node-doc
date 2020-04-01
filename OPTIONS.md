@@ -88,9 +88,9 @@ Embedding global navi links.
 |html_gnavi_links|object|{"self":"./"}|Pairs of (link name:link)|
 
 html meta informations.
-
 (all variables can use @version,@homepage for package.json values(version,homepage).
-empty values will be ignored.
+empty values will be ignored.)
+
 |key|type|default|description|
 |:---:|:---:|:---:|:---|
 |html_meta.keywords|string|""|keywords for meta element "keywords".|

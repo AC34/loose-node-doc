@@ -1,4 +1,4 @@
-//files
+# files
 src/outputs/lang/defining_languages.js
 src/outputs/lang/langs_lister.js
 src/Options/options_lister.js
@@ -6,12 +6,12 @@ src/arrange/templates_list/templates_lister.js
 test/**
 build/**
 
-//memos
+# memos
 devmemo
 tags
 todo
 versionmemo
 
-/github
+# github
 _config.yml
 .gitignore

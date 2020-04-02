@@ -27,7 +27,6 @@ function listKeys(options) {
     if (ignoreFirst(key)) continue;
     //empty string
     if (ignore[key] === "") {
-      console.log("type string!");
       list[key] = key;
       continue;
     }
@@ -42,9 +41,6 @@ function listKeys(options) {
       list[key] = {};
       var keys2 = Object.keys(options[key].default);
       for (var i in keys2) {
-        console.log(
-          "checking ignore:" + ignoreSecond(key, keys2[i]) + "2:" + keys2[i]
-        );
         if (ignoreSecond(key, keys2[i])) continue;
         list[key][keys2[i]] = key + "." + keys2[i];
       }

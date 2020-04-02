@@ -1,7 +1,7 @@
 function validateOptions(object, Console) {
   var definition = require(__dirname + "/Options");
   var addition = {};
-  //key existannce check
+  //key existance check
   for (var key in object) {
     if (!definition[key]) {
       notifyInvalidKey(key,Console);

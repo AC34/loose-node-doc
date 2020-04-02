@@ -67,7 +67,7 @@ module.exports = {
     default: ["this is notification 1."]
   },
   html_gnavi_links: {
-    datatype: "object",
+    data_type: "object",
     default: {
       "self": "./"
     }

@@ -1,18 +1,10 @@
-function validateOptions(object, Console) {
+  function validateOptions(object, Console) {
   var definition = require(__dirname + "/Options");
   var addition = {};
-  //key existance check
+  //key existannce check
   for (var key in object) {
-    var target = undefined;
-    //single level
-    if(key.indexOf(".")===-1){
-      target = definition[key].default;   
-    }else{
-      var levels = key.split(".");
-      target = definition[levels[0]].default[levels[1]];
-    }
-    if (typeof target==="undefined") {
-      Console.outMessage("option-invalid-option-key",{"key":key});
+    if (!definition[key]) {
+      notifyInvalidKey(key,Console);
       continue;
     }
   }
@@ -38,6 +30,9 @@ function validateOptions(object, Console) {
   } //for in definition
   var ret = Object.assign(object, addition);
   return ret;
+}
+function notifyInvalidKey(key,Console) {
+  Console.outMessage("option-invalid-option-key",{"key":key});
 }
 
 module.exports = validateOptions;

@@ -15,7 +15,7 @@ function otreeToHtml(otree, options, ProjectInfo) {
   }
   //wrap
   html = makeElement(
-    options.html_format.documentation,
+    options.html_format_documentation,
     { id: ProjectInfo.html_template.documentation_id },
     html
   );

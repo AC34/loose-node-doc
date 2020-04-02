@@ -10,7 +10,7 @@ function createNotifications(html, options, ProjectInfo) {
   var notifications = options.html_notifications;
   for (var i in notifications) {
     n += makeElement(
-      options.html_format.notifications,
+      options.html_format_notifications,
       {
         class: ProjectInfo.html_template.notification_class
       },

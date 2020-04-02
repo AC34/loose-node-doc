@@ -8,12 +8,11 @@ var makeExampleElement = require("./makeExampleElement");
  * @param {object} ProjectInfo
  */
 function commentToHtml(name, comments, options, ProjectInfo) {
-  var f = options.html_format;
   var t = ProjectInfo.html_template;
   var ret = "";
   //name
   ret += makeElement(
-    f.item_name,
+    options.html_format_item_name,
     {
       class: t.item_name_class
     },
@@ -22,7 +21,7 @@ function commentToHtml(name, comments, options, ProjectInfo) {
   //description
   if (comments[0]) {
     ret += makeElement(
-      f.item_description,
+      options.html_format_item_description,
       {
         class: t.item_description_class
       },
@@ -32,11 +31,11 @@ function commentToHtml(name, comments, options, ProjectInfo) {
   //index > 0 are tagged lines
   for (var i in comments) {
     if (i === 0) continue;
-    ret += switchByTag(comments[i], t, f);
+    ret += switchByTag(comments[i], t, options);
   }
   //wrap by item wrapper
   ret = makeElement(
-    f.item,
+    options.html_format_item,
     { id: makeNameId(name, t), class: t.item_class },
     ret
   );
@@ -46,15 +45,15 @@ function makeNameId(name, html_template) {
   var id = name.replace(".", html_template.item_id_dot_replacer);
   return html_template.item_id_prefix + id;
 }
-function switchByTag(comment, html_template, html_format) {
+function switchByTag(comment, html_template, options) {
   if (!comment.tag) return "";
   //example
   if (comment.tag === "example") {
-    return makeExampleElement(comment, html_template, html_format);
+    return makeExampleElement(comment, html_template, options);
   }
   if (comment.tag === "link") {
     var link = makeElement(
-      html_format.link,
+      options.html_format_link,
       {
         target: "_blank",
         class: html_template.item_link_class,
@@ -62,12 +61,12 @@ function switchByTag(comment, html_template, html_format) {
       },
       comment.name
     );
-    return makeElement(html_format.item_details_item,{},link);
+    return makeElement(options.html_format_item_details_item,{},link);
   }
   if (comment.tag === "trail") {
     return ""; //ignore
   }
   //other tags
-  return makeTaggedElement(comment, html_template, html_format);
+  return makeTaggedElement(comment, html_template, options);
 }
 module.exports = commentToHtml;

@@ -1,28 +1,27 @@
 /**
- * creates metatags by opitons and  options.html_meta 
+ * creates metatags by opitons and  options.html_meta_*
  * ignores if given values are empty
  * @param {string} html 
  * @param {object} options 
  * @param {object} ProjectInfo 
  * @return {string} html
  */
-function createMetas(html,options,ProjectInfo){
+function createMetas(options,ProjectInfo){
   var pi = ProjectInfo;
-  var hm = options.html_meta;
   var metas = "";
   //metas
-  metas += makeMeta("keywords",hm.keywords,pi);
-  metas += makeMeta("description",hm.description,pi);
-  metas += makeMeta("author",hm.author,pi);
+  metas += makeMeta("keywords",options.html_meta_keywords,pi);
+  metas += makeMeta("description",options.html_meta_description,pi);
+  metas += makeMeta("author",options.html_meta_author,pi);
   //ogp
-  metas += makeOgpMeta("site_name",hm.og_site_name,pi);
+  metas += makeOgpMeta("site_name",options.html_meta_og_site_name,pi);
   metas += makeOgpMeta("title",options.html_site_title,pi);
   metas += makeOgpMeta("description",options.html_site_description,pi);
   metas += makeOgpMeta("type","website",pi);
-  metas += makeOgpMeta("url",hm.og_url,pi);
-  metas += makeOgpMeta("image",hm.og_image,pi);
+  metas += makeOgpMeta("url",options.html_meta_og_url,pi);
+  metas += makeOgpMeta("image",options.html_meta_og_image,pi);
   //custom
-  metas += replacenPatterns(hm.custom_html,pi);
+  metas += replacenPatterns(options.html_meta_custom_html,pi);
   return metas;
 }
 function makeMeta(name,content,ProjectInfo){
@@ -53,5 +52,15 @@ function replacenPatterns(str,ProjectInfo){
   if(!hp)return str;//abort on empty
   str = str.replace(hp_pat,hp);
   return str;
+}
+//extracts html_meta_* values only
+function extractHtmlMetas(options){
+  var ret = {};
+  for(var key in options){
+    if(key.startsWith("html_meta")){
+      ret[key] = options[key];
+    }
+  }
+  return ret;
 }
 module.exports = createMetas;

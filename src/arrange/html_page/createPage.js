@@ -66,7 +66,7 @@ function loadTemplate(ProjectInfo, options) {
  */
 function addLanguage(html, options) {
   var pattern = "<html>";
-  var rep = "<html lang='" + options.html_format.lang + "'>";
+  var rep = "<html lang='" + options.html_format_lang + "'>";
   return html.replace(pattern, rep);
 }
 /**
@@ -147,7 +147,7 @@ function insertHtml(template,html){
  */
 function insertMetas(html,options,ProjectInfo){
   var createMetas = require("./util/createMetas");
-  var metas = createMetas(html,options,ProjectInfo); 
+  var metas = createMetas(options,ProjectInfo); 
   return html.replace("<!--custom_metas-->",metas);
 }
 /**

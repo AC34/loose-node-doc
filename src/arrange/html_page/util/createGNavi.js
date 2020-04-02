@@ -6,7 +6,7 @@ var makeElement = require("./../../html/util/makeElement");
  * @return {string} gnavi_html
  */
 function createGNavi(options,ProjectInfo){
-  var f = options.html_format;
+  var f = extractHtmlFormat(options);
   var t = ProjectInfo.html_template;
   var list = options.html_gnavi_links;
   if(Object.keys(list).length===0)return "";
@@ -26,6 +26,16 @@ function createList(list){
       target:"_blank"
     },name);
     ret += makeElement("li",{},a);
+  }
+  return ret;
+}
+//extracts html_format_* values only
+function extractHtmlFormat(options){
+  var ret = {}; 
+  for(var key in options){
+    if(key.startsWith("html_format")){
+      ret[key] = options[key];
+    }
   }
   return ret;
 }

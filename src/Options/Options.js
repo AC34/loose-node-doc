@@ -90,39 +90,98 @@ module.exports = {
     default: "<style></style>"
   },
   //for html
-  //all values can use @version,@homepage
-  html_meta: {
-    data_type: "object",
-    default: {
-      keywords: "",
-      description: "this is the documentation of my project (version:@version)",
-      author: "",
-      og_site_name: "",
-      og_url: "",
-      og_image: "",
-      custom_html: ""
-    }
+  //all html_meta_* can use @version,@homepage
+  html_meta_keywords:{
+    data_type:"string",
+    default:""
   },
-  html_format: {
-    data_type: "object",
-    default: {
-      lang: "en",
-      g_navi: "div",
-      documentation: "div",
-      //expecting ul or ol
-      g_navi_list: "ul",
-      notifications: "p",
-      item: "dl",
-      item_name: "dt",
-      item_description: "dd",
-      item_details: "div",
-      item_details_item: "dd",
-      item_details_datatypes: "div",
-      item_details_datatype: "dd",
-      example_wrap: "div",
-      example: "code",
-      example_caption: "dd",
-      link: "a"
-    }
+  html_meta_description:{
+    data_type:"string",
+    default:"this is the documentation of my project (version:@version)"
+  },
+  html_meta_author:{
+    data_type:"string",
+    default:""
+  },
+  html_meta_og_site_name:{
+    data_type:"string",
+    default:""
+  },
+  html_meta_og_url:{
+    data_type:"string",
+    default:""
+  },
+  html_meta_og_image:{
+    data_type:"string",
+    default:""
+  },
+  html_meta_custom_html:{
+    data_type:"string",
+    default:""
+  },
+  html_format_lang:{
+    data_type:"string",
+    default:"en"
+  },
+  html_format_g_navi:{
+    data_type:"string",
+    default:"div"
+  },
+  html_format_documentation:{
+    data_type:"string",
+    default:"div"
+  },
+  //supposed to be ul or ol
+  html_format_g_navi_list:{
+    data_type:"string",
+    default:"ul"
+  },
+  html_format_notifications:{
+    data_type:"string",
+    default:"p"
+  },
+  html_format_item:{
+    data_type:"string",
+    default:"dl"
+  },
+  html_format_item_name:{
+    data_type:"string",
+    default:"dt"
+  },
+  html_format_item_desription:{
+    data_type:"string",
+    default:"dd"
+  },
+  html_format_item_details:{
+    data_type:"string",
+    default:"div"
+  },
+  html_format_item_dtails_item:{
+    data_type:"string",
+    default:"dd"
+  },
+  html_format_item_details_datatypes:{
+    data_type:"string",
+    default:"div"
+  },
+  html_format_item_details_datatype:{
+    data_type:"string",
+    default:"dd"
+  },
+  html_format_example_wrap:{
+    data_type:"string",
+    default:"div"
+  },
+  html_format_example:{
+    data_type:"string",
+    default:"code"
+  },
+  html_format_example_caption:{
+    data_types:"string",
+    default:"dd"
+  },
+  html_format_link:{
+    data_types:"string",
+    default:"a"
   }
 };

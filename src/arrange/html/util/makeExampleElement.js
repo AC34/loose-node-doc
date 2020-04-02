@@ -7,18 +7,18 @@ var makeElement = require("./makeElement.js");
  * @param {object} html_format
  * @return {string} html
  */
-function makeExampleElement(comment, html_template, html_format) {
+function makeExampleElement(comment, html_template, options) {
   var cap = extractCaption(comment.description);
   if (cap !== "") {
-    cap = replaceCaption(cap, html_format,html_template);
+    cap = replaceCaption(cap, options,html_template);
   }
   var code = makeElement(
-    html_format.example,
+    options.html_format_example,
     {},
     avoidCaption(comment.description)
   );
   var example = makeElement(
-    html_format.example_wrap,
+    options.html_format_example_wrap,
     {
       class:html_template.item_example_class
     },
@@ -42,11 +42,11 @@ function avoidCaption(str) {
  * @param {string} str
  * @return {string} str
  */
-function replaceCaption(str, html_format,html_template) {
+function replaceCaption(str, options,html_template) {
   var head_pt = new RegExp("<caption>", "g");
-  var head_rp = "<"+html_format.example_caption+" class=\""+html_template.item_example_caption_class+"\">";
+  var head_rp = "<"+options.html_format_example_caption+" class=\""+html_template.item_example_caption_class+"\">";
   var tale_pt = new RegExp("</caption>", "g");
-  var tale_rp = "</" + html_format.example_caption + ">";
+  var tale_rp = "</" + options.html_format_example_caption + ">";
   str = str.replace(head_pt, head_rp);
   str = str.replace(tale_pt, tale_rp);
   return str;

@@ -23,6 +23,7 @@ function createList(list){
     var a = "<a href=\""+list[name]+"\""+">"+name+"</a>";
     var a = makeElement("a",{
       href:list[name],
+      target:"_blank"
     },name);
     ret += makeElement("li",{},a);
   }

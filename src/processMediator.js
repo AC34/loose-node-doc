@@ -240,11 +240,12 @@ var processMediator = {
     html_file = writer.replaceVersionPattern(html_file,ProjectInfo);
     var success = writer.writeHtml(html_file,html);
     copyAssets(ProjectInfo,options);
+    var html_path = options.html_path.replace(new RegExp("@version"),ProjectInfo.package_json.version);
     //notify
     if(success){
-      this.console.outMessage("process-write-html-success",{path:options.html_path});
+      this.console.outMessage("process-write-html-success",{path:html_path});
     }else{
-      this.console.outMessage("process-write-html-failure",{path:options.html_path});
+      this.console.outMessage("process-write-html-failure",{path:html_path});
     }
   },
   /**

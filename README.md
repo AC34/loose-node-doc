@@ -5,8 +5,8 @@ Works for tree structured module(Everythihng needs to rest within one global obj
 
 ## 💬Anouncement
 Everything is under preparation.
-
-Don't use yet.
+Currently checking everything.
+Dont't touch until this reaches 1.0.0 or higher.
 
 ## How to use
 ### 1. Installation

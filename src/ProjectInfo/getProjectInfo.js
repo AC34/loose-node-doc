@@ -13,7 +13,6 @@ function getProjectInfo(options){
   pi.entry_point_dir = path.dirname(pi.entry_point_path); 
   var package_json_path = resolvePackageFile(pi.project_root_dir,options);
   pi.package_json = readPackageJson(package_json_path);
-  console.log("project info resolved:"+JSON.stringify(pi,null," "));
   return pi; 
 }
 /**

@@ -4,6 +4,7 @@ var ProjectInfo = {
   entry_point_dir: "",
   build_script_path: "",
   package_json: "",
+  lnd_package_json:"",
   //without @
   trail_tag:"trail",
   //ids/classes for html
@@ -25,6 +26,7 @@ var ProjectInfo = {
     item_details_datatypes_class: "data-types",
     item_link_class: "reference_link",
     example_caption_class: "example-caption"
-  }
+  },
+  powered_by_html:"<p id='powered-by'>This documentation is powered by <a href='@lnd-homepage' target='_blank'>loose-node-doc</a>.</p>"
 };
 module.exports = ProjectInfo;

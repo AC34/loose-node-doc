@@ -27,6 +27,8 @@ function createPage(html, options, ProjectInfo) {
   templ = insertVersion(templ, options, ProjectInfo);
   //assign about_html
   templ = insertAboutHtml(templ, options);
+  //powered-by
+  templ = insertPoweredBy(templ,options,ProjectInfo);
   //html
   templ = insertHtml(templ,html);
   //done
@@ -165,5 +167,18 @@ function insertTitles(html,options,ProjectInfo){
   var h1 = "<h1>"+options.html_site_title+"</h1>"
   var h1_pat = new RegExp("<!--h1_page_title-->","g");
   return html.replace(h1_pat,h1);
+}
+/**
+ * Inserts poweredby string to given html.
+ * @param {string} html 
+ * @param {object} options 
+ * @param {object} ProjectInfo 
+ */
+function insertPoweredBy(html,options,ProjectInfo){
+  if(options.html_add_powered_by===false)return html;//cancel
+  //replace hompage pattern "@homepage"
+  var replacer = ProjectInfo.powered_by_html;
+  replacer = replacer.replace("@lnd-homepage",ProjectInfo.lnd_package_json.homepage);
+  return html.replace("<!--powered-by-->",replacer);
 }
 module.exports = createPage;

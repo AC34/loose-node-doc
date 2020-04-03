@@ -13,6 +13,8 @@ function getProjectInfo(options){
   pi.entry_point_dir = path.dirname(pi.entry_point_path); 
   var package_json_path = resolvePackageFile(pi.project_root_dir,options);
   pi.package_json = readPackageJson(package_json_path);
+  var lnd_package_json_path = resolveLndPackageFile(pi.entry_point_dir);
+  pi.lnd_package_json = readPackageJson(lnd_package_json_path);
   return pi; 
 }
 /**
@@ -67,6 +69,9 @@ function resolvePackageFile(project_root_dir,options){
   file = file.replace(/\//g,sep);
   return file;
 }
+function resolveLndPackageFile(entry_point_dir){
+  return entry_point_dir+"/package.json";
+}
 /**
  * reads package.json file.
  * empty object will be returned if reading failed.
@@ -84,5 +89,4 @@ function readPackageJson(package_file_path){
     return {};
   }
 }
-
 module.exports = getProjectInfo;

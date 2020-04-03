@@ -23,6 +23,7 @@ module.exports ={
 	"html_version_html": "html_version_html",
 	"html_custom_css": "html_custom_css",
 	"html_custom_script": "html_custom_script",
+	"html_add_powered_by": "html_add_powered_by",
 	"html_meta_keywords": "html_meta_keywords",
 	"html_meta_description": "html_meta_description",
 	"html_meta_author": "html_meta_author",

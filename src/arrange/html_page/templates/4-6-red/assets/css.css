@@ -519,6 +519,9 @@ header h1 {
   bottom: 50px;
 }
 
+#main #powered-by{
+  text-align: center;
+}
 @media screen and (min-width: 851px) {
   #main > * {
     width: 600px;

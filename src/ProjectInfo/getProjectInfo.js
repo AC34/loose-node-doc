@@ -11,8 +11,9 @@ function getProjectInfo(options){
   pi.project_root_dir = resolveProjectRootDir();
   pi.entry_point_path = resolveEntryPointPath();
   pi.entry_point_dir = path.dirname(pi.entry_point_path); 
-  var package_json_path = resolvePackageFile(pi.entry_point_dir,options);
+  var package_json_path = resolvePackageFile(pi.project_root_dir,options);
   pi.package_json = readPackageJson(package_json_path);
+  console.log("project info resolved:"+JSON.stringify(pi,null," "));
   return pi; 
 }
 /**
@@ -58,12 +59,12 @@ function resolveBuildScriptPath(){
  * @param {object} options 
  * @return {string}
  */
-function resolvePackageFile(entry_point_dir,options){
+function resolvePackageFile(project_root_dir,options){
   var file = options.package_json_path;
   if(file.startsWith("./",""))file = file.replace("./","/");
   if(!file.startsWith("/",""))file = "/"+file;
   //concat
-  file = entry_point_dir+file;
+  file = project_root_dir+file;
   file = file.replace(/\//g,sep);
   return file;
 }

@@ -89,6 +89,10 @@ module.exports = {
     data_type: "string",
     default: "<style></style>"
   },
+  html_add_powered_by:{
+    data_type:"boolean",
+    default:true
+  },
   //for html
   //all html_meta_* can use @version,@homepage
   html_meta_keywords:{
